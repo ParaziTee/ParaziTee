@@ -5,24 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ParaziT - Radio Transmission</title>
     <style>
-        body { background-color: #121212; color: #00ff66; font-family: monospace; text-align: center; margin: 0; padding: 20px; }
-        h1 { font-size: 28px; text-shadow: 0 0 10px #00ff66; }
-        p { color: #888; }
-        .player { background: #1e1e1e; padding: 15px; border-radius: 10px; margin: 20px auto; max-width: 400px; border: 1px solid #00ff66; }
-        audio { width: 100%; margin-top: 10px; }
+        /* Genel Sayfa Tasarımı */
+        body { 
+            background-color: #0d0d0d; 
+            color: #00ff66; 
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 0; 
+            padding: 0; 
+            text-align: center;
+        }
+
+        /* Üst Menü (Navbar) */
+        nav {
+            background-color: #161616;
+            border-bottom: 2px solid #00ff66;
+            padding: 15px 0;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+        }
+
+        nav a {
+            color: #00ff66;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        /* Menü Linklerine Gelince Parlama Efekti */
+        nav a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px #00ff66;
+        }
+
+        /* İçerik Alanı */
+        .container {
+            padding: 20px;
+        }
+
+        h1 { 
+            font-size: 32px; 
+            text-shadow: 0 0 10px #00ff66; 
+            margin-top: 30px;
+        }
+
+        p { color: #aaaaaa; }
+
+        /* Müzik Çalar Kutusu */
+        .player { 
+            background: #181818; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 30px auto; 
+            max-width: 420px; 
+            border: 1px solid #00ff66; 
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
+        }
+
+        audio { 
+            width: 100%; 
+            margin-top: 15px; 
+        }
     </style>
 </head>
 <body>
 
-    <h1>ParaziT ☣️</h1>
-    <p>Reklam Yok Abone Yok Sadece Eğlence</p>
+    <!-- MENÜ BAŞLANGICI -->
+    <nav>
+        <a href="#ana-sayfa">[ ANA SAYFA ]</a>
+        <a href="#yayinlar">[ YAYINLAR ]</a>
+        <a href="#hakkimizda">[ STALKER ]</a>
+        <a href="#iletisim">[ İLETİŞİM ]</a>
+    </nav>
+    <!-- MENÜ BİTİŞİ -->
 
-    <div class="player">
-        <h3>Track 1: Hidra - Hedefte</h3>
-        <p>İlk Müzik yayını :D</p>
-        <audio controls src="Hidra - Hedefte ( 2013 )(_7ZVZbk99drk_).m4a"></audio>
+    <div class="container">
+        <h1>ParaziT ☣️</h1>
+        <p>Reklam Yok / Abone Yok / Sadece Frekans</p>
+
+        <div class="player">
+            <h3>Track 1: Hidra - Hedefte</h3>
+            <p>İlk Müzik Yayını</p>
+            <audio controls src="Hidra - Hedefte ( 2013 )(_7ZVZbk99drk_).m4a"></audio>
+        </div>
     </div>
 
 </body>
 </html>
-
