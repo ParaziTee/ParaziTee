@@ -78,12 +78,12 @@
             background: #222;
         }
         .folder-content {
-            display: none; /* Başlangıçta kapalı durur */
+            display: none;
             padding: 5px 0;
             background: #050505;
         }
         .folder-content.open {
-            display: block; /* Tıklanınca açılır */
+            display: block;
         }
         .track-item {
             padding: 8px 15px;
@@ -119,5 +119,119 @@
         <!-- Kontrol Butonları -->
         <div class="controls-box">
             <button class="btn-term" onclick="prevSong()">[ &lt;&lt; GERİ ]</button>
-            <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button
+            <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button>
+            <button class="btn-term" onclick="nextSong()">[ İLERİ &gt;&gt; ]</button>
+        </div>
+    </div>
 
+    <!-- Tıklanıp Açılan Klasör Yapısı -->
+    <div class="folder-container">
+        <div class="folder-header" onclick="toggleFolder()">
+            <span>📁 Enes Alper - Sakat Bırakırım Serisi</span>
+            <span id="folder-icon">▶</span>
+        </div>
+        <div class="folder-content" id="folder-content">
+            <div id="track-list"></div>
+        </div>
+    </div>
+
+    <script>
+        let songs = [];
+        let currentIndex = 0;
+        const player = document.getElementById('audio-player');
+        const title = document.getElementById('song-title');
+        const artist = document.getElementById('song-artist');
+        const trackListContainer = document.getElementById('track-list');
+        const folderContent = document.getElementById('folder-content');
+        const folderIcon = document.getElementById('folder-icon');
+
+        fetch('playlist.json?v=' + new Date().getTime())
+            .then(response => {
+                if (!response.ok) throw new Error("JSON dosyası bulunamadı");
+                return response.json();
+            })
+            .then(data => {
+                songs = data;
+                renderPlaylist();
+                if(songs.length > 0) {
+                    loadSong(currentIndex, false);
+                }
+            })
+            .catch(err => {
+                title.innerText = "❌ playlist.json Okunamadı!";
+                artist.innerText = "Lütfen JSON dosyanı kontrol et";
+            });
+
+        function toggleFolder() {
+            if (folderContent.classList.contains('open')) {
+                folderContent.classList.remove('open');
+                folderIcon.innerText = "▶";
+            } else {
+                folderContent.classList.add('open');
+                folderIcon.innerText = "▼";
+            }
+        }
+
+        function renderPlaylist() {
+            trackListContainer.innerHTML = "";
+            songs.forEach((song, index) => {
+                const div = document.createElement('div');
+                div.className = "track-item" + (index === currentIndex ? " active" : "");
+                div.innerText = `📄 [Part ${index + 1}] ${song.title}`;
+                div.onclick = () => {
+                    currentIndex = index;
+                    loadSong(currentIndex, true);
+                };
+                trackListContainer.appendChild(div);
+            });
+        }
+
+        function loadSong(index, autoPlay = true) {
+            if (songs.length === 0) return;
+            currentIndex = index;
+            title.innerText = songs[index].title;
+            artist.innerText = songs[index].artist;
+            player.src = songs[index].url;
+            player.load();
+            
+            if (autoPlay) {
+                player.play().catch(e => console.log("Oynatma engellendi:", e));
+            }
+
+            const items = trackListContainer.getElementsByClassName('track-item');
+            for (let i = 0; i < items.length; i++) {
+                if (i === currentIndex) {
+                    items[i].classList.add('active');
+                } else {
+                    items[i].classList.remove('active');
+                }
+            }
+        }
+
+        function nextSong() {
+            let nextIndex = (currentIndex + 1) % songs.length;
+            loadSong(nextIndex, true);
+        }
+
+        function prevSong() {
+            let prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+            loadSong(prevIndex, true);
+        }
+
+        function replaySong() {
+            player.currentTime = 0;
+            player.play().catch(e => console.log("Tekrar oynatma hatası:", e));
+        }
+
+        player.onended = () => {
+            nextSong();
+        };
+
+        player.onerror = () => {
+            title.innerText = "❌ Dosya Bulunamadı!";
+            artist.innerText = songs[currentIndex] ? songs[currentIndex].url : "";
+        };
+    </script>
+
+</body>
+</html>
