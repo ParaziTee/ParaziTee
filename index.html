@@ -3,135 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParaziTR - Terminal Radyo</title>
+    <title>ParaziTR - Xbox Sci-Fi Dashboard</title>
     <style>
         body {
-            background-color: #050505;
-            color: #ffcc00;
+            background-color: #030803;
+            color: #33ff33;
             font-family: monospace;
             text-align: center;
-            padding: 15px;
+            padding: 10px;
             margin: 0;
-        }
-        h2 {
-            color: #ffcc00;
-            text-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
-            font-size: 1.2rem;
-        }
-        .terminal-box {
-            border: 1px solid #ffcc00;
-            padding: 15px;
-            margin: 10px auto;
-            max-width: 420px;
-            background: #000;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
-        }
-        audio {
-            width: 100%;
-            margin-top: 10px;
-        }
-        .controls-box {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            gap: 5px;
-        }
-        .btn-term {
-            background: #050505;
-            color: #ffcc00;
-            border: 1px solid #ffcc00;
-            padding: 8px 10px;
-            font-family: monospace;
-            font-weight: bold;
-            cursor: pointer;
-            flex: 1;
-            font-size: 0.85rem;
-        }
-        .btn-term:hover, .btn-term:active {
-            background: #ffcc00;
-            color: #000;
+            overflow-x: hidden;
         }
 
-        /* Klasör / Dizin Alanı Stilleri */
-        .folder-container {
-            border: 1px solid #ffcc00;
-            margin: 15px auto;
-            max-width: 420px;
-            background: #000;
-            text-align: left;
-            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+        /* CRT Scanline & Retro Arka Plan Efekti */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 999;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
         }
-        .folder-header {
-            background: #111;
-            color: #ffcc00;
-            padding: 10px;
+
+        h1 {
+            color: #33ff33;
+            text-shadow: 0 0 10px rgba(51, 255, 51, 0.6);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #1a531a;
+            padding-bottom: 5px;
+        }
+
+        /* OG Xbox Tarzı Ana Dashboard Düzeni */
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        /* Sol Taraftaki O Meşhur Neon Küre (Orb) Alanı */
+        .xbox-orb-box {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #76ff03 0%, #0d3b02 70%, #000 100%);
+            box-shadow: 0 0 25px rgba(118, 255, 3, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px auto;
+            animation: pulse-orb 3s infinite alternate;
+        }
+
+        .xbox-logo-x {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #051a02;
+            text-shadow: 0 0 8px #76ff03;
+        }
+
+        @keyframes pulse-orb {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(118, 255, 3, 0.4); }
+            100% { transform: scale(1.04); box-shadow: 0 0 35px rgba(118, 255, 3, 0.8); }
+        }
+
+        /* Sağ Taraftaki Kesik Köşeli Sci-Fi Menü Barları */
+        .menu-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-btn {
+            background: rgba(5, 20, 5, 0.9);
+            color: #33ff33;
+            border: 1px solid #1e6b1e;
+            padding: 12px 15px;
+            text-align: left;
+            font-family: monospace;
             font-size: 0.9rem;
             font-weight: bold;
             cursor: pointer;
-            user-select: none;
-            border-bottom: 1px solid #333;
+            box-shadow: inset 0 0 8px rgba(30, 107, 30, 0.3);
+            transition: 0.2s;
+            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            text-decoration: none;
         }
-        .folder-header:hover {
-            background: #222;
+
+        .menu-btn:hover, .menu-btn.active {
+            background: #1e6b1e;
+            color: #030803;
+            box-shadow: 0 0 15px rgba(51, 255, 51, 0.8);
+            border-color: #76ff03;
         }
-        .folder-content {
+
+        /* Genişleyen Müzik / Klasör Paneli */
+        .sub-panel {
             display: none;
-            padding: 5px 0;
-            background: #050505;
+            width: 100%;
+            background: #010d01;
+            border: 1px solid #1e6b1e;
+            text-align: left;
+            padding: 10px;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
         }
-        .folder-content.open {
+
+        .sub-panel.open {
             display: block;
         }
-        .track-item {
-            padding: 8px 15px;
+
+        /* Müzik Oynatıcı Kontrolleri */
+        .player-box {
+            background: #021402;
+            border: 1px dashed #33ff33;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 5px;
+            filter: invert(100%) hue-rotate(90deg) brightness(1.2);
+        }
+
+        .controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .ctrl-btn {
+            flex: 1;
+            background: #030803;
+            color: #33ff33;
+            border: 1px solid #33ff33;
+            padding: 6px;
+            font-family: monospace;
+            font-size: 0.75rem;
             cursor: pointer;
-            border-bottom: 1px dashed #222;
-            font-size: 0.8rem;
-            color: #aaa;
-            transition: 0.1s;
-        }
-        .track-item:hover {
-            background: #151500;
-            color: #ffcc00;
-        }
-        .track-item.active {
-            color: #ffcc00;
-            background: #221a00;
-            border-left: 3px solid #ffcc00;
             font-weight: bold;
+        }
+
+        .ctrl-btn:hover {
+            background: #33ff33;
+            color: #030803;
+        }
+
+        /* Şarkı Listesi Parçaları */
+        .track-item {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+            border-bottom: 1px dotted #0f3d0f;
+            cursor: pointer;
+            color: #88cc88;
+        }
+
+        .track-item:hover {
+            background: #0b260b;
+            color: #33ff33;
+        }
+
+        .track-item.active {
+            color: #76ff03;
+            background: #0f3d0f;
+            font-weight: bold;
+            border-left: 3px solid #76ff03;
         }
     </style>
 </head>
 <body>
 
-    <h2>☢️ ParaziTR 🇹🇷</h2>
+    <h1>PARAZITR // XBOX-OS v1.0</h1>
 
-    <!-- Ana Oynatıcı Paneli -->
-    <div class="terminal-box">
-        <h3 id="song-title" style="margin-bottom: 3px; font-size: 1rem;">Sistem Yükleniyor...</h3>
-        <p id="song-artist" style="color: #888; margin-top: 0; font-size: 0.8rem;">--</p>
+    <div class="dashboard-container">
         
-        <audio id="audio-player" controls preload="auto"></audio>
-
-        <!-- Kontrol Butonları -->
-        <div class="controls-box">
-            <button class="btn-term" onclick="prevSong()">[ &lt;&lt; GERİ ]</button>
-            <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button>
-            <button class="btn-term" onclick="nextSong()">[ İLERİ &gt;&gt; ]</button>
+        <!-- OG Xbox Tarzı Neon Küre -->
+        <div class="xbox-orb-box">
+            <div class="xbox-logo-x">☢</div>
         </div>
-    </div>
 
-    <!-- Tıklanıp Açılan Klasör Yapısı -->
-    <div class="folder-container">
-        <div class="folder-header" onclick="toggleFolder()">
-            <span>📁 Enes Alper - Sakat Bırakırım Serisi</span>
-            <span id="folder-icon">▶</span>
-        </div>
-        <div class="folder-content" id="folder-content">
-            <div id="track-list"></div>
+        <!-- Ana Menü Barları -->
+        <div class="menu-list">
+            
+            <!-- 1. Müzik & Albüm Bölümü -->
+            <button class="menu-btn" onclick="toggleSection('music-panel')">
+                <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM ]</span>
+                <span>📂</span>
+            </button>
+            
+            <div id="music-panel" class="sub-panel">
+                <div class="player-box">
+                    <div id="song-title" style="font-size: 0.85rem; font-weight: bold; color: #76ff03;">Sistem Yükleniyor...</div>
+                    <div id="song-artist" style="font-size: 0.75rem; color: #669966;">--</div>
+                    <audio id="audio-player" controls preload="auto"></audio>
+                    
+                    <div class="controls">
+                        <button class="ctrl-btn" onclick="prevSong()">[ &lt;&lt; GERİ ]</button>
+                        <button class="ctrl-btn" onclick="replaySong()">[ ↻ TEKRAR ]</button>
+                        <button class="ctrl-btn" onclick="nextSong()">[ İLERİ &gt;&gt; ]</button>
+                    </div>
+                </div>
+                <div id="track-list"></div>
+            </div>
+
+            <!-- 2. APK İndirme Butonu (Doğrudan GitHub'daki ParaziTR.apk dosyasına bağlanır) -->
+            <a href="ParaziTR.apk" class="menu-btn" download>
+                <span>> DOWNLOAD APP (.APK)</span>
+                <span>📥</span>
+            </a>
+
+            <!-- 3. Sistem Durumu / XBOX LIVE -->
+            <button class="menu-btn" onclick="alert('SYSTEM STATUS: ONLINE\nSECURE PROTOCOL: ACTIVE\nHOST: GITHUB PAGES')">
+                <span>> XBOX LIVE / SYSTEM INFO</span>
+                <span>🟢</span>
+            </button>
+
+            <!-- 4. Ayarlar / Settings -->
+            <button class="menu-btn" onclick="alert('PARAZITR CYBERPUNK TERMINAL - 2026')">
+                <span>> SETTINGS // ABOUT</span>
+                <span>⚙️</span>
+            </button>
+
         </div>
     </div>
 
@@ -142,34 +246,22 @@
         const title = document.getElementById('song-title');
         const artist = document.getElementById('song-artist');
         const trackListContainer = document.getElementById('track-list');
-        const folderContent = document.getElementById('folder-content');
-        const folderIcon = document.getElementById('folder-icon');
 
+        // playlist.json dosyasını çekiyoruz
         fetch('playlist.json?v=' + new Date().getTime())
-            .then(response => {
-                if (!response.ok) throw new Error("JSON dosyası bulunamadı");
-                return response.json();
-            })
+            .then(res => res.json())
             .then(data => {
                 songs = data;
                 renderPlaylist();
-                if(songs.length > 0) {
-                    loadSong(currentIndex, false);
-                }
+                if(songs.length > 0) loadSong(0, false);
             })
             .catch(err => {
-                title.innerText = "❌ playlist.json Okunamadı!";
-                artist.innerText = "Lütfen JSON dosyanı kontrol et";
+                title.innerText = "❌ playlist.json Bulunamadı!";
             });
 
-        function toggleFolder() {
-            if (folderContent.classList.contains('open')) {
-                folderContent.classList.remove('open');
-                folderIcon.innerText = "▶";
-            } else {
-                folderContent.classList.add('open');
-                folderIcon.innerText = "▼";
-            }
+        function toggleSection(id) {
+            const panel = document.getElementById(id);
+            panel.classList.toggle('open');
         }
 
         function renderPlaylist() {
@@ -177,7 +269,7 @@
             songs.forEach((song, index) => {
                 const div = document.createElement('div');
                 div.className = "track-item" + (index === currentIndex ? " active" : "");
-                div.innerText = `📄 [Part ${index + 1}] ${song.title}`;
+                div.innerText = `[${index + 1}] ${song.title}`;
                 div.onclick = () => {
                     currentIndex = index;
                     loadSong(currentIndex, true);
@@ -220,18 +312,10 @@
 
         function replaySong() {
             player.currentTime = 0;
-            player.play().catch(e => console.log("Tekrar oynatma hatası:", e));
+            player.play().catch(e => console.log("Tekrar hatası:", e));
         }
 
-        player.onended = () => {
-            nextSong();
-        };
-
-        player.onerror = () => {
-            title.innerText = "❌ Dosya Bulunamadı!";
-            artist.innerText = songs[currentIndex] ? songs[currentIndex].url : "";
-        };
+        player.onended = () => { nextSong(); };
     </script>
-
 </body>
 </html>
