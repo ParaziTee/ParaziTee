@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>☢️ ParaziTR 🇹🇷</title>
+    <title>ParaziTR - Terminal Radyo</title>
     <style>
         body {
             background-color: #050505;
@@ -51,25 +51,42 @@
             background: #ffcc00;
             color: #000;
         }
-        /* Dosya Listesi (Directory) Stili */
-        .playlist-dir {
+
+        /* Klasör / Dizin Alanı Stilleri */
+        .folder-container {
             border: 1px solid #ffcc00;
-            margin: 10px auto;
+            margin: 15px auto;
             max-width: 420px;
             background: #000;
             text-align: left;
-            padding: 10px;
             box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
         }
-        .dir-title {
+        .folder-header {
+            background: #111;
             color: #ffcc00;
-            border-bottom: 1px dashed #ffcc00;
-            padding-bottom: 5px;
-            margin-bottom: 8px;
+            padding: 10px;
             font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .folder-header:hover {
+            background: #222;
+        }
+        .folder-content {
+            display: none; /* Başlangıçta kapalı durur */
+            padding: 5px 0;
+            background: #050505;
+        }
+        .folder-content.open {
+            display: block; /* Tıklanınca açılır */
         }
         .track-item {
-            padding: 6px 8px;
+            padding: 8px 15px;
             cursor: pointer;
             border-bottom: 1px dashed #222;
             font-size: 0.8rem;
@@ -77,12 +94,12 @@
             transition: 0.1s;
         }
         .track-item:hover {
-            background: #111;
+            background: #151500;
             color: #ffcc00;
         }
         .track-item.active {
             color: #ffcc00;
-            background: #1a1500;
+            background: #221a00;
             border-left: 3px solid #ffcc00;
             font-weight: bold;
         }
@@ -90,7 +107,7 @@
 </head>
 <body>
 
-    <h2>☢️ Parazit 🇹🇷</h2>
+    <h2>ParaziTR [ Terminal Radyo ]</h2>
 
     <!-- Ana Oynatıcı Paneli -->
     <div class="terminal-box">
@@ -102,101 +119,5 @@
         <!-- Kontrol Butonları -->
         <div class="controls-box">
             <button class="btn-term" onclick="prevSong()">[ &lt;&lt; GERİ ]</button>
-            <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button>
-            <button class="btn-term" onclick="nextSong()">[ İLERİ &gt;&gt; ]</button>
-        </div>
-    </div>
+            <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button
 
-    <!-- Tıklanabilir Dosya Listesi (Directory) -->
-    <div class="playlist-dir">
-        <div class="dir-title">> /sarkilar/ dizini (Tıkla Aç):</div>
-        <div id="track-list"></div>
-    </div>
-
-    <script>
-        let songs = [];
-        let currentIndex = 0;
-        const player = document.getElementById('audio-player');
-        const title = document.getElementById('song-title');
-        const artist = document.getElementById('song-artist');
-        const trackListContainer = document.getElementById('track-list');
-
-        fetch('playlist.json?v=' + new Date().getTime())
-            .then(response => response.json())
-            .then(data => {
-                songs = data;
-                renderPlaylist();
-                if(songs.length > 0) {
-                    loadSong(currentIndex, false);
-                }
-            })
-            .catch(err => {
-                title.innerText = "❌ playlist.json Okunamadı!";
-            });
-
-        function renderPlaylist() {
-            trackListContainer.innerHTML = "";
-            songs.forEach((song, index) => {
-                const div = document.createElement('div');
-                div.className = "track-item" + (index === currentIndex ? " active" : "");
-                div.innerText = `[${index + 1}] ${song.title}`;
-                div.onclick = () => {
-                    currentIndex = index;
-                    loadSong(currentIndex, true);
-                };
-                trackListContainer.appendChild(div);
-            });
-        }
-
-        function loadSong(index, autoPlay = true) {
-            if (songs.length === 0) return;
-            currentIndex = index;
-            title.innerText = songs[index].title;
-            artist.innerText = songs[index].artist;
-            player.src = songs[index].url;
-            player.load();
-            
-            if (autoPlay) {
-                player.play().catch(e => console.log("Oynatma engellendi:", e));
-            }
-
-            // Listede aktif olan şarkıyı güncelle
-            const items = trackListContainer.getElementsByClassName('track-item');
-            for (let i = 0; i < items.length; i++) {
-                if (i === currentIndex) {
-                    items[i].classList.add('active');
-                } else {
-                    items[i].classList.remove('active');
-                }
-            }
-        }
-
-        function nextSong() {
-            let nextIndex = (currentIndex + 1) % songs.length;
-            loadSong(nextIndex, true);
-        }
-
-        function prevSong() {
-            let prevIndex = (currentIndex - 1 + songs.length) % songs.length;
-            loadSong(prevIndex, true);
-        }
-
-        function replaySong() {
-            player.currentTime = 0;
-            player.play().catch(e => console.log("Tekrar oynatma hatası:", e));
-        }
-
-        // Şarkı bitince otomatik sonrakine geç
-        player.onended = () => {
-            nextSong();
-        };
-
-        // Hata yakalama
-        player.onerror = () => {
-            title.innerText = "❌ Dosya Bulunamadı!";
-            artist.innerText = songs[currentIndex] ? songs[currentIndex].url : "";
-        };
-    </script>
-
-</body>
-</html>
