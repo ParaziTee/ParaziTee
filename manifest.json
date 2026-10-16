@@ -1,6 +1,6 @@
 {
-  "name": "ParaziTR",
-  "short_name": "PTR",
+  "name": "ParaziTR Terminal Radyo",
+  "short_name": "ParaziTR",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#030803",
