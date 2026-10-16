@@ -3,47 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title/>☢️ ParaziTR 🇹🇷</title>
+    <title>☢️ ParaziTR 🇹🇷</title>
     <style>
         body {
             background-color: #050505;
-            color: #00ff66;
+            color: #ffcc00;
             font-family: monospace;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
+            margin: 0;
+        }
+        h2 {
+            color: #ffcc00;
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+            font-size: 1.2rem;
         }
         .terminal-box {
-            border: 1px solid #00ff66;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 400px;
+            border: 1px solid #ffcc00;
+            padding: 15px;
+            margin: 10px auto;
+            max-width: 420px;
             background: #000;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
         }
         audio {
             width: 100%;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         .controls-box {
             display: flex;
             justify-content: space-between;
-            margin-top: 15px;
+            margin-top: 10px;
             gap: 5px;
         }
         .btn-term {
             background: #050505;
-            color: #00ff66;
-            border: 1px solid #00ff66;
-            padding: 8px 12px;
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+            padding: 8px 10px;
             font-family: monospace;
             font-weight: bold;
             cursor: pointer;
             flex: 1;
-            transition: 0.2s;
+            font-size: 0.85rem;
         }
         .btn-term:hover, .btn-term:active {
-            background: #00ff66;
+            background: #ffcc00;
             color: #000;
+        }
+        /* Dosya Listesi (Directory) Stili */
+        .playlist-dir {
+            border: 1px solid #ffcc00;
+            margin: 10px auto;
+            max-width: 420px;
+            background: #000;
+            text-align: left;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
+        }
+        .dir-title {
+            color: #ffcc00;
+            border-bottom: 1px dashed #ffcc00;
+            padding-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .track-item {
+            padding: 6px 8px;
+            cursor: pointer;
+            border-bottom: 1px dashed #222;
+            font-size: 0.8rem;
+            color: #aaa;
+            transition: 0.1s;
+        }
+        .track-item:hover {
+            background: #111;
+            color: #ffcc00;
+        }
+        .track-item.active {
+            color: #ffcc00;
+            background: #1a1500;
+            border-left: 3px solid #ffcc00;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -51,18 +92,25 @@
 
     <h2>ParaziTR [ Terminal Radyo ]</h2>
 
+    <!-- Ana Oynatıcı Paneli -->
     <div class="terminal-box">
-        <h3 id="song-title" style="margin-bottom: 5px;">Sistem Yükleniyor...</h3>
-        <p id="song-artist" style="color: #888; margin-top: 0;">--</p>
+        <h3 id="song-title" style="margin-bottom: 3px; font-size: 1rem;">Sistem Yükleniyor...</h3>
+        <p id="song-artist" style="color: #888; margin-top: 0; font-size: 0.8rem;">--</p>
         
         <audio id="audio-player" controls preload="auto"></audio>
 
-        <!-- Butonlar Paneli -->
+        <!-- Kontrol Butonları -->
         <div class="controls-box">
             <button class="btn-term" onclick="prevSong()">[ &lt;&lt; GERİ ]</button>
             <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button>
             <button class="btn-term" onclick="nextSong()">[ İLERİ &gt;&gt; ]</button>
         </div>
+    </div>
+
+    <!-- Tıklanabilir Dosya Listesi (Directory) -->
+    <div class="playlist-dir">
+        <div class="dir-title">> /sarkilar/ dizini (Tıkla Aç):</div>
+        <div id="track-list"></div>
     </div>
 
     <script>
@@ -71,43 +119,71 @@
         const player = document.getElementById('audio-player');
         const title = document.getElementById('song-title');
         const artist = document.getElementById('song-artist');
+        const trackListContainer = document.getElementById('track-list');
 
         fetch('playlist.json?v=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
                 songs = data;
+                renderPlaylist();
                 if(songs.length > 0) {
-                    loadSong(currentIndex);
+                    loadSong(currentIndex, false);
                 }
             })
             .catch(err => {
                 title.innerText = "❌ playlist.json Okunamadı!";
             });
 
-        function loadSong(index) {
+        function renderPlaylist() {
+            trackListContainer.innerHTML = "";
+            songs.forEach((song, index) => {
+                const div = document.createElement('div');
+                div.className = "track-item" + (index === currentIndex ? " active" : "");
+                div.innerText = `[${index + 1}] ${song.title}`;
+                div.onclick = () => {
+                    currentIndex = index;
+                    loadSong(currentIndex, true);
+                };
+                trackListContainer.appendChild(div);
+            });
+        }
+
+        function loadSong(index, autoPlay = true) {
             if (songs.length === 0) return;
+            currentIndex = index;
             title.innerText = songs[index].title;
             artist.innerText = songs[index].artist;
             player.src = songs[index].url;
             player.load();
+            
+            if (autoPlay) {
+                player.play().catch(e => console.log("Oynatma engellendi:", e));
+            }
+
+            // Listede aktif olan şarkıyı güncelle
+            const items = trackListContainer.getElementsByClassName('track-item');
+            for (let i = 0; i < items.length; i++) {
+                if (i === currentIndex) {
+                    items[i].classList.add('active');
+                } else {
+                    items[i].classList.remove('active');
+                }
+            }
         }
 
-        // Buton Fonksiyonları
         function nextSong() {
-            currentIndex = (currentIndex + 1) % songs.length;
-            loadSong(currentIndex);
-            player.play();
+            let nextIndex = (currentIndex + 1) % songs.length;
+            loadSong(nextIndex, true);
         }
 
         function prevSong() {
-            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
-            loadSong(currentIndex);
-            player.play();
+            let prevIndex = (currentIndex - 1 + songs.length) % songs.length;
+            loadSong(prevIndex, true);
         }
 
         function replaySong() {
             player.currentTime = 0;
-            player.play();
+            player.play().catch(e => console.log("Tekrar oynatma hatası:", e));
         }
 
         // Şarkı bitince otomatik sonrakine geç
@@ -115,7 +191,7 @@
             nextSong();
         };
 
-        // Hata kontrolü
+        // Hata yakalama
         player.onerror = () => {
             title.innerText = "❌ Dosya Bulunamadı!";
             artist.innerText = songs[currentIndex] ? songs[currentIndex].url : "";
