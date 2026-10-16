@@ -3,125 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParaziT - Radio Transmission</title>
+    <title>ParaziTR - Terminal</title>
     <style>
-        /* Genel Sayfa Tasarımı */
-        body { 
-            background-color: #0d0d0d; 
-            color: #00ff66; 
-            font-family: 'Courier New', Courier, monospace; 
-            margin: 0; 
-            padding: 0; 
-            text-align: center;
-        }
-
-        /* Üst Menü (Navbar) */
-        nav {
-            background-color: #161616;
-            border-bottom: 2px solid #00ff66;
-            padding: 15px 0;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
-        }
-
-        nav a {
+        body {
+            background-color: #050505;
             color: #00ff66;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        /* Menü Linklerine Gelince Parlama Efekti */
-        nav a:hover {
-            color: #ffffff;
-            text-shadow: 0 0 8px #00ff66;
-        }
-
-        /* İçerik Alanı */
-        .container {
+            font-family: monospace;
+            text-align: center;
             padding: 20px;
         }
-
-        h1 { 
-            font-size: 32px; 
-            text-shadow: 0 0 10px #00ff66; 
-            margin-top: 30px;
+        .terminal-box {
+            border: 1px solid #00ff66;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            background: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.2);
         }
-
-        p { color: #aaaaaa; }
-
-        /* Müzik Çalar Kutusu */
-        .player { 
-            background: #181818; 
-            padding: 20px; 
-            border-radius: 8px; 
-            margin: 30px auto; 
-            max-width: 420px; 
-            border: 1px solid #00ff66; 
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
-        }
-
-        audio { 
-            width: 100%; 
-            margin-top: 15px; 
+        audio {
+            width: 100%;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <!-- MENÜ BAŞLANGICI -->
-    <nav>
-        <a href="#hakkimizda"> 
+    <h2>ParaziTR [ Terminal Radyo ]</h2>
 
- HAKKIMIZDA </a>
-
-        <a href="#iletisim">
- İLETİŞİM </a>
-
-    </nav>
-    <!-- MENÜ BİTİŞİ -->
-
-    <div class="container">
-        <h1>☢️ ParaziTR 🇹🇷</h1>
-        <p>Reklam Yok / Abone Yok / Sadece Eğlence</p>
-<!-- Radyo Terminal Paneli -->
-<div style="border: 1px solid #00ff66; padding: 20px; margin: 20px auto; max-width: 400px; background: #050505;">
-    <h3 id="song-title" style="color: #00ff66; margin-bottom: 5px;">Sistem Yükleniyor...</h3>
-    <p id="song-artist" style="color: #888; margin-top: 0;">ParaziT Radio</p>
-    <audio id="audio-player" controls style="width: 100%;"></audio>
-</div>
-
-<script>
-    fetch('playlist.json')
-        .then(response => response.json())
-        .then(songs => {
-            let currentIndex = 0;
-            const player = document.getElementById('audio-player');
-            const title = document.getElementById('song-title');
-            const artist = document.getElementById('song-artist');
-
-            function loadSong(index) {
-                title.innerText = songs[index].title;
-                artist.innerText = songs[index].artist;
-                player.src = songs[index].url;
-            }
-
-            // Şarkı bitince otomatik sonrakine geçiş
-            player.onended = () => {
-                currentIndex = (currentIndex + 1) % songs.length;
-                loadSong(currentIndex);
-                player.play();
-            };
-
-            if(songs.length > 0) {
-                loadSong(currentIndex);
-            }
-        });
-</script>
-           
-        </div>
+    <div class="terminal-box">
+        <h3 id="song-title" style="margin-bottom: 5px;">Sistem Yükleniyor...</h3>
+        <p id="song-artist" style="color: #888; margin-top: 0;">--</p>
+        
+        <audio id="audio-player" controls preload="auto"></audio>
     </div>
+
+    <script>
+        fetch('playlist.json?v=' + new Date().getTime())
+            .then(response => response.json())
+            .then(songs => {
+                let currentIndex = 0;
+                const player = document.getElementById('audio-player');
+                const title = document.getElementById('song-title');
+                const artist = document.getElementById('song-artist');
+
+                function loadSong(index) {
+                    title.innerText = songs[index].title;
+                    artist.innerText = songs[index].artist;
+                    player.src = songs[index].url;
+                    player.load();
+                }
+
+                player.onerror = () => {
+                    title.innerText = "❌ Dosya Bulunamadı!";
+                    artist.innerText = songs[currentIndex].url;
+                };
+
+                player.onended = () => {
+                    currentIndex = (currentIndex + 1) % songs.length;
+                    loadSong(currentIndex);
+                    player.play();
+                };
+
+                if(songs.length > 0) {
+                    loadSong(currentIndex);
+                }
+            })
+            .catch(err => {
+                document.getElementById('song-title').innerText = "❌ playlist.json Okunamadı!";
+            });
+    </script>
 
 </body>
 </html>
