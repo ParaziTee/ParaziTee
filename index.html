@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>☢️ ParaziTR 🇹🇷</title>
+    <title>ParaziTR - Terminal Radyo</title>
     <style>
         body {
             background-color: #050505;
@@ -24,53 +24,102 @@
             width: 100%;
             margin-top: 15px;
         }
+        .controls-box {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 5px;
+        }
+        .btn-term {
+            background: #050505;
+            color: #00ff66;
+            border: 1px solid #00ff66;
+            padding: 8px 12px;
+            font-family: monospace;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+            transition: 0.2s;
+        }
+        .btn-term:hover, .btn-term:active {
+            background: #00ff66;
+            color: #000;
+        }
     </style>
 </head>
 <body>
 
-    <h2>☢️ ParaziTR 🇹🇷</h2>
+    <h2>ParaziTR [ Terminal Radyo ]</h2>
 
     <div class="terminal-box">
         <h3 id="song-title" style="margin-bottom: 5px;">Sistem Yükleniyor...</h3>
         <p id="song-artist" style="color: #888; margin-top: 0;">--</p>
         
         <audio id="audio-player" controls preload="auto"></audio>
+
+        <!-- Butonlar Paneli -->
+        <div class="controls-box">
+            <button class="btn-term" onclick="prevSong()">[ &lt;&lt; GERİ ]</button>
+            <button class="btn-term" onclick="replaySong()">[ ↻ TEKRAR ]</button>
+            <button class="btn-term" onclick="nextSong()">[ İLERİ &gt;&gt; ]</button>
+        </div>
     </div>
 
     <script>
+        let songs = [];
+        let currentIndex = 0;
+        const player = document.getElementById('audio-player');
+        const title = document.getElementById('song-title');
+        const artist = document.getElementById('song-artist');
+
         fetch('playlist.json?v=' + new Date().getTime())
             .then(response => response.json())
-            .then(songs => {
-                let currentIndex = 0;
-                const player = document.getElementById('audio-player');
-                const title = document.getElementById('song-title');
-                const artist = document.getElementById('song-artist');
-
-                function loadSong(index) {
-                    title.innerText = songs[index].title;
-                    artist.innerText = songs[index].artist;
-                    player.src = songs[index].url;
-                    player.load();
-                }
-
-                player.onerror = () => {
-                    title.innerText = "❌ Dosya Bulunamadı!";
-                    artist.innerText = songs[currentIndex].url;
-                };
-
-                player.onended = () => {
-                    currentIndex = (currentIndex + 1) % songs.length;
-                    loadSong(currentIndex);
-                    player.play();
-                };
-
+            .then(data => {
+                songs = data;
                 if(songs.length > 0) {
                     loadSong(currentIndex);
                 }
             })
             .catch(err => {
-                document.getElementById('song-title').innerText = "❌ playlist.json Okunamadı!";
+                title.innerText = "❌ playlist.json Okunamadı!";
             });
+
+        function loadSong(index) {
+            if (songs.length === 0) return;
+            title.innerText = songs[index].title;
+            artist.innerText = songs[index].artist;
+            player.src = songs[index].url;
+            player.load();
+        }
+
+        // Buton Fonksiyonları
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % songs.length;
+            loadSong(currentIndex);
+            player.play();
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+            loadSong(currentIndex);
+            player.play();
+        }
+
+        function replaySong() {
+            player.currentTime = 0;
+            player.play();
+        }
+
+        // Şarkı bitince otomatik sonrakine geç
+        player.onended = () => {
+            nextSong();
+        };
+
+        // Hata kontrolü
+        player.onerror = () => {
+            title.innerText = "❌ Dosya Bulunamadı!";
+            artist.innerText = songs[currentIndex] ? songs[currentIndex].url : "";
+        };
     </script>
 
 </body>
