@@ -36,6 +36,11 @@
         .song-btn { background-color: #0d1a0d; border: 1px solid #27ae60; color: #2ecc71; padding: 10px; text-align: left; font-size: 0.8rem; border-radius: 3px; cursor: pointer; }
         .song-btn:active { background-color: #2ecc71; color: #000; }
         
+        /* Kategori Değiştirme Sekmeleri */
+        .tab-btn-row { display: flex; gap: 5px; margin-bottom: 10px; }
+        .tab-btn { flex: 1; background: #050805; border: 1px solid #2ecc71; color: #2ecc71; padding: 8px; font-size: 0.75rem; cursor: pointer; border-radius: 3px; font-weight: bold; }
+        .tab-btn.active { background: #2ecc71; color: #050805; }
+
         .input-field { width: 100%; background: #050805; border: 1px solid #2ecc71; color: #2ecc71; padding: 10px; margin-bottom: 8px; border-radius: 3px; font-family: 'Courier New', Courier, monospace; }
         .action-btn { width: 100%; background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 3px; font-family: 'Courier New', Courier, monospace; margin-bottom: 5px; }
         .action-btn:active { background-color: #2ecc71; color: #050805; }
@@ -88,15 +93,22 @@
     <!-- ANA EKRAN MENÜLERİ -->
     <div class="menu-list">
         
-        <!-- 1. KATEGORİ: ENES ALPER - SAKAT BIRAKIRIM -->
-        <button class="menu-btn" onclick="toggleSection('enes-panel')">
-            <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM ]</span>
+        <!-- TEK MÜZİK BAŞLIĞI -->
+        <button class="menu-btn" onclick="toggleSection('music-main-panel')">
+            <span>> MUSIC [ PLAYLISTS ]</span>
             <span>🎵</span>
         </button>
         
-        <div id="enes-panel" class="sub-panel">
-            <div class="player-box">
-                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">Enes Alper - Sakat Bırakırım Serisi</div>
+        <div id="music-main-panel" class="sub-panel">
+            <!-- Müzik Kategorileri Sekmesi -->
+            <div class="tab-btn-row">
+                <button id="tab-enes-btn" class="tab-btn active" onclick="switchMusicTab('enes')">Enes Alper</button>
+                <button id="tab-stalker-btn" class="tab-btn" onclick="switchMusicTab('stalker')">Stalker</button>
+            </div>
+
+            <!-- 1. KATEGORİ: ENES ALPER -->
+            <div id="enes-sub-content" class="player-box">
+                <div style="font-size: 0.8rem; font-weight: bold; color: #2ecc71;">Enes Alper - Sakat Bırakırım Serisi</div>
                 <div id="enes-now-playing" style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım Part 1</div>
                 
                 <audio id="enes-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
@@ -118,17 +130,10 @@
                     <button onclick="playSong('enes', 7)" class="song-btn">▶ Sakat Bırakırım Part 8</button>
                 </div>
             </div>
-        </div>
 
-        <!-- 2. KATEGORİ: STALKER - PANTER SERİSİ -->
-        <button class="menu-btn" onclick="toggleSection('stalker-panel')">
-            <span>> MUSIC [ STALKER - PANTER SERİSİ ]</span>
-            <span>🐆</span>
-        </button>
-
-        <div id="stalker-panel" class="sub-panel">
-            <div class="player-box">
-                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">Stalker - Panter Serisi</div>
+            <!-- 2. KATEGORİ: STALKER -->
+            <div id="stalker-sub-content" class="player-box" style="display: none;">
+                <div style="font-size: 0.8rem; font-weight: bold; color: #2ecc71;">Stalker - Panter Serisi</div>
                 <div id="stalker-now-playing" style="font-size: 0.75rem; color: #27ae60;">Stalker - Beyaz Panter</div>
                 
                 <audio id="stalker-player" controls preload="auto" src="./Stalker-Beyaz-Panter.mp3" style="width:100%; margin: 5px 0;"></audio>
@@ -148,13 +153,13 @@
             </div>
         </div>
 
-        <!-- 3. APK İndirme -->
+        <!-- APK İndirme -->
         <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
         </a>
 
-        <!-- 4. Çevrimiçi Durum -->
+        <!-- Çevrimiçi Durum -->
         <button class="menu-btn" onclick="toggleSection('online-panel')">
             <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
@@ -164,7 +169,7 @@
             <p><strong>Marka Sahibi:</strong> Enes Alper / ParaziTR ☢️</p>
         </div>
 
-        <!-- 5. Ayarlar / Hakkında -->
+        <!-- Ayarlar / Hakkında -->
         <button class="menu-btn" onclick="toggleSection('settings-panel')">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
@@ -177,7 +182,6 @@
     </div>
 
     <script>
-        // Enes Alper Playlist
         const enesPlaylist = [
             { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
             { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
@@ -189,7 +193,6 @@
             { src: "./Enes-alper-sakat-bırakırım-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
         ];
 
-        // Stalker Playlist (GitHub dosya isimlerinize uygun olarak ayarlandı)
         const stalkerPlaylist = [
             { src: "./Stalker-Beyaz-Panter.mp3", title: "Stalker - Beyaz Panter" },
             { src: "./Stalker-Kırmızı-Panter.mp3", title: "Stalker - Kırmızı Panter" },
@@ -208,6 +211,25 @@
         function toggleSidePanel() {
             var drawer = document.getElementById('side-drawer');
             drawer.classList.toggle('open');
+        }
+
+        function switchMusicTab(tab) {
+            var enesContent = document.getElementById('enes-sub-content');
+            var stalkerContent = document.getElementById('stalker-sub-content');
+            var enesBtn = document.getElementById('tab-enes-btn');
+            var stalkerBtn = document.getElementById('tab-stalker-btn');
+
+            if (tab === 'enes') {
+                enesContent.style.display = 'flex';
+                stalkerContent.style.display = 'none';
+                enesBtn.classList.add('active');
+                stalkerBtn.classList.remove('active');
+            } else {
+                enesContent.style.display = 'none';
+                stalkerContent.style.display = 'flex';
+                stalkerBtn.classList.add('active');
+                enesBtn.classList.remove('active');
+            }
         }
 
         function playSong(artist, index) {
