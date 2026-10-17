@@ -216,7 +216,57 @@
         document.getElementById('audio-player').addEventListener('ended', function() {
             nextSong();
         });
+        <script>
+        // GitHub depondaki GERÇEK dosya isimleri birebir entegre edildi:
+        const playlist = [
+            { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
+            { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
+            { src: "./Sakat-Bırakırım-3.mp3", title: "Enes Alper - Sakat Bırakırım Part 3" },
+            { src: "./Sakat-Bırakırım-4.mp3", title: "Enes Alper - Sakat Bırakırım Part 4" },
+            { src: "./Enes-alper-sakat-birakirim-5.mp3", title: "Enes Alper - Sakat Bırakırım Part 5" },
+            { src: "./Enes-alper-sakat-birakirim-6.mp3", title: "Enes Alper - Sakat Bırakırım Part 6" },
+            { src: "./Enes-alper-sakat-birakirim-7.mp3", title: "Enes Alper - Sakat Bırakırım Part 7" },
+            { src: "./Enes-alper-sakat-bırakırım-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
+        ];
+
+        let currentIndex = 0;
+
+        function toggleSection(id) {
+            var panel = document.getElementById(id);
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+        }
+
+        function playSongByIndex(index) {
+            currentIndex = index;
+            var player = document.getElementById('audio-player');
+            var nowPlaying = document.getElementById('now-playing');
+            player.src = playlist[currentIndex].src;
+            nowPlaying.innerText = playlist[currentIndex].title;
+            player.play();
+        }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            playSongByIndex(currentIndex);
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            playSongByIndex(currentIndex);
+        }
+
+        function replaySong() {
+            var player = document.getElementById('audio-player');
+            player.currentTime = 0;
+            player.play();
+        }
+
+        // Şarkı bittiğinde otomatik sonraki şarkıya geç
+        document.getElementById('audio-player').addEventListener('ended', function() {
+            nextSong();
+        });
     </script>
+
 
 </body>
 </html>
