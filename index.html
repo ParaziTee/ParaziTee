@@ -25,7 +25,7 @@
         .close-btn { background: none; border: 1px solid #e74c3c; color: #e74c3c; padding: 5px; cursor: pointer; text-align: center; font-weight: bold; border-radius: 3px; }
 
         .menu-list { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
-        .menu-btn { background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 15px 20px; text-align: left; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; text-decoration: none; box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); width: 100%; }
+        .menu-btn { background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 15px 20px; text-align: left; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; text-decoration: none; box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); width: 100%; }
         .menu-btn:active { background-color: #2ecc71; color: #050805; }
         
         .sub-panel { display: none; background-color: #080f08; border: 1px dashed #2ecc71; padding: 15px; margin-top: -10px; margin-bottom: 5px; border-radius: 4px; font-size: 0.8rem; line-height: 1.4; }
@@ -59,9 +59,8 @@
         <div class="section-title">🔑 SANAL KİMLİK & SERİ KOD</div>
         <div id="logged-out-view">
             <p style="font-size: 0.75rem; margin-bottom: 5px; color: #27ae60;">Sanal İsim (Nick) girin:</p>
-            <input type="text" id="sanal-isim-input" class="input-field" placeholder="" oninput="checkKurucuField()">
+            <input type="text" id="sanal-isim-input" class="input-field" placeholder="Örn: ParaziTR" oninput="checkKurucuField()">
             
-            <!-- Sadece ParaziTR yazıldığında açılan Şifre Kutusu -->
             <div id="kurucu-pass-box" style="display: none;">
                 <p style="font-size: 0.7rem; color: #f1c40f; margin-bottom: 4px;">☢️ Kurucu Şifresi Girin:</p>
                 <input type="password" id="kurucu-pass-input" class="input-field" placeholder="Şifre" style="border-color: #f1c40f;">
@@ -88,55 +87,84 @@
 
     <!-- ANA EKRAN MENÜLERİ -->
     <div class="menu-list">
-        <!-- 1. Müzik Paneli -->
-        <button class="menu-btn" onclick="toggleSection('music-panel')">
-            <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM Serisi]</span>
+        
+        <!-- 1. KATEGORİ: ENES ALPER - SAKAT BIRAKIRIM -->
+        <button class="menu-btn" onclick="toggleSection('enes-panel')">
+            <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM ]</span>
             <span>🎵</span>
         </button>
         
-        <div id="music-panel" class="sub-panel">
+        <div id="enes-panel" class="sub-panel">
             <div class="player-box">
-                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
-                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım Part 1</div>
+                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">Enes Alper - Sakat Bırakırım Serisi</div>
+                <div id="enes-now-playing" style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım Part 1</div>
                 
-                <audio id="audio-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
+                <audio id="enes-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
 
                 <div class="controls-row">
-                    <button class="ctrl-btn" onclick="prevSong()">⏮ Geri</button>
-                    <button class="ctrl-btn" onclick="replaySong()">🔁 Tekrarla</button>
-                    <button class="ctrl-btn" onclick="nextSong()">İleri ⏭</button>
+                    <button class="ctrl-btn" onclick="prevSong('enes')">⏮ Geri</button>
+                    <button class="ctrl-btn" onclick="replaySong('enes')">🔁 Tekrarla</button>
+                    <button class="ctrl-btn" onclick="nextSong('enes')">İleri ⏭</button>
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; margin-top: 5px;">
-                    <button onclick="playSongByIndex(0)" class="song-btn">▶ Sakat Bırakırım Part 1</button>
-                    <button onclick="playSongByIndex(1)" class="song-btn">▶ Sakat Bırakırım Part 2</button>
-                    <button onclick="playSongByIndex(2)" class="song-btn">▶ Sakat Bırakırım Part 3</button>
-                    <button onclick="playSongByIndex(3)" class="song-btn">▶ Sakat Bırakırım Part 4</button>
-                    <button onclick="playSongByIndex(4)" class="song-btn">▶ Sakat Bırakırım Part 5</button>
-                    <button onclick="playSongByIndex(5)" class="song-btn">▶ Sakat Bırakırım Part 6</button>
-                    <button onclick="playSongByIndex(6)" class="song-btn">▶ Sakat Bırakırım Part 7</button>
-                    <button onclick="playSongByIndex(7)" class="song-btn">▶ Sakat Bırakırım Part 8</button>
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; margin-top: 5px;">
+                    <button onclick="playSong('enes', 0)" class="song-btn">▶ Sakat Bırakırım Part 1</button>
+                    <button onclick="playSong('enes', 1)" class="song-btn">▶ Sakat Bırakırım Part 2</button>
+                    <button onclick="playSong('enes', 2)" class="song-btn">▶ Sakat Bırakırım Part 3</button>
+                    <button onclick="playSong('enes', 3)" class="song-btn">▶ Sakat Bırakırım Part 4</button>
+                    <button onclick="playSong('enes', 4)" class="song-btn">▶ Sakat Bırakırım Part 5</button>
+                    <button onclick="playSong('enes', 5)" class="song-btn">▶ Sakat Bırakırım Part 6</button>
+                    <button onclick="playSong('enes', 6)" class="song-btn">▶ Sakat Bırakırım Part 7</button>
+                    <button onclick="playSong('enes', 7)" class="song-btn">▶ Sakat Bırakırım Part 8</button>
                 </div>
             </div>
         </div>
 
-        <!-- 2. APK İndirme -->
+        <!-- 2. KATEGORİ: STALKER - PANTER SERİSİ -->
+        <button class="menu-btn" onclick="toggleSection('stalker-panel')">
+            <span>> MUSIC [ STALKER - PANTER SERİSİ ]</span>
+            <span>🐆</span>
+        </button>
+
+        <div id="stalker-panel" class="sub-panel">
+            <div class="player-box">
+                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">Stalker - Panter Serisi</div>
+                <div id="stalker-now-playing" style="font-size: 0.75rem; color: #27ae60;">Stalker - Beyaz Panter</div>
+                
+                <audio id="stalker-player" controls preload="auto" src="./Stalker-Beyaz-Panter.mp3" style="width:100%; margin: 5px 0;"></audio>
+
+                <div class="controls-row">
+                    <button class="ctrl-btn" onclick="prevSong('stalker')">⏮ Geri</button>
+                    <button class="ctrl-btn" onclick="replaySong('stalker')">🔁 Tekrarla</button>
+                    <button class="ctrl-btn" onclick="nextSong('stalker')">İleri ⏭</button>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; margin-top: 5px;">
+                    <button onclick="playSong('stalker', 0)" class="song-btn">▶ Stalker - Beyaz Panter</button>
+                    <button onclick="playSong('stalker', 1)" class="song-btn">▶ Stalker - Kırmızı Panter</button>
+                    <button onclick="playSong('stalker', 2)" class="song-btn">▶ Stalker - Pembe Panter</button>
+                    <button onclick="playSong('stalker', 3)" class="song-btn">▶ Stalker - Sarı Panter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. APK İndirme -->
         <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
         </a>
 
-        <!-- 3. Çevrimiçi Durum -->
+        <!-- 4. Çevrimiçi Durum -->
         <button class="menu-btn" onclick="toggleSection('online-panel')">
             <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
         </button>
         <div id="online-panel" class="sub-panel">
             <p><strong>Durum:</strong> Aktif / Online 🟢</p>
-            <p><strong> Kurucu:</strong> ParaziTR ☢️</p>
+            <p><strong>Marka Sahibi:</strong> Enes Alper / ParaziTR ☢️</p>
         </div>
 
-        <!-- 4. Ayarlar / Hakkında -->
+        <!-- 5. Ayarlar / Hakkında -->
         <button class="menu-btn" onclick="toggleSection('settings-panel')">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
@@ -144,12 +172,13 @@
         <div id="settings-panel" class="sub-panel">
             <p><strong>ParaziTR 1.0</strong></p>
             <p>Nükleer / Green UI Konsepti.</p>
-            <p style="margin-top: 5px; color: #27ae60;">> ParaziTR 2026 </p>
+            <p style="margin-top: 5px; color: #27ae60;">> Tüm hakları ParaziTR'ye aittir.</p>
         </div>
     </div>
 
     <script>
-        const playlist = [
+        // Enes Alper Playlist
+        const enesPlaylist = [
             { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
             { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
             { src: "./Sakat-Bırakırım-3.mp3", title: "Enes Alper - Sakat Bırakırım Part 3" },
@@ -160,7 +189,16 @@
             { src: "./Enes-alper-sakat-bırakırım-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
         ];
 
-        let currentIndex = 0;
+        // Stalker Playlist (GitHub dosya isimlerinize uygun olarak ayarlandı)
+        const stalkerPlaylist = [
+            { src: "./Stalker-Beyaz-Panter.mp3", title: "Stalker - Beyaz Panter" },
+            { src: "./Stalker-Kırmızı-Panter.mp3", title: "Stalker - Kırmızı Panter" },
+            { src: "./Stalker-Pembe-Panter.mp3", title: "Stalker - Pembe Panter" },
+            { src: "./Stalker-Sarı-Panter.mp3", title: "Stalker - Sarı Panter" }
+        ];
+
+        let enesIndex = 0;
+        let stalkerIndex = 0;
 
         function toggleSection(id) {
             var panel = document.getElementById(id);
@@ -172,36 +210,55 @@
             drawer.classList.toggle('open');
         }
 
-        function playSongByIndex(index) {
-            currentIndex = index;
-            var player = document.getElementById('audio-player');
-            var nowPlaying = document.getElementById('now-playing');
-            player.src = playlist[currentIndex].src;
-            nowPlaying.innerText = playlist[currentIndex].title;
-            player.play();
+        function playSong(artist, index) {
+            if (artist === 'enes') {
+                document.getElementById('stalker-player').pause();
+                enesIndex = index;
+                var player = document.getElementById('enes-player');
+                var nowPlaying = document.getElementById('enes-now-playing');
+                player.src = enesPlaylist[enesIndex].src;
+                nowPlaying.innerText = enesPlaylist[enesIndex].title;
+                player.play();
+            } else {
+                document.getElementById('enes-player').pause();
+                stalkerIndex = index;
+                var player = document.getElementById('stalker-player');
+                var nowPlaying = document.getElementById('stalker-now-playing');
+                player.src = stalkerPlaylist[stalkerIndex].src;
+                nowPlaying.innerText = stalkerPlaylist[stalkerIndex].title;
+                player.play();
+            }
         }
 
-        function nextSong() {
-            currentIndex = (currentIndex + 1) % playlist.length;
-            playSongByIndex(currentIndex);
+        function nextSong(artist) {
+            if (artist === 'enes') {
+                enesIndex = (enesIndex + 1) % enesPlaylist.length;
+                playSong('enes', enesIndex);
+            } else {
+                stalkerIndex = (stalkerIndex + 1) % stalkerPlaylist.length;
+                playSong('stalker', stalkerIndex);
+            }
         }
 
-        function prevSong() {
-            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-            playSongByIndex(currentIndex);
+        function prevSong(artist) {
+            if (artist === 'enes') {
+                enesIndex = (enesIndex - 1 + enesPlaylist.length) % enesPlaylist.length;
+                playSong('enes', enesIndex);
+            } else {
+                stalkerIndex = (stalkerIndex - 1 + stalkerPlaylist.length) % stalkerPlaylist.length;
+                playSong('stalker', stalkerIndex);
+            }
         }
 
-        function replaySong() {
-            var player = document.getElementById('audio-player');
+        function replaySong(artist) {
+            var player = (artist === 'enes') ? document.getElementById('enes-player') : document.getElementById('stalker-player');
             player.currentTime = 0;
             player.play();
         }
 
-        document.getElementById('audio-player').addEventListener('ended', function() {
-            nextSong();
-        });
+        document.getElementById('enes-player').addEventListener('ended', function() { nextSong('enes'); });
+        document.getElementById('stalker-player').addEventListener('ended', function() { nextSong('stalker'); });
 
-        // ParaziTR yazılınca Şifre Alanını Göster
         function checkKurucuField() {
             var inputVal = document.getElementById('sanal-isim-input').value.trim();
             var passBox = document.getElementById('kurucu-pass-box');
@@ -212,7 +269,6 @@
             }
         }
 
-        // KURUCU ŞİFRELİ VE SANAL KİMLİK MANTIĞI
         function generateSanalKimlik() {
             var sanalIsim = document.getElementById('sanal-isim-input').value.trim();
             if(sanalIsim === "") {
@@ -221,8 +277,6 @@
             }
             
             var generatedKey = "";
-            
-            // Kurucu Giriş Kontrolü
             if (sanalIsim.toLowerCase() === "parazitr") {
                 var passVal = document.getElementById('kurucu-pass-input').value;
                 if (passVal !== "Parazite0001") {
@@ -260,7 +314,6 @@
                 document.getElementById('display-user').innerText = savedName;
                 document.getElementById('display-key').innerText = savedKey;
 
-                // Kurucu Rozeti Kontrolü
                 if (savedName.toLowerCase() === "parazitr") {
                     document.getElementById('display-badge').innerHTML = "<span class='badge-owner'>☢️ KURUCU</span>";
                     document.getElementById('display-role').innerText = "SİSTEM KURUCUSU ☢️";
