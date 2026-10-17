@@ -5,120 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PARAZITR 1.0</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        body {
-            background-color: #050805;
-            color: #2ecc71;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(46, 204, 113, 0.6);
-        }
-        .menu-list {
-            width: 100%;
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .menu-btn {
-            background-color: #0b140b;
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
-            padding: 15px 20px;
-            text-align: left;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 4px;
-            text-decoration: none;
-            box-shadow: 0 0 5px rgba(46, 204, 113, 0.2);
-        }
-        .menu-btn:active {
-            background-color: #2ecc71;
-            color: #050805;
-        }
-        .sub-panel {
-            display: none;
-            background-color: #080f08;
-            border: 1px dashed #2ecc71;
-            padding: 15px;
-            margin-top: -10px;
-            margin-bottom: 5px;
-            border-radius: 4px;
-        }
-        .player-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .controls-row {
-            display: flex;
-            gap: 5px;
-            justify-content: space-between;
-        }
-        .ctrl-btn {
-            flex: 1;
-            background-color: #0d1a0d;
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
-            padding: 8px 5px;
-            font-size: 0.75rem;
-            border-radius: 3px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-        }
-        .ctrl-btn:active {
-            background-color: #2ecc71;
-            color: #000;
-        }
-        .song-btn {
-            background-color: #0d1a0d;
-            border: 1px solid #27ae60;
-            color: #2ecc71;
-            padding: 10px;
-            text-align: left;
-            font-size: 0.8rem;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .song-btn:active {
-            background-color: #2ecc71;
-            color: #000;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: #050805; color: #2ecc71; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .header { text-align: center; margin-bottom: 25px; font-size: 1.4rem; font-weight: bold; text-shadow: 0 0 10px rgba(46, 204, 113, 0.6); }
+        .menu-list { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        .menu-btn { background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 15px 20px; text-align: left; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; text-decoration: none; box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); }
+        .menu-btn:active { background-color: #2ecc71; color: #050805; }
+        .sub-panel { display: none; background-color: #080f08; border: 1px dashed #2ecc71; padding: 15px; margin-top: -10px; margin-bottom: 5px; border-radius: 4px; }
+        .player-box { display: flex; flex-direction: column; gap: 10px; }
+        .controls-row { display: flex; gap: 5px; justify-content: space-between; }
+        .ctrl-btn { flex: 1; background-color: #0d1a0d; border: 1px solid #2ecc71; color: #2ecc71; padding: 8px 5px; font-size: 0.75rem; border-radius: 3px; cursor: pointer; text-align: center; font-weight: bold; }
+        .ctrl-btn:active { background-color: #2ecc71; color: #000; }
+        .song-btn { background-color: #0d1a0d; border: 1px solid #27ae60; color: #2ecc71; padding: 10px; text-align: left; font-size: 0.8rem; border-radius: 3px; cursor: pointer; }
+        .song-btn:active { background-color: #2ecc71; color: #000; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        ☢️ PARAZITR 1.0 ☢️
-    </div>
+    <div class="header">☢️ PARAZITR 1.0 ☢️</div>
 
     <div class="menu-list">
-        
-        <!-- Müzik Paneli Butonu -->
         <button class="menu-btn" onclick="toggleSection('music-panel')">
             <span>> MUSIC [ ENES ALPER - PLAYLIST ]</span>
             <span>🎵</span>
         </button>
         
-        <!-- Müzik Paneli İçeriği -->
         <div id="music-panel" class="sub-panel">
             <div class="player-box">
                 <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
@@ -126,14 +37,12 @@
                 
                 <audio id="audio-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
 
-                <!-- İleri - Geri - Replay Kontrol Tuşları -->
                 <div class="controls-row">
                     <button class="ctrl-btn" onclick="prevSong()">⏮ Geri</button>
                     <button class="ctrl-btn" onclick="replaySong()">🔁 Tekrarla</button>
                     <button class="ctrl-btn" onclick="nextSong()">İleri ⏭</button>
                 </div>
 
-                <!-- 1'den 8'e Tüm Şarkı Butonları -->
                 <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; margin-top: 5px;">
                     <button onclick="playSongByIndex(0)" class="song-btn">▶ Sakat Bırakırım Part 1</button>
                     <button onclick="playSongByIndex(1)" class="song-btn">▶ Sakat Bırakırım Part 2</button>
@@ -147,24 +56,20 @@
             </div>
         </div>
 
-        <!-- APK İndirme Butonu -->
         <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
         </a>
 
-        <!-- Sistem Durumu -->
         <div class="menu-btn">
             <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
         </div>
 
-        <!-- Ayarlar -->
         <div class="menu-btn">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
         </div>
-
     </div>
 
     <script>
@@ -215,6 +120,5 @@
             nextSong();
         });
     </script>
-
 </body>
 </html>
