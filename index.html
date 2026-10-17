@@ -55,6 +55,7 @@
         <button class="menu-toggle-btn" onclick="toggleSidePanel()">☰ PANEL</button>
     </div>
 
+    <!-- YAN MENÜ -->
     <div id="side-drawer" class="side-panel">
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         
@@ -90,13 +91,16 @@
         <button class="action-btn" style="font-size:0.75rem;" onclick="alert('Mesaj sistem ağına gönderildi!')">GÖNDER</button>
     </div>
 
+    <!-- ANA EKRAN -->
     <div class="menu-list">
         
+        <!-- MÜZİK ANA BAŞLIĞI -->
         <button class="menu-btn" onclick="toggleSection('music-main-panel')">
             <span>> MUSIC [ PLAYLISTS ]</span>
             <span>🎵</span>
         </button>
         
+        <!-- MÜZİK ALT KATEGORİLERİ -->
         <div id="music-main-panel" class="sub-panel" style="padding: 10px; background: transparent; border: none;">
             
             <button class="menu-btn" style="margin-bottom: 10px;" onclick="toggleSection('enes-sub-content')">
@@ -157,11 +161,13 @@
 
         </div>
 
+        <!-- APK İndirme -->
         <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk" onclick="trackDownload()">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
         </a>
 
+        <!-- Çevrimiçi Durum -->
         <button class="menu-btn" onclick="toggleSection('online-panel')">
             <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
@@ -171,6 +177,7 @@
             <p><strong>Marka Sahibi:</strong> Enes Alper / ParaziTR ☢️</p>
         </div>
 
+        <!-- Ayarlar -->
         <button class="menu-btn" onclick="toggleSection('settings-panel')">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
@@ -181,6 +188,7 @@
             <p style="margin-top: 5px; color: #2ecc71;">> Tüm hakları ParaziTR'ye aittir.</p>
         </div>
 
+        <!-- YÖNETİM PANELİ (Sadece Kurucu) -->
         <div id="admin-panel-wrapper" style="display: none;">
             <button class="menu-btn admin-panel-btn" onclick="toggleSection('admin-panel-content')">
                 <span>> YÖNETİM PANELİ ☢️</span>
@@ -195,6 +203,7 @@
         </div>
 
     </div>
+
     <script>
         function initStats() {
             let visits = localStorage.getItem('parazitr_visits') || 0;
@@ -296,4 +305,107 @@
             } else {
                 stalkerIndex = (stalkerIndex + 1) % stalkerPlaylist.length;
                 playSong('stalker', stalkerIndex);
+            }
+        }
+
+        function prevSong(artist) {
+            if (artist === 'enes') {
+                enesIndex = (enesIndex - 1 + enesPlaylist.length) % enesPlaylist.length;
+                playSong('enes', enesIndex);
+            } else {
+                stalkerIndex = (stalkerIndex - 1 + stalkerPlaylist.length) % stalkerPlaylist.length;
+                playSong('stalker', stalkerIndex);
+            }
+        }
+
+        function replaySong(artist) {
+            var player = (artist === 'enes') ? document.getElementById('enes-player') : document.getElementById('stalker-player');
+            player.currentTime = 0;
+            player.play();
+        }
+
+        document.getElementById('enes-player').addEventListener('ended', function() { nextSong('enes'); });
+        document.getElementById('stalker-player').addEventListener('ended', function() { nextSong('stalker'); });
+
+        function checkKurucuField() {
+            var inputVal = document.getElementById('sanal-isim-input').value.trim();
+            var passBox = document.getElementById('kurucu-pass-box');
+            if (inputVal.toLowerCase() === "parazitr") {
+                passBox.style.display = "block";
+            } else {
+                passBox.style.display = "none";
+            }
+        }
+
+        function generateSanalKimlik() {
+            var sanalIsim = document.getElementById('sanal-isim-input').value.trim();
+            if(sanalIsim === "") {
+                alert("Lütfen geçerli bir Sanal İsim girin!");
+                return;
+            }
+            
+            var generatedKey = "";
+            if (sanalIsim.toLowerCase() === "parazitr") {
+                var passVal = document.getElementById('kurucu-pass-input').value;
+                if (passVal !== "Parazite0001") {
+                    alert("HATALI KURUCU ŞİFRESİ! Erişim engellendi.");
+                    return;
+                }
+                generatedKey = "PRZ-ADMIN-01 ☢️";
+            } else {
+                var randomNum = Math.floor(1000 + Math.random() * 9000);
+                var randomChar = Math.random().toString(36).substring(2, 4).toUpperCase();
+                generatedKey = "PRZ-" + randomNum + "-" + randomChar;
+            }
+
+            localStorage.setItem('parazitr_sanal_name', sanalIsim);
+            localStorage.setItem('parazitr_sanal_key', generatedKey);
+            checkSanalKimlik();
+        }
+
+        function logoutSanalKimlik() {
+            localStorage.removeItem('parazitr_sanal_name');
+            localStorage.removeItem('parazitr_sanal_key');
+            document.getElementById('sanal-isim-input').value = "";
+            document.getElementById('kurucu-pass-input').value = "";
+            document.getElementById('kurucu-pass-box').style.display = "none";
+            checkSanalKimlik();
+        }
+
+        function checkSanalKimlik() {
+            var savedName = localStorage.getItem('parazitr_sanal_name');
+            var savedKey = localStorage.getItem('parazitr_sanal_key');
+            var adminWrapper = document.getElementById('admin-panel-wrapper');
+            
+            if(savedName && savedKey) {
+                document.getElementById('logged-out-view').style.display = 'none';
+                document.getElementById('logged-in-view').style.display = 'block';
+                document.getElementById('display-user').innerText = savedName;
+                document.getElementById('display-key').innerText = savedKey;
+
+                if (savedName.toLowerCase() === "parazitr") {
+                    document.getElementById('display-badge').innerHTML = "<span class='badge-owner'>☢️ KURUCU</span>";
+                    document.getElementById('display-role').innerText = "SİSTEM KURUCUSU ☢️";
+                    document.getElementById('display-role').style.color = "#f1c40f";
+                    adminWrapper.style.display = 'block';
+                } else {
+                    document.getElementById('display-badge').innerText = "🟢";
+                    document.getElementById('display-role').innerText = "Standart Üye";
+                    document.getElementById('display-role').style.color = "#2ecc71";
+                    adminWrapper.style.display = 'none';
+                }
+            } else {
+                document.getElementById('logged-out-view').style.display = 'block';
+                document.getElementById('logged-in-view').style.display = 'none';
+                adminWrapper.style.display = 'none';
+            }
+        }
+
+        window.onload = function() {
+            initStats();
+            checkSanalKimlik();
+        };
+    </script>
+</body>
+</html>
  
