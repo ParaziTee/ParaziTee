@@ -155,7 +155,31 @@
                         <button onclick="playSong('stalker', 1)" class="song-btn">▶ Stalker - Kırmızı Panter</button>
                         <button onclick="playSong('stalker', 2)" class="song-btn">▶ Stalker - Pembe Panter</button>
                         <button onclick="playSong('stalker', 3)" class="song-btn">▶ Stalker - Sarı Panter</button>
+            <!-- 3. STALKER - BİRİ FAME Mİ DEDİ SERİSİ -->
+            <button class="menu-btn" style="margin-top: 10px;" onclick="toggleSection('fame-sub-content')">
+                <span>> MUSIC [ STALKER - BİRİ FAME Mİ DEDİ SERİSİ ]</span>
+                <span>🎙️</span>
+            </button>
+            <div id="fame-sub-content" class="sub-panel">
+                <div class="player-box">
+                    <div style="font-size: 0.8rem; font-weight: bold; color: #2ecc71;">Stalker - Biri Fame mi Dedi Serisi</div>
+                    <div id="fame-now-playing" style="font-size: 0.75rem; color: #27ae60;">Stalker - Biri Fame mi Dedi Part 1</div>
+                    
+                    <audio id="fame-player" controls preload="auto" src="./Stalker-Biri-Fame-mi-Dedi-1.mp3" style="width:100%; margin: 5px 0;"></audio>
+
+                    <div class="controls-row">
+                        <button class="ctrl-btn" onclick="prevSong('fame')">⏮ Geri</button>
+                        <button class="ctrl-btn" onclick="replaySong('fame')">🔁 Tekrarla</button>
+                        <button class="ctrl-btn" onclick="nextSong('fame')">İleri ⏭</button>
                     </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; margin-top: 5px;">
+                        <button onclick="playSong('fame', 0)" class="song-btn">▶ Biri Fame mi Dedi Part 1</button>
+                        <button onclick="playSong('fame', 1)" class="song-btn">▶ Biri Fame mi Dedi Part 2</button>
+                        <button onclick="playSong('fame', 2)" class="song-btn">▶ Biri Fame mi Dedi Part 3</button>
+                        <button onclick="playSong('fame', 3)" class="song-btn">▶ Biri Fame mi Dedi Part 4</button>
+                        <button onclick="playSong('fame', 4)" class="song-btn">▶ Biri Fame mi Dedi Part 5</button>
+                     </div>
                 </div>
             </div>
 
