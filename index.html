@@ -9,9 +9,9 @@
         body { background-color: #050805; color: #2ecc71; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .header { text-align: center; margin-bottom: 25px; font-size: 1.4rem; font-weight: bold; text-shadow: 0 0 10px rgba(46, 204, 113, 0.6); }
         .menu-list { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
-        .menu-btn { background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 15px 20px; text-align: left; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; text-decoration: none; box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); }
+        .menu-btn { background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 15px 20px; text-align: left; font-size: 0.9rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; text-decoration: none; box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); width: 100%; }
         .menu-btn:active { background-color: #2ecc71; color: #050805; }
-        .sub-panel { display: none; background-color: #080f08; border: 1px dashed #2ecc71; padding: 15px; margin-top: -10px; margin-bottom: 5px; border-radius: 4px; }
+        .sub-panel { display: none; background-color: #080f08; border: 1px dashed #2ecc71; padding: 15px; margin-top: -10px; margin-bottom: 5px; border-radius: 4px; font-size: 0.8rem; line-height: 1.4; }
         .player-box { display: flex; flex-direction: column; gap: 10px; }
         .controls-row { display: flex; gap: 5px; justify-content: space-between; }
         .ctrl-btn { flex: 1; background-color: #0d1a0d; border: 1px solid #2ecc71; color: #2ecc71; padding: 8px 5px; font-size: 0.75rem; border-radius: 3px; cursor: pointer; text-align: center; font-weight: bold; }
@@ -22,11 +22,12 @@
 </head>
 <body>
 
-    <div class="header">☢️ ParaziTR DEMO ☢️</div>
+    <div class="header">☢️ PARAZITR 1.0 ☢️</div>
 
     <div class="menu-list">
+        <!-- Müzik Paneli -->
         <button class="menu-btn" onclick="toggleSection('music-panel')">
-            <span>> MUSIC [ ENES ALPER - Sakat Bırakırım Serisi ]</span>
+            <span>> MUSIC [ ENES ALPER - PLAYLIST ]</span>
             <span>🎵</span>
         </button>
         
@@ -56,19 +57,33 @@
             </div>
         </div>
 
+        <!-- APK İndirme -->
         <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
         </a>
 
-        <div class="menu-btn">
+        <!-- Çevrimiçi Durum Butonu -->
+        <button class="menu-btn" onclick="toggleSection('online-panel')">
             <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
+        </button>
+        <div id="online-panel" class="sub-panel">
+            <p><strong>Durum:</strong> Aktif / Online 🟢</p>
+            <p><strong>Sunucu:</strong> GitHub Pages Node</p>
+            <p><strong>Proje Sürümü:</strong> v1.0 Stabil</p>
         </div>
 
-        <div class="menu-btn">
+        <!-- Ayarlar / Hakkında Butonu -->
+        <button class="menu-btn" onclick="toggleSection('settings-panel')">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
+        </button>
+        <div id="settings-panel" class="sub-panel">
+            <p><strong>ParaziTR 1.0</strong></p>
+            <p>Nükleer / Green UI Konseptiyle geliştirilmiştir.</p>
+            <p>Tasarım & Altyapı: Enes Alper Projesi özel sürümüdür.</p>
+            <p style="margin-top: 5px; color: #27ae60;">> Tüm hakları saklıdır.</p>
         </div>
     </div>
 
