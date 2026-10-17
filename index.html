@@ -413,6 +413,51 @@
             initStats();
             checkSanalKimlik();
         };
+        // BÜTÜN SİTE RENGİNİ ANINDA VE KESİN DEĞİŞTİREN FONKSİYON
+        function changeTheme(themeName) {
+            var color = "#2ecc71"; // Varsayılan Yeşil
+            var bg = "#050805";
+            var panelBg = "#080f08";
+
+            if (themeName === 'red') {
+                color = "#e74c3c"; // Nükleer Kırmızı
+                bg = "#0a0303";
+                panelBg = "#120505";
+            } else if (themeName === 'blue') {
+                color = "#00f3ff"; // Hacker Cyan
+                bg = "#03080a";
+                panelBg = "#050d12";
+            }
+
+            // Body Arka Planı ve Yazı Renkleri
+            document.body.style.backgroundColor = bg;
+            document.body.style.color = color;
+
+            // Bütün Menü Butonları, Alt Paneller ve Kutular
+            var elements = document.querySelectorAll('.menu-btn, .sub-panel, .input-field, .action-btn, .key-box, .ctrl-btn, .song-btn, .side-panel, .header, .section-title, .menu-toggle-btn');
+            elements.forEach(function(el) {
+                if (!el.classList.contains('admin-panel-btn') && !el.classList.contains('admin-panel-box')) {
+                    el.style.borderColor = color;
+                    el.style.color = color;
+                }
+            });
+
+            // Yan menü arka planı
+            var sidePanel = document.getElementById('side-drawer');
+            if (sidePanel) sidePanel.style.backgroundColor = panelBg;
+
+            // Tercihi Hafızaya Kaydet
+            localStorage.setItem('parazitr_theme', themeName);
+        }
+
+        // Sayfa Açıldığında Kayıtlı Temayı Yükle
+        window.addEventListener('DOMContentLoaded', function() {
+            var savedTheme = localStorage.getItem('parazitr_theme');
+            if (savedTheme) {
+                changeTheme(savedTheme);
+            }
+        });
+
     </script>
 </body>
 </html>
