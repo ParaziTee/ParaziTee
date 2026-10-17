@@ -230,7 +230,7 @@
         </div>
 
     </div>
-    <script>
+        <script>
         // İstatistik ve Sayaç Mantığı
         function initStats() {
             let visits = localStorage.getItem('parazitr_visits') || 0;
@@ -276,4 +276,233 @@
         }
 
         function fallbackCopyText(text) {
-            var textArea = document.createElement("
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) showCopyAlert();
+            } catch (err) {}
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyAlert() {
+            var alertBox = document.getElementById('copy-alert');
+            if(alertBox) {
+                alertBox.style.display = 'block';
+                setTimeout(function() { alertBox.style.display = 'none'; }, 2000);
+            }
+        }
+
+        // Çalma Listeleri
+        const enesPlaylist = [
+            { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
+            { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
+            { src: "./Sakat-Bırakırım-3.mp3", title: "Enes Alper - Sakat Bırakırım Part 3" },
+            { src: "./Sakat-Bırakırım-4.mp3", title: "Enes Alper - Sakat Bırakırım Part 4" },
+            { src: "./Enes-alper-sakat-birakirim-5.mp3", title: "Enes Alper - Sakat Bırakırım Part 5" },
+            { src: "./Enes-alper-sakat-birakirim-6.mp3", title: "Enes Alper - Sakat Bırakırım Part 6" },
+            { src: "./Enes-alper-sakat-birakirim-7.mp3", title: "Enes Alper - Sakat Bırakırım Part 7" },
+            { src: "./Enes-alper-sakat-bırakırım-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
+        ];
+
+        const stalkerPlaylist = [
+            { src: "./Stalker-Beyaz-Panter.mp3", title: "Stalker - Beyaz Panter" },
+            { src: "./Stalker-Kırmızı-Panter.mp3", title: "Stalker - Kırmızı Panter" },
+            { src: "./Stalker-Pembe-Panter.mp3", title: "Stalker - Pembe Panter" },
+            { src: "./Stalker-Sarı-Panter.mp3", title: "Stalker - Sarı Panter" }
+        ];
+
+        const famePlaylist = [
+            { src: "./Stalker-Biri-Fame-mi-Dedi-1.mp3", title: "Stalker - Biri Fame mi Dedi Part 1" },
+            { src: "./Stalker-Biri-Fame-mi-Dedi-2.mp3", title: "Stalker - Biri Fame mi Dedi Part 2" },
+            { src: "./Stalker-Biri-Fame-mi-Dedi-3.mp3", title: "Stalker - Biri Fame mi Dedi Part 3" },
+            { src: "./Stalker-Biri-Fame-mi-Dedi-4.mp3", title: "Stalker - Biri Fame mi Dedi Part 4" },
+            { src: "./Stallker-Biri-Fame-mi-Dedi-5.mp3", title: "Stalker - Biri Fame mi Dedi Part 5" }
+        ];
+
+        let enesIndex = 0;
+        let stalkerIndex = 0;
+        let fameIndex = 0;
+
+        function toggleSection(id) {
+            var panel = document.getElementById(id);
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+        }
+
+        function toggleSidePanel() {
+            var drawer = document.getElementById('side-drawer');
+            drawer.classList.toggle('open');
+        }
+
+        function playSong(artist, index) {
+            var enesP = document.getElementById('enes-player');
+            var stalkerP = document.getElementById('stalker-player');
+            var fameP = document.getElementById('fame-player');
+
+            if(enesP) enesP.pause();
+            if(stalkerP) stalkerP.pause();
+            if(fameP) fameP.pause();
+
+            if (artist === 'enes') {
+                enesIndex = index;
+                enesP.src = enesPlaylist[enesIndex].src;
+                document.getElementById('enes-now-playing').innerText = enesPlaylist[enesIndex].title;
+                enesP.play();
+            } else if (artist === 'stalker') {
+                stalkerIndex = index;
+                stalkerP.src = stalkerPlaylist[stalkerIndex].src;
+                document.getElementById('stalker-now-playing').innerText = stalkerPlaylist[stalkerIndex].title;
+                stalkerP.play();
+            } else if (artist === 'fame') {
+                fameIndex = index;
+                fameP.src = famePlaylist[fameIndex].src;
+                document.getElementById('fame-now-playing').innerText = famePlaylist[fameIndex].title;
+                fameP.play();
+            }
+        }
+
+        function nextSong(artist) {
+            if (artist === 'enes') { enesIndex = (enesIndex + 1) % enesPlaylist.length; playSong('enes', enesIndex); }
+            else if (artist === 'stalker') { stalkerIndex = (stalkerIndex + 1) % stalkerPlaylist.length; playSong('stalker', stalkerIndex); }
+            else if (artist === 'fame') { fameIndex = (fameIndex + 1) % famePlaylist.length; playSong('fame', fameIndex); }
+        }
+
+        function prevSong(artist) {
+            if (artist === 'enes') { enesIndex = (enesIndex - 1 + enesPlaylist.length) % enesPlaylist.length; playSong('enes', enesIndex); }
+            else if (artist === 'stalker') { stalkerIndex = (stalkerIndex - 1 + stalkerPlaylist.length) % stalkerPlaylist.length; playSong('stalker', stalkerIndex); }
+            else if (artist === 'fame') { fameIndex = (fameIndex - 1 + famePlaylist.length) % famePlaylist.length; playSong('fame', fameIndex); }
+        }
+
+        function replaySong(artist) {
+            var player;
+            if (artist === 'enes') player = document.getElementById('enes-player');
+            else if (artist === 'stalker') player = document.getElementById('stalker-player');
+            else if (artist === 'fame') player = document.getElementById('fame-player');
+            if(player) { player.currentTime = 0; player.play(); }
+        }
+
+        document.getElementById('enes-player').addEventListener('ended', function() { nextSong('enes'); });
+        document.getElementById('stalker-player').addEventListener('ended', function() { nextSong('stalker'); });
+        document.getElementById('fame-player').addEventListener('ended', function() { nextSong('fame'); });
+
+        // Kurucu Yetki Kontrolü
+        function checkKurucuField() {
+            var inputVal = document.getElementById('sanal-isim-input').value.trim();
+            var passBox = document.getElementById('kurucu-pass-box');
+            if (inputVal.toLowerCase() === "parazitr") {
+                passBox.style.display = "block";
+            } else {
+                passBox.style.display = "none";
+            }
+        }
+
+        function generateSanalKimlik() {
+            var sanalIsim = document.getElementById('sanal-isim-input').value.trim();
+            if(sanalIsim === "") {
+                alert("Lütfen geçerli bir Sanal İsim girin!");
+                return;
+            }
+            
+            var generatedKey = "";
+            if (sanalIsim.toLowerCase() === "parazitr") {
+                var passVal = document.getElementById('kurucu-pass-input').value;
+                if (passVal !== "Parazite0001") {
+                    alert("HATALI KURUCU ŞİFRESİ! Erişim engellendi.");
+                    return;
+                }
+                generatedKey = "PRZ-ADMIN-01 ☢️";
+            } else {
+                var randomNum = Math.floor(1000 + Math.random() * 9000);
+                var randomChar = Math.random().toString(36).substring(2, 4).toUpperCase();
+                generatedKey = "PRZ-" + randomNum + "-" + randomChar;
+            }
+
+            localStorage.setItem('parazitr_sanal_name', sanalIsim);
+            localStorage.setItem('parazitr_sanal_key', generatedKey);
+            checkSanalKimlik();
+        }
+
+        function logoutSanalKimlik() {
+            localStorage.removeItem('parazitr_sanal_name');
+            localStorage.removeItem('parazitr_sanal_key');
+            document.getElementById('sanal-isim-input').value = "";
+            document.getElementById('kurucu-pass-input').value = "";
+            document.getElementById('kurucu-pass-box').style.display = "none";
+            checkSanalKimlik();
+        }
+
+        function checkSanalKimlik() {
+            var savedName = localStorage.getItem('parazitr_sanal_name');
+            var savedKey = localStorage.getItem('parazitr_sanal_key');
+            var adminWrapper = document.getElementById('admin-panel-wrapper');
+            
+            if(savedName && savedKey) {
+                document.getElementById('logged-out-view').style.display = 'none';
+                document.getElementById('logged-in-view').style.display = 'block';
+                document.getElementById('display-user').innerText = savedName;
+                document.getElementById('display-key').innerText = savedKey;
+
+                if (savedName.toLowerCase() === "parazitr") {
+                    document.getElementById('display-badge').innerHTML = "<span class='badge-owner'>☢️ KURUCU</span>";
+                    document.getElementById('display-role').innerText = "SİSTEM KURUCUSU ☢️";
+                    document.getElementById('display-role').style.color = "#f1c40f";
+                    adminWrapper.style.display = 'block';
+                } else {
+                    document.getElementById('display-badge').innerText = "🟢";
+                    document.getElementById('display-role').innerText = "Standart Üye";
+                    document.getElementById('display-role').style.color = "#2ecc71";
+                    adminWrapper.style.display = 'none';
+                }
+            } else {
+                document.getElementById('logged-out-view').style.display = 'block';
+                document.getElementById('logged-in-view').style.display = 'none';
+                adminWrapper.style.display = 'none';
+            }
+        }
+
+        // Tema Değiştirme Fonksiyonu
+        function changeTheme(themeName) {
+            var color = "#2ecc71";
+            var bg = "#050805";
+            var panelBg = "#080f08";
+
+            if (themeName === 'red') {
+                color = "#e74c3c";
+                bg = "#0a0303";
+                panelBg = "#120505";
+            } else if (themeName === 'blue') {
+                color = "#00f3ff";
+                bg = "#03080a";
+                panelBg = "#050d12";
+            }
+
+            document.body.style.backgroundColor = bg;
+            document.body.style.color = color;
+
+            var selector = '.menu-btn, .sub-panel, .input-field, .action-btn, .key-box, .ctrl-btn, .song-btn, .side-panel, .header, .section-title, .menu-toggle-btn';
+            document.querySelectorAll(selector).forEach(function(el) {
+                if (!el.classList.contains('admin-panel-btn') && !el.classList.contains('admin-panel-box')) {
+                    el.style.borderColor = color;
+                    el.style.color = color;
+                }
+            });
+
+            var sideDrawer = document.getElementById('side-drawer');
+            if(sideDrawer) sideDrawer.style.backgroundColor = panelBg;
+
+            localStorage.setItem('parazitr_theme', themeName);
+        }
+
+        window.onload = function() {
+            initStats();
+            checkSanalKimlik();
+            var savedTheme = localStorage.getItem('parazitr_theme');
+            if (savedTheme) changeTheme(savedTheme);
+        };
+    </script>
+</body>
+</html>
