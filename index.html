@@ -55,7 +55,7 @@
         <button class="menu-toggle-btn" onclick="toggleSidePanel()">☰ PANEL</button>
     </div>
 
-    <!-- YAN MENÜ -->
+    <!-- SAĞDAN AÇILAN YAN MENÜ -->
     <div id="side-drawer" class="side-panel">
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         
@@ -91,10 +91,10 @@
         <button class="action-btn" style="font-size:0.75rem;" onclick="alert('Mesaj sistem ağına gönderildi!')">GÖNDER</button>
     </div>
 
-    <!-- ANA EKRAN -->
+    <!-- ANA EKRAN MENÜLERİ -->
     <div class="menu-list">
         
-        <!-- MÜZİK ANA BAŞLIĞI -->
+        <!-- TEK MÜZİK ANA BAŞLIĞI -->
         <button class="menu-btn" onclick="toggleSection('music-main-panel')">
             <span>> MUSIC [ PLAYLISTS ]</span>
             <span>🎵</span>
@@ -103,7 +103,8 @@
         <!-- MÜZİK ALT KATEGORİLERİ -->
         <div id="music-main-panel" class="sub-panel" style="padding: 10px; background: transparent; border: none;">
             
-            <button class="menu-btn" style="margin-bottom: 10px;" onclick="toggleSection('enes-sub-content')">
+            <!-- 1. Enes Alper Serisi -->
+            <button class="menu-btn" style="margin-bottom: 8px;" onclick="toggleSection('enes-sub-content')">
                 <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM ]</span>
                 <span>🎵</span>
             </button>
@@ -111,15 +112,12 @@
                 <div class="player-box">
                     <div style="font-size: 0.8rem; font-weight: bold; color: #2ecc71;">Enes Alper - Sakat Bırakırım Serisi</div>
                     <div id="enes-now-playing" style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım Part 1</div>
-                    
                     <audio id="enes-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
-
                     <div class="controls-row">
                         <button class="ctrl-btn" onclick="prevSong('enes')">⏮ Geri</button>
                         <button class="ctrl-btn" onclick="replaySong('enes')">🔁 Tekrarla</button>
                         <button class="ctrl-btn" onclick="nextSong('enes')">İleri ⏭</button>
                     </div>
-
                     <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; margin-top: 5px;">
                         <button onclick="playSong('enes', 0)" class="song-btn">▶ Sakat Bırakırım Part 1</button>
                         <button onclick="playSong('enes', 1)" class="song-btn">▶ Sakat Bırakırım Part 2</button>
@@ -133,7 +131,8 @@
                 </div>
             </div>
 
-            <button class="menu-btn" onclick="toggleSection('stalker-sub-content')">
+            <!-- 2. Stalker - Panter Serisi -->
+            <button class="menu-btn" style="margin-bottom: 8px;" onclick="toggleSection('stalker-sub-content')">
                 <span>> MUSIC [ STALKER - PANTER SERİSİ ]</span>
                 <span>🐆</span>
             </button>
@@ -141,45 +140,43 @@
                 <div class="player-box">
                     <div style="font-size: 0.8rem; font-weight: bold; color: #2ecc71;">Stalker - Panter Serisi</div>
                     <div id="stalker-now-playing" style="font-size: 0.75rem; color: #27ae60;">Stalker - Beyaz Panter</div>
-                    
                     <audio id="stalker-player" controls preload="auto" src="./Stalker-Beyaz-Panter.mp3" style="width:100%; margin: 5px 0;"></audio>
-
                     <div class="controls-row">
                         <button class="ctrl-btn" onclick="prevSong('stalker')">⏮ Geri</button>
                         <button class="ctrl-btn" onclick="replaySong('stalker')">🔁 Tekrarla</button>
                         <button class="ctrl-btn" onclick="nextSong('stalker')">İleri ⏭</button>
                     </div>
-
                     <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; margin-top: 5px;">
                         <button onclick="playSong('stalker', 0)" class="song-btn">▶ Stalker - Beyaz Panter</button>
                         <button onclick="playSong('stalker', 1)" class="song-btn">▶ Stalker - Kırmızı Panter</button>
                         <button onclick="playSong('stalker', 2)" class="song-btn">▶ Stalker - Pembe Panter</button>
                         <button onclick="playSong('stalker', 3)" class="song-btn">▶ Stalker - Sarı Panter</button>
-            <!-- 3. STALKER - BİRİ FAME Mİ DEDİ SERİSİ -->
-            <button class="menu-btn" style="margin-top: 10px;" onclick="toggleSection('fame-sub-content')">
-                <span>> MUSIC [ STALKER - BİRİ FAME Mİ DEDİ SERİSİ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Stalker - Biri Fame mi Dedi Serisi -->
+            <button class="menu-btn" onclick="toggleSection('fame-sub-content')">
+                <span>> MUSIC [ STALKER - BİRİ FAME Mİ DEDİ ]</span>
                 <span>🎙️</span>
             </button>
             <div id="fame-sub-content" class="sub-panel">
                 <div class="player-box">
                     <div style="font-size: 0.8rem; font-weight: bold; color: #2ecc71;">Stalker - Biri Fame mi Dedi Serisi</div>
                     <div id="fame-now-playing" style="font-size: 0.75rem; color: #27ae60;">Stalker - Biri Fame mi Dedi Part 1</div>
-                    
                     <audio id="fame-player" controls preload="auto" src="./Stalker-Biri-Fame-mi-Dedi-1.mp3" style="width:100%; margin: 5px 0;"></audio>
-
                     <div class="controls-row">
                         <button class="ctrl-btn" onclick="prevSong('fame')">⏮ Geri</button>
                         <button class="ctrl-btn" onclick="replaySong('fame')">🔁 Tekrarla</button>
                         <button class="ctrl-btn" onclick="nextSong('fame')">İleri ⏭</button>
                     </div>
-
                     <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; margin-top: 5px;">
                         <button onclick="playSong('fame', 0)" class="song-btn">▶ Biri Fame mi Dedi Part 1</button>
                         <button onclick="playSong('fame', 1)" class="song-btn">▶ Biri Fame mi Dedi Part 2</button>
                         <button onclick="playSong('fame', 2)" class="song-btn">▶ Biri Fame mi Dedi Part 3</button>
                         <button onclick="playSong('fame', 3)" class="song-btn">▶ Biri Fame mi Dedi Part 4</button>
                         <button onclick="playSong('fame', 4)" class="song-btn">▶ Biri Fame mi Dedi Part 5</button>
-                     </div>
+                    </div>
                 </div>
             </div>
 
@@ -198,15 +195,15 @@
         </button>
         <div id="online-panel" class="sub-panel">
             <p><strong>Durum:</strong> Aktif / Online 🟢</p>
-            <p><strong>Lider: </strong> ParaziTR ☢️</p>
+            <p><strong>Marka Sahibi:</strong> Enes Alper / ParaziTR ☢️</p>
         </div>
 
-        <!-- Ayarlar -->
+        <!-- Ayarlar ve Tema Seçimi -->
         <button class="menu-btn" onclick="toggleSection('settings-panel')">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
         </button>
-                <div id="settings-panel" class="sub-panel">
+        <div id="settings-panel" class="sub-panel">
             <p><strong>ParaziTR 1.0</strong></p>
             <p>Nükleer / Green UI Konsepti.</p>
             
@@ -214,13 +211,13 @@
             <div style="display: flex; gap: 5px; margin-bottom: 10px;">
                 <button class="ctrl-btn" onclick="changeTheme('green')">☢️ Yeşil</button>
                 <button class="ctrl-btn" style="border-color: #e74c3c; color: #e74c3c;" onclick="changeTheme('red')">🚨 Kırmızı</button>
-                <button class="ctrl-btn" style="border-color: #3498db; color: #3498db;" onclick="changeTheme('blue')">Cyan</button>
+                <button class="ctrl-btn" style="border-color: #00f3ff; color: #00f3ff;" onclick="changeTheme('blue')">Cyan</button>
             </div>
 
-            <p style="margin-top: 5px; color: #2ecc71;">> ParaziTR</p>
+            <p style="margin-top: 5px; color: #2ecc71;">> Tüm hakları ParaziTR'ye aittir.</p>
         </div>
 
-        <!-- YÖNETİM PANELİ (Sadece Kurucu) -->
+        <!-- Yönetim Paneli (Sadece Kurucuya Görünür) -->
         <div id="admin-panel-wrapper" style="display: none;">
             <button class="menu-btn admin-panel-btn" onclick="toggleSection('admin-panel-content')">
                 <span>> YÖNETİM PANELİ ☢️</span>
@@ -237,6 +234,7 @@
     </div>
 
     <script>
+        // İstatistik ve Sayaç Mantığı
         function initStats() {
             let visits = localStorage.getItem('parazitr_visits') || 0;
             visits = parseInt(visits) + 1;
@@ -266,19 +264,43 @@
             }
         }
 
+        // Seri Kodu Tek Tıkla Panoya Kopyalama Fonksiyonu
         function copyKeyToClipboard() {
             var keyText = document.getElementById('display-key').innerText;
-            navigator.clipboard.writeText(keyText).then(function() {
-                var alertBox = document.getElementById('copy-alert');
-                alertBox.style.display = 'block';
-                setTimeout(function() {
-                    alertBox.style.display = 'none';
-                }, 2000);
-            }, function(err) {
-                alert('Kopyalama başarısız oldu.');
-            });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(keyText).then(function() {
+                    showCopyAlert();
+                }).catch(function() {
+                    fallbackCopyText(keyText);
+                });
+            } else {
+                fallbackCopyText(keyText);
+            }
         }
 
+        function fallbackCopyText(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                var successful = document.execCommand('copy');
+                if (successful) showCopyAlert();
+            } catch (err) {}
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyAlert() {
+            var alertBox = document.getElementById('copy-alert');
+            if(alertBox) {
+                alertBox.style.display = 'block';
+                setTimeout(function() { alertBox.style.display = 'none'; }, 2000);
+            }
+        }
+
+        // Çalma Listeleri
         const enesPlaylist = [
             { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
             { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
@@ -297,8 +319,17 @@
             { src: "./Stalker-Sarı-Panter.mp3", title: "Stalker - Sarı Panter" }
         ];
 
+        const famePlaylist = [
+            { src: "./Stalker-Biri-Fame-mi-Dedi-1.mp3", title: "Stalker - Biri Fame mi Dedi Part 1" },
+            { src: "./Stalker-Biri-Fame-mi-Dedi-2.mp3", title: "Stalker - Biri Fame mi Dedi Part 2" },
+            { src: "./Stalker-Biri-Fame-mi-Dedi-3.mp3", title: "Stalker - Biri Fame mi Dedi Part 3" },
+            {    { src: "./Stalker-Biri-Fame-mi-Dedi-4.mp3", title: "Stalker - Biri Fame mi Dedi Part 4" },
+            { src: "./Stallker-Biri-Fame-mi-Dedi-5.mp3", title: "Stalker - Biri Fame mi Dedi Part 5" }
+        ];
+
         let enesIndex = 0;
         let stalkerIndex = 0;
+        let fameIndex = 0;
 
         function toggleSection(id) {
             var panel = document.getElementById(id);
@@ -311,54 +342,57 @@
         }
 
         function playSong(artist, index) {
+            var enesP = document.getElementById('enes-player');
+            var stalkerP = document.getElementById('stalker-player');
+            var fameP = document.getElementById('fame-player');
+
+            if(enesP) enesP.pause();
+            if(stalkerP) stalkerP.pause();
+            if(fameP) fameP.pause();
+
             if (artist === 'enes') {
-                document.getElementById('stalker-player').pause();
                 enesIndex = index;
-                var player = document.getElementById('enes-player');
-                var nowPlaying = document.getElementById('enes-now-playing');
-                player.src = enesPlaylist[enesIndex].src;
-                nowPlaying.innerText = enesPlaylist[enesIndex].title;
-                player.play();
-            } else {
-                document.getElementById('enes-player').pause();
+                enesP.src = enesPlaylist[enesIndex].src;
+                document.getElementById('enes-now-playing').innerText = enesPlaylist[enesIndex].title;
+                enesP.play();
+            } else if (artist === 'stalker') {
                 stalkerIndex = index;
-                var player = document.getElementById('stalker-player');
-                var nowPlaying = document.getElementById('stalker-now-playing');
-                player.src = stalkerPlaylist[stalkerIndex].src;
-                nowPlaying.innerText = stalkerPlaylist[stalkerIndex].title;
-                player.play();
+                stalkerP.src = stalkerPlaylist[stalkerIndex].src;
+                document.getElementById('stalker-now-playing').innerText = stalkerPlaylist[stalkerIndex].title;
+                stalkerP.play();
+            } else if (artist === 'fame') {
+                fameIndex = index;
+                fameP.src = famePlaylist[fameIndex].src;
+                document.getElementById('fame-now-playing').innerText = famePlaylist[fameIndex].title;
+                fameP.play();
             }
         }
 
         function nextSong(artist) {
-            if (artist === 'enes') {
-                enesIndex = (enesIndex + 1) % enesPlaylist.length;
-                playSong('enes', enesIndex);
-            } else {
-                stalkerIndex = (stalkerIndex + 1) % stalkerPlaylist.length;
-                playSong('stalker', stalkerIndex);
-            }
+            if (artist === 'enes') { enesIndex = (enesIndex + 1) % enesPlaylist.length; playSong('enes', enesIndex); }
+            else if (artist === 'stalker') { stalkerIndex = (stalkerIndex + 1) % stalkerPlaylist.length; playSong('stalker', stalkerIndex); }
+            else if (artist === 'fame') { fameIndex = (fameIndex + 1) % famePlaylist.length; playSong('fame', fameIndex); }
         }
 
         function prevSong(artist) {
-            if (artist === 'enes') {
-                enesIndex = (enesIndex - 1 + enesPlaylist.length) % enesPlaylist.length;
-                playSong('enes', enesIndex);
-            } else {
-                stalkerIndex = (stalkerIndex - 1 + stalkerPlaylist.length) % stalkerPlaylist.length;
-                playSong('stalker', stalkerIndex);
-            }
+            if (artist === 'enes') { enesIndex = (enesIndex - 1 + enesPlaylist.length) % enesPlaylist.length; playSong('enes', enesIndex); }
+            else if (artist === 'stalker') { stalkerIndex = (stalkerIndex - 1 + stalkerPlaylist.length) % stalkerPlaylist.length; playSong('stalker', stalkerIndex); }
+            else if (artist === 'fame') { fameIndex = (fameIndex - 1 + famePlaylist.length) % famePlaylist.length; playSong('fame', fameIndex); }
         }
 
         function replaySong(artist) {
-            var player = (artist === 'enes') ? document.getElementById('enes-player') : document.getElementById('stalker-player');
-            player.currentTime = 0;
-            player.play();
+            var player;
+            if (artist === 'enes') player = document.getElementById('enes-player');
+            else if (artist === 'stalker') player = document.getElementById('stalker-player');
+            else if (artist === 'fame') player = document.getElementById('fame-player');
+            if(player) { player.currentTime = 0; player.play(); }
         }
 
         document.getElementById('enes-player').addEventListener('ended', function() { nextSong('enes'); });
         document.getElementById('stalker-player').addEventListener('ended', function() { nextSong('stalker'); });
+        document.getElementById('fame-player').addEventListener('ended', function() { nextSong('fame'); });
 
+        // Kurucu Yetki Kontrolü
         function checkKurucuField() {
             var inputVal = document.getElementById('sanal-isim-input').value.trim();
             var passBox = document.getElementById('kurucu-pass-box');
@@ -433,56 +467,45 @@
             }
         }
 
-        window.onload = function() {
-            initStats();
-            checkSanalKimlik();
-        };
-        // BÜTÜN SİTE RENGİNİ ANINDA VE KESİN DEĞİŞTİREN FONKSİYON
+        // Tema Değiştirme Fonksiyonu
         function changeTheme(themeName) {
-            var color = "#2ecc71"; // Varsayılan Yeşil
+            var color = "#2ecc71";
             var bg = "#050805";
             var panelBg = "#080f08";
 
             if (themeName === 'red') {
-                color = "#e74c3c"; // Nükleer Kırmızı
+                color = "#e74c3c";
                 bg = "#0a0303";
                 panelBg = "#120505";
             } else if (themeName === 'blue') {
-                color = "#00f3ff"; // Hacker Cyan
+                color = "#00f3ff";
                 bg = "#03080a";
                 panelBg = "#050d12";
             }
 
-            // Body Arka Planı ve Yazı Renkleri
             document.body.style.backgroundColor = bg;
             document.body.style.color = color;
 
-            // Bütün Menü Butonları, Alt Paneller ve Kutular
-            var elements = document.querySelectorAll('.menu-btn, .sub-panel, .input-field, .action-btn, .key-box, .ctrl-btn, .song-btn, .side-panel, .header, .section-title, .menu-toggle-btn');
-            elements.forEach(function(el) {
+            var selector = '.menu-btn, .sub-panel, .input-field, .action-btn, .key-box, .ctrl-btn, .song-btn, .side-panel, .header, .section-title, .menu-toggle-btn';
+            document.querySelectorAll(selector).forEach(function(el) {
                 if (!el.classList.contains('admin-panel-btn') && !el.classList.contains('admin-panel-box')) {
                     el.style.borderColor = color;
                     el.style.color = color;
                 }
             });
 
-            // Yan menü arka planı
-            var sidePanel = document.getElementById('side-drawer');
-            if (sidePanel) sidePanel.style.backgroundColor = panelBg;
+            var sideDrawer = document.getElementById('side-drawer');
+            if(sideDrawer) sideDrawer.style.backgroundColor = panelBg;
 
-            // Tercihi Hafızaya Kaydet
             localStorage.setItem('parazitr_theme', themeName);
         }
 
-        // Sayfa Açıldığında Kayıtlı Temayı Yükle
-        window.addEventListener('DOMContentLoaded', function() {
+        window.onload = function() {
+            initStats();
+            checkSanalKimlik();
             var savedTheme = localStorage.getItem('parazitr_theme');
-            if (savedTheme) {
-                changeTheme(savedTheme);
-            }
-        });
-
+            if (savedTheme) changeTheme(savedTheme);
+        };
     </script>
 </body>
 </html>
- 
