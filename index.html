@@ -97,7 +97,7 @@
             <span>🎵</span>
         </button>
         
-        <!-- Müzik Paneli İçeriği -->
+        <!-- Müzik Paneli Açılır Kısım -->
         <div id="music-panel" class="sub-panel">
             <div class="player-box">
                 <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
@@ -111,8 +111,47 @@
                     <button onclick="changeSong('./Sakat-Bırakırım-2.mp3', 'Enes Alper - Sakat Bırakırım Part 2')" class="song-btn">▶ Sakat Bırakırım Part 2</button>
                     <button onclick="changeSong('./Sakat-Bırakırım-3.mp3', 'Enes Alper - Sakat Bırakırım Part 3')" class="song-btn">▶ Sakat Bırakırım Part 3</button>
                     <button onclick="changeSong('./Sakat-Bırakırım-4.mp3', 'Enes Alper - Sakat Bırakırım Part 4')" class="song-btn">▶ Sakat Bırakırım Part 4</button>
-                    <button 
-<button onclick="changeSong('./sakat-5.mp3', 'Enes Alper - Sakat Bırakırım Part 5')" class="song-btn">▶ Sakat Bırakırım Part 5</button>
-<button onclick="changeSong('./sakat-6.mp3', 'Enes Alper - Sakat Bırakırım Part 6')" class="song-btn">▶ Sakat Bırakırım Part 6</button>
-<button onclick="changeSong('./sakat-7.mp3', 'Enes Alper - Sakat Bırakırım Part 7')" class="song-btn">▶ Sakat Bırakırım Part 7</button>
-<button onclick="changeSong('./sakat-8.mp3', 'Enes Alper - Sakat Bırakırım Part 8')" class="song-btn">▶ Sakat Bırakırım Part 8</button>
+                    <button onclick="changeSong('./sakat-5.mp3', 'Enes Alper - Sakat Bırakırım Part 5')" class="song-btn">▶ Sakat Bırakırım Part 5</button>
+                    <button onclick="changeSong('./sakat-6.mp3', 'Enes Alper - Sakat Bırakırım Part 6')" class="song-btn">▶ Sakat Bırakırım Part 6</button>
+                    <button onclick="changeSong('./sakat-7.mp3', 'Enes Alper - Sakat Bırakırım Part 7')" class="song-btn">▶ Sakat Bırakırım Part 7</button>
+                    <button onclick="changeSong('./sakat-8.mp3', 'Enes Alper - Sakat Bırakırım Part 8')" class="song-btn">▶ Sakat Bırakırım Part 8</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- APK İndirme Butonu -->
+        <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
+            <span>> DOWNLOAD APP (.APK)</span>
+            <span>📥</span>
+        </a>
+
+        <!-- Sistem Durumu -->
+        <div class="menu-btn">
+            <span>> ParaziTR Çevrimiçi</span>
+            <span>🟢</span>
+        </div>
+
+        <!-- Ayarlar -->
+        <div class="menu-btn">
+            <span>> SETTINGS // ABOUT</span>
+            <span>⚙️</span>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            var panel = document.getElementById(id);
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+        }
+        function changeSong(songSrc, title) {
+            var player = document.getElementById('audio-player');
+            var nowPlaying = document.getElementById('now-playing');
+            player.src = songSrc;
+            nowPlaying.innerText = title;
+            player.play();
+        }
+    </script>
+
+</body>
+</html>
