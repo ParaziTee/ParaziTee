@@ -11,7 +11,7 @@
         .top-bar { width: 100%; max-width: 450px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .header { font-size: 1.4rem; font-weight: bold; text-shadow: 0 0 10px rgba(46, 204, 113, 0.6); }
         
-        /* Yan Menü Butonu (Hamburger) */
+        /* Yan Menü Butonu */
         .menu-toggle-btn { background: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 8px 12px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
         .menu-toggle-btn:active { background: #2ecc71; color: #050805; }
 
@@ -42,6 +42,7 @@
         .key-box { background: #000; border: 1px solid #2ecc71; padding: 8px; text-align: center; font-size: 1rem; letter-spacing: 2px; color: #2ecc71; margin: 5px 0; font-weight: bold; user-select: all; }
         
         .section-title { font-size: 0.9rem; font-weight: bold; border-bottom: 1px solid #2ecc71; padding-bottom: 5px; margin-top: 10px; color: #2ecc71; }
+        .badge-owner { color: #f1c40f; font-weight: bold; text-shadow: 0 0 5px #f1c40f; }
     </style>
 </head>
 <body>
@@ -51,21 +52,22 @@
         <button class="menu-toggle-btn" onclick="toggleSidePanel()">☰ PANEL</button>
     </div>
 
-    <!-- SAĞDAN AÇILAN YAN MENÜ (Hesap, Arkadaşlar, Mesajlar) -->
+    <!-- SAĞDAN AÇILAN YAN MENÜ -->
     <div id="side-drawer" class="side-panel">
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         
         <div class="section-title">🔑 SANAL KİMLİK & SERİ KOD</div>
         <div id="logged-out-view">
             <p style="font-size: 0.75rem; margin-bottom: 5px; color: #27ae60;">Sanal İsim (Nick) girin:</p>
-            <input type="text" id="sanal-isim-input" class="input-field" placeholder="Örn: ParaziT_x99">
+            <input type="text" id="sanal-isim-input" class="input-field" placeholder="Örn: ParaziTR">
             <button class="action-btn" onclick="generateSanalKimlik()">KİMLİK & SERİ KOD ÜRET</button>
         </div>
         <div id="logged-in-view" style="display: none;">
-            <p style="font-size: 0.8rem;">İsim: <span id="display-user" style="font-weight:bold;"></span> 🟢</p>
+            <p style="font-size: 0.8rem;">İsim: <span id="display-user" style="font-weight:bold;"></span> <span id="display-badge"></span></p>
+            <p style="font-size: 0.7rem; margin-top: 6px;">Yetki Seviyesi: <span id="display-role" style="font-weight:bold; color:#2ecc71;">Üye</span></p>
             <p style="font-size: 0.7rem; margin-top: 4px;">Seri Kodunuz:</p>
             <div class="key-box" id="display-key">PRZ-0000-XX</div>
-            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; margin-top: 5px;">SIFIRLA / ÇIKIŞ</button>
+            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; margin-top: 8px;">SIFIRLA / ÇIKIŞ</button>
         </div>
 
         <div class="section-title">👥 ARKADAŞLAR (0)</div>
@@ -123,7 +125,7 @@
         </button>
         <div id="online-panel" class="sub-panel">
             <p><strong>Durum:</strong> Aktif / Online 🟢</p>
-            <p><strong>Marka Sahibi:</strong> Enes Alper / ParaziTR</p>
+            <p><strong>Marka Sahibi:</strong> Enes Alper / ParaziTR ☢️</p>
         </div>
 
         <!-- 4. Ayarlar / Hakkında -->
@@ -191,6 +193,7 @@
             nextSong();
         });
 
+        // KURUCU YETKİSİ VE SANAL KİMLİK MANTIĞI
         function generateSanalKimlik() {
             var sanalIsim = document.getElementById('sanal-isim-input').value.trim();
             if(sanalIsim === "") {
@@ -198,9 +201,16 @@
                 return;
             }
             
-            var randomNum = Math.floor(1000 + Math.random() * 9000);
-            var randomChar = Math.random().toString(36).substring(2, 4).toUpperCase();
-            var generatedKey = "PRZ-" + randomNum + "-" + randomChar;
+            var generatedKey = "";
+            
+            // Eğer giren kişi ParaziTR ise Kurucu yetkisi ver
+            if (sanalIsim.toLowerCase() === "parazitr") {
+                generatedKey = "PRZ-ADMIN-01 ☢️";
+            } else {
+                var randomNum = Math.floor(1000 + Math.random() * 9000);
+                var randomChar = Math.random().toString(36).substring(2, 4).toUpperCase();
+                generatedKey = "PRZ-" + randomNum + "-" + randomChar;
+            }
 
             localStorage.setItem('parazitr_sanal_name', sanalIsim);
             localStorage.setItem('parazitr_sanal_key', generatedKey);
@@ -223,6 +233,17 @@
                 document.getElementById('logged-in-view').style.display = 'block';
                 document.getElementById('display-user').innerText = savedName;
                 document.getElementById('display-key').innerText = savedKey;
+
+                // Kurucu Kontrolü
+                if (savedName.toLowerCase() === "parazitr") {
+                    document.getElementById('display-badge').innerHTML = "<span class='badge-owner'>☢️ KURUCU</span>";
+                    document.getElementById('display-role').innerText = "SİSTEM KURUCUSU ☢️";
+                    document.getElementById('display-role').style.color = "#f1c40f";
+                } else {
+                    document.getElementById('display-badge').innerText = "🟢";
+                    document.getElementById('display-role').innerText = "Standart Üye";
+                    document.getElementById('display-role').style.color = "#2ecc71";
+                }
             } else {
                 document.getElementById('logged-out-view').style.display = 'block';
                 document.getElementById('logged-in-view').style.display = 'none';
