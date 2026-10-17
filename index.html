@@ -122,4 +122,99 @@
         <div id="music-panel" class="sub-panel">
             <div class="player-box">
                 <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
-                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım 
+                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım Part 1</div>
+                
+                <audio id="audio-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
+
+                <!-- İleri - Geri - Replay Kontrol Tuşları -->
+                <div class="controls-row">
+                    <button class="ctrl-btn" onclick="prevSong()">⏮ Geri</button>
+                    <button class="ctrl-btn" onclick="replaySong()">🔁 Tekrarla</button>
+                    <button class="ctrl-btn" onclick="nextSong()">İleri ⏭</button>
+                </div>
+
+                <!-- 1'den 8'e Tüm Şarkı Butonları -->
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; margin-top: 5px;">
+                    <button onclick="playSongByIndex(0)" class="song-btn">▶ Sakat Bırakırım Part 1</button>
+                    <button onclick="playSongByIndex(1)" class="song-btn">▶ Sakat Bırakırım Part 2</button>
+                    <button onclick="playSongByIndex(2)" class="song-btn">▶ Sakat Bırakırım Part 3</button>
+                    <button onclick="playSongByIndex(3)" class="song-btn">▶ Sakat Bırakırım Part 4</button>
+                    <button onclick="playSongByIndex(4)" class="song-btn">▶ Sakat Bırakırım Part 5</button>
+                    <button onclick="playSongByIndex(5)" class="song-btn">▶ Sakat Bırakırım Part 6</button>
+                    <button onclick="playSongByIndex(6)" class="song-btn">▶ Sakat Bırakırım Part 7</button>
+                    <button onclick="playSongByIndex(7)" class="song-btn">▶ Sakat Bırakırım Part 8</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- APK İndirme Butonu -->
+        <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
+            <span>> DOWNLOAD APP (.APK)</span>
+            <span>📥</span>
+        </a>
+
+        <!-- Sistem Durumu -->
+        <div class="menu-btn">
+            <span>> ParaziTR Çevrimiçi</span>
+            <span>🟢</span>
+        </div>
+
+        <!-- Ayarlar -->
+        <div class="menu-btn">
+            <span>> SETTINGS // ABOUT</span>
+            <span>⚙️</span>
+        </div>
+
+    </div>
+
+    <script>
+        const playlist = [
+            { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
+            { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
+            { src: "./Sakat-Bırakırım-3.mp3", title: "Enes Alper - Sakat Bırakırım Part 3" },
+            { src: "./Sakat-Bırakırım-4.mp3", title: "Enes Alper - Sakat Bırakırım Part 4" },
+            { src: "./Enes-alper-sakat-birakirim-5.mp3", title: "Enes Alper - Sakat Bırakırım Part 5" },
+            { src: "./Enes-alper-sakat-birakirim-6.mp3", title: "Enes Alper - Sakat Bırakırım Part 6" },
+            { src: "./Enes-alper-sakat-birakirim-7.mp3", title: "Enes Alper - Sakat Bırakırım Part 7" },
+            { src: "./Enes-alper-sakat-bırakırım-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
+        ];
+
+        let currentIndex = 0;
+
+        function toggleSection(id) {
+            var panel = document.getElementById(id);
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+        }
+
+        function playSongByIndex(index) {
+            currentIndex = index;
+            var player = document.getElementById('audio-player');
+            var nowPlaying = document.getElementById('now-playing');
+            player.src = playlist[currentIndex].src;
+            nowPlaying.innerText = playlist[currentIndex].title;
+            player.play();
+        }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            playSongByIndex(currentIndex);
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            playSongByIndex(currentIndex);
+        }
+
+        function replaySong() {
+            var player = document.getElementById('audio-player');
+            player.currentTime = 0;
+            player.play();
+        }
+
+        document.getElementById('audio-player').addEventListener('ended', function() {
+            nextSong();
+        });
+    </script>
+
+</body>
+</html>
