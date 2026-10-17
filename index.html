@@ -48,7 +48,6 @@
             border-radius: 4px;
             text-decoration: none;
             box-shadow: 0 0 5px rgba(46, 204, 113, 0.2);
-            transition: all 0.2s ease;
         }
         .menu-btn:active {
             background-color: #2ecc71;
@@ -78,7 +77,7 @@
             border-radius: 3px;
             cursor: pointer;
         }
-        .song-btn:hover, .song-btn:active {
+        .song-btn:active {
             background-color: #2ecc71;
             color: #000;
         }
@@ -101,20 +100,20 @@
         <div id="music-panel" class="sub-panel">
             <div class="player-box">
                 <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
-                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Şarkı Seçin</div>
+                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Şarkı Seçin (Part 1 - 8)</div>
                 
-                <audio id="audio-player" controls preload="auto" src="./Enes-alper-8.mp3" style="width:100%; margin: 5px 0;"></audio>
+                <audio id="audio-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
 
-                <!-- 1'den 8'e Şarkı Listesi -->
-                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto;">
-                    <button onclick="changeSong('./Enes-alper-8.mp3', 'Enes Alper - Sakat Bırakırım 8')" class="song-btn">▶ 1. Enes Alper - Sakat Bırakırım 8</button>
-                    <button onclick="changeSong('./Enes-alper-7.mp3', 'Enes Alper - Sakat Bırakırım 7')" class="song-btn">▶ 2. Enes Alper - Sakat Bırakırım 7</button>
-                    <button onclick="changeSong('./Enes-alper-6.mp3', 'Enes Alper - Sakat Bırakırım 6')" class="song-btn">▶ 3. Enes Alper - Sakat Bırakırım 6</button>
-                    <button onclick="changeSong('./Enes-alper-5.mp3', 'Enes Alper - Sakat Bırakırım 5')" class="song-btn">▶ 4. Enes Alper - Sakat Bırakırım 5</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-4.mp3', 'Enes Alper - Sakat Bırakırım 4')" class="song-btn">▶ 5. Enes Alper - Sakat Bırakırım 4</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-3.mp3', 'Enes Alper - Sakat Bırakırım 3')" class="song-btn">▶ 6. Enes Alper - Sakat Bırakırım 3</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-2.mp3', 'Enes Alper - Sakat Bırakırım 2')" class="song-btn">▶ 7. Enes Alper - Sakat Bırakırım 2</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-1.mp3', 'Enes Alper - Sakat Bırakırım 1')" class="song-btn">▶ 8. Enes Alper - Sakat Bırakırım 1</button>
+                <!-- 1'den 8'e Tüm Şarkılar -->
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto;">
+                    <button onclick="changeSong('./Sakat-Bırakırım-1.mp3', 'Enes Alper - Sakat Bırakırım Part 1')" class="song-btn">▶ 1. Sakat Bırakırım Part 1</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-2.mp3', 'Enes Alper - Sakat Bırakırım Part 2')" class="song-btn">▶ 2. Sakat Bırakırım Part 2</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-3.mp3', 'Enes Alper - Sakat Bırakırım Part 3')" class="song-btn">▶ 3. Sakat Bırakırım Part 3</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-4.mp3', 'Enes Alper - Sakat Bırakırım Part 4')" class="song-btn">▶ 4. Sakat Bırakırım Part 4</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-5.mp3', 'Enes Alper - Sakat Bırakırım Part 5')" class="song-btn">▶ 5. Sakat Bırakırım Part 5</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-6.mp3', 'Enes Alper - Sakat Bırakırım Part 6')" class="song-btn">▶ 6. Sakat Bırakırım Part 6</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-7.mp3', 'Enes Alper - Sakat Bırakırım Part 7')" class="song-btn">▶ 7. Sakat Bırakırım Part 7</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-8.mp3', 'Enes Alper - Sakat Bırakırım Part 8')" class="song-btn">▶ 8. Sakat Bırakırım Part 8</button>
                 </div>
             </div>
         </div>
@@ -155,3 +154,4 @@
 
 </body>
 </html>
+
