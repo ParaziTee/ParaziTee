@@ -338,32 +338,28 @@
             drawer.classList.toggle('open');
         }
 
-        function playSong(artist, index) {
-            var enesP = document.getElementById('enes-player');
-            var stalkerP = document.getElementById('stalker-player');
-            var fameP = document.getElementById('fame-player');
-
-            if(enesP) enesP.pause();
-            if(stalkerP) stalkerP.pause();
-            if(fameP) fameP.pause();
-
+               function playSong(artist, index) {
+            var playlist, prefix, indexName;
             if (artist === 'enes') {
-                enesIndex = index;
-                enesP.src = enesPlaylist[enesIndex].src;
-                document.getElementById('enes-now-playing').innerText = enesPlaylist[enesIndex].title;
-                enesP.play();
+                playlist = enesPlaylist; prefix = 'enes'; enesIndex = index;
             } else if (artist === 'stalker') {
-                stalkerIndex = index;
-                stalkerP.src = stalkerPlaylist[stalkerIndex].src;
-                document.getElementById('stalker-now-playing').innerText = stalkerPlaylist[stalkerIndex].title;
-                stalkerP.play();
+                playlist = stalkerPlaylist; prefix = 'stalker'; stalkerIndex = index;
             } else if (artist === 'fame') {
-                fameIndex = index;
-                fameP.src = famePlaylist[fameIndex].src;
-                document.getElementById('fame-now-playing').innerText = famePlaylist[fameIndex].title;
-                fameP.play();
+                playlist = famePlaylist; prefix = 'fame'; fameIndex = index;
             }
+
+            var item = playlist[index];
+            document.getElementById(prefix + '-now-playing').innerText = item.title;
+            
+            var player = document.getElementById(prefix + '-player');
+            player.src = item.src;
+            player.load();
+            
+            // Otomatik oynatmayı kaldırdık, tarayıcı engeline takılmasın diye 
+            // kullanıcıya yüklendiğini bildiriyoruz. Oynat tuşuna basması yeterli olacak.
+            alert("🎵 " + item.title + " yüklendi! Oynat tuşuna basarak dinleyebilirsin.");
         }
+
 
         function nextSong(artist) {
             if (artist === 'enes') { enesIndex = (enesIndex + 1) % enesPlaylist.length; playSong('enes', enesIndex); }
