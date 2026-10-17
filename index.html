@@ -40,7 +40,7 @@
             color: #2ecc71;
             padding: 15px 20px;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -68,9 +68,19 @@
             flex-direction: column;
             gap: 10px;
         }
-        audio {
-            width: 100%;
-            margin-top: 5px;
+        .song-btn {
+            background-color: #0d1a0d;
+            border: 1px solid #27ae60;
+            color: #2ecc71;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.8rem;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .song-btn:hover, .song-btn:active {
+            background-color: #2ecc71;
+            color: #000;
         }
     </style>
 </head>
@@ -82,19 +92,7 @@
 
     <div class="menu-list">
         
-        !-- 1. Müzik Bölümü -->
-        <button class="menu-btn" onclick="toggleSection('music-panel')">
-            <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM ]</span>
-            <span>🎵</span>
-        </button>
-        
-        <div id="music-panel" class="sub-panel">
-            <div class="player-box">
-                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">Sistem Yükleniyor...</div>
-                <div style="font-size: 0.75rem; color: #27ae60;">Enes Alper - Sakat Bırakırım</div>
-              
-                    
-            <!-- 1. Müzik Bölümü -->
+        <!-- Müzik Paneli -->
         <button class="menu-btn" onclick="toggleSection('music-panel')">
             <span>> MUSIC [ ENES ALPER - PLAYLIST ]</span>
             <span>🎵</span>
@@ -103,43 +101,37 @@
         <div id="music-panel" class="sub-panel">
             <div class="player-box">
                 <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
-                <div style="font-size: 0.75rem; color: #27ae60;">Seçilen Şarkı Çalmaya Hazır</div>
+                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Şarkı Seçin</div>
                 
-                <!-- Ana Ses Oynatıcı -->
-                <audio id="audio-player" controls preload="auto" src="./Enes-alper-8.mp3" style="width:100%; margin: 10px 0;"></audio>
+                <audio id="audio-player" controls preload="auto" src="./Enes-alper-8.mp3" style="width:100%; margin: 5px 0;"></audio>
 
-                <!-- 1'den 8'e Şarkı Seçim Butonları -->
-                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto;">
-                    <button onclick="changeSong('./Enes-alper-8.mp3', 'Enes Alper - Sakat Bırakırım 8')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 1. Enes Alper - Sakat Bırakırım 8</button>
-                    <button onclick="changeSong('./Enes-alper-7.mp3', 'Enes Alper - Sakat Bırakırım 7')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 2. Enes Alper - Sakat Bırakırım 7</button>
-                    <button onclick="changeSong('./Enes-alper-6.mp3', 'Enes Alper - Sakat Bırakırım 6')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 3. Enes Alper - Sakat Bırakırım 6</button>
-                    <button onclick="changeSong('./Enes-alper-5.mp3', 'Enes Alper - Sakat Bırakırım 5')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 4. Enes Alper - Sakat Bırakırım 5</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-4.mp3', 'Enes Alper - Sakat Bırakırım 4')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 5. Enes Alper - Sakat Bırakırım 4</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-3.mp3', 'Enes Alper - Sakat Bırakırım 3')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 6. Enes Alper - Sakat Bırakırım 3</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-2.mp3', 'Enes Alper - Sakat Bırakırım 2')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 7. Enes Alper - Sakat Bırakırım 2</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-1.mp3', 'Enes Alper - Sakat Bırakırım 1')" class="menu-btn" style="padding: 8px; font-size: 0.75rem;">▶ 8. Enes Alper - Sakat Bırakırım 1</button>
+                <!-- 1'den 8'e Şarkı Listesi -->
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto;">
+                    <button onclick="changeSong('./Enes-alper-8.mp3', 'Enes Alper - Sakat Bırakırım 8')" class="song-btn">▶ 1. Enes Alper - Sakat Bırakırım 8</button>
+                    <button onclick="changeSong('./Enes-alper-7.mp3', 'Enes Alper - Sakat Bırakırım 7')" class="song-btn">▶ 2. Enes Alper - Sakat Bırakırım 7</button>
+                    <button onclick="changeSong('./Enes-alper-6.mp3', 'Enes Alper - Sakat Bırakırım 6')" class="song-btn">▶ 3. Enes Alper - Sakat Bırakırım 6</button>
+                    <button onclick="changeSong('./Enes-alper-5.mp3', 'Enes Alper - Sakat Bırakırım 5')" class="song-btn">▶ 4. Enes Alper - Sakat Bırakırım 5</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-4.mp3', 'Enes Alper - Sakat Bırakırım 4')" class="song-btn">▶ 5. Enes Alper - Sakat Bırakırım 4</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-3.mp3', 'Enes Alper - Sakat Bırakırım 3')" class="song-btn">▶ 6. Enes Alper - Sakat Bırakırım 3</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-2.mp3', 'Enes Alper - Sakat Bırakırım 2')" class="song-btn">▶ 7. Enes Alper - Sakat Bırakırım 2</button>
+                    <button onclick="changeSong('./Sakat-Bırakırım-1.mp3', 'Enes Alper - Sakat Bırakırım 1')" class="song-btn">▶ 8. Enes Alper - Sakat Bırakırım 1</button>
                 </div>
             </div>
         </div>
 
-
-
-            </div>
-        </div>
-
-        <!-- 2. APK İndirme Butonu (Sorunsuz Çalışan) -->
+        <!-- APK İndirme Butonu -->
         <a href="./ParaziTR_1.apk" class="menu-btn" download="ParaziTR_1.apk">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
         </a>
 
-        <!-- 3. Xbox / Sistem Bilgi -->
+        <!-- Sistem Bilgisi -->
         <div class="menu-btn">
-            <span>>ParaziTR Çevrimiçi</span>
+            <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
         </div>
 
-        <!-- 4. Ayarlar -->
+        <!-- Ayarlar -->
         <div class="menu-btn">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
@@ -150,11 +142,14 @@
     <script>
         function toggleSection(id) {
             var panel = document.getElementById(id);
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
+            panel.style.display = (panel.style.display === "block") ? "none" : "block";
+        }
+        function changeSong(songSrc, title) {
+            var player = document.getElementById('audio-player');
+            var nowPlaying = document.getElementById('now-playing');
+            player.src = songSrc;
+            nowPlaying.innerText = title;
+            player.play();
         }
     </script>
 
