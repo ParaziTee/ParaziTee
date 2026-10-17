@@ -67,6 +67,27 @@
             flex-direction: column;
             gap: 10px;
         }
+        .controls-row {
+            display: flex;
+            gap: 5px;
+            justify-content: space-between;
+        }
+        .ctrl-btn {
+            flex: 1;
+            background-color: #0d1a0d;
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            padding: 8px 5px;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+        .ctrl-btn:active {
+            background-color: #2ecc71;
+            color: #000;
+        }
         .song-btn {
             background-color: #0d1a0d;
             border: 1px solid #27ae60;
@@ -86,35 +107,42 @@
 <body>
 
     <div class="header">
-        ☢️ PARAZITR (demo) ☢️
+        ☢️ PARAZITR 1.0 ☢️
     </div>
 
     <div class="menu-list">
         
         <!-- Müzik Paneli Butonu -->
         <button class="menu-btn" onclick="toggleSection('music-panel')">
-            <span>> MUSIC [ ENES ALPER - SAKAT BIRAKIRIM (1-8) ]</span>
+            <span>> MUSIC [ ENES ALPER - PLAYLIST ]</span>
             <span>🎵</span>
         </button>
         
         <!-- Müzik Paneli Açılır Kısım -->
         <div id="music-panel" class="sub-panel">
             <div class="player-box">
-                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">Sakat Bırakırım Serisi</div>
-                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Şarkı Seçin (Part 1 - 8)</div>
+                <div style="font-size: 0.85rem; font-weight: bold; color: #2ecc71;">ParaziTR Müzik Çalar</div>
+                <div id="now-playing" style="font-size: 0.75rem; color: #27ae60;">Sakat Bırakırım Part 1</div>
                 
                 <audio id="audio-player" controls preload="auto" src="./Sakat-Bırakırım-1.mp3" style="width:100%; margin: 5px 0;"></audio>
 
+                <!-- İleri - Geri - Replay Kontrol Tuşları -->
+                <div class="controls-row">
+                    <button class="ctrl-btn" onclick="prevSong()">⏮ Geri</button>
+                    <button class="ctrl-btn" onclick="replaySong()">🔁 Tekrarla</button>
+                    <button class="ctrl-btn" onclick="nextSong()">İleri ⏭</button>
+                </div>
+
                 <!-- 1'den 8'e Tüm Şarkılar -->
-                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto;">
-                    <button onclick="changeSong('./Sakat-Bırakırım-1.mp3', 'Enes Alper - Sakat Bırakırım Part 1')" class="song-btn">▶ Sakat Bırakırım Part 1</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-2.mp3', 'Enes Alper - Sakat Bırakırım Part 2')" class="song-btn">▶ Sakat Bırakırım Part 2</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-3.mp3', 'Enes Alper - Sakat Bırakırım Part 3')" class="song-btn">▶ Sakat Bırakırım Part 3</button>
-                    <button onclick="changeSong('./Sakat-Bırakırım-4.mp3', 'Enes Alper - Sakat Bırakırım Part 4')" class="song-btn">▶ Sakat Bırakırım Part 4</button>
-                    <button onclick="changeSong('./Enes-alper-sakat-birakirim-5.mp3', 'Enes Alper - Sakat Bırakırım Part 5')" class="song-btn">▶ Sakat Bırakırım Part 5</button>
-                    <button onclick="changeSong('./Enes-alper-sakat-birakirim-6.mp3', 'Enes Alper - Sakat Bırakırım Part 6')" class="song-btn">▶ Sakat Bırakırım Part 6</button>
-                    <button onclick="changeSong('./Enes-alper-sakat-birakirim-7.mp3', 'Enes Alper - Sakat Bırakırım Part 7')" class="song-btn">▶ Sakat Bırakırım Part 7</button>
-                    <button onclick="changeSong('./Enes-alper-sakat-bırakırım-8.mp3', 'Enes Alper - Sakat Bırakırım Part 8')" class="song-btn">▶ Sakat Bırakırım Part 8</button>
+                <div style="display: flex; flex-direction: column; gap: 6px; max-height: 200px; overflow-y: auto; margin-top: 5px;">
+                    <button onclick="playSongByIndex(0)" class="song-btn">▶ Sakat Bırakırım Part 1</button>
+                    <button onclick="playSongByIndex(1)" class="song-btn">▶ Sakat Bırakırım Part 2</button>
+                    <button onclick="playSongByIndex(2)" class="song-btn">▶ Sakat Bırakırım Part 3</button>
+                    <button onclick="playSongByIndex(3)" class="song-btn">▶ Sakat Bırakırım Part 4</button>
+                    <button onclick="playSongByIndex(4)" class="song-btn">▶ Sakat Bırakırım Part 5</button>
+                    <button onclick="playSongByIndex(5)" class="song-btn">▶ Sakat Bırakırım Part 6</button>
+                    <button onclick="playSongByIndex(6)" class="song-btn">▶ Sakat Bırakırım Part 7</button>
+                    <button onclick="playSongByIndex(7)" class="song-btn">▶ Sakat Bırakırım Part 8</button>
                 </div>
             </div>
         </div>
@@ -140,17 +168,54 @@
     </div>
 
     <script>
+        // Şarkı Listesi ve Dosya Yolları (5-8 arası dosya adını GitHub'daki gerçek adıyla güncelleyebilirsin)
+        const playlist = [
+            { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
+            { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
+            { src: "./Sakat-Bırakırım-3.mp3", title: "Enes Alper - Sakat Bırakırım Part 3" },
+            { src: "./Sakat-Bırakırım-4.mp3", title: "Enes Alper - Sakat Bırakırım Part 4" },
+            { src: "./sakat-5.mp3", title: "Enes Alper - Sakat Bırakırım Part 5" },
+            { src: "./sakat-6.mp3", title: "Enes Alper - Sakat Bırakırım Part 6" },
+            { src: "./sakat-7.mp3", title: "Enes Alper - Sakat Bırakırım Part 7" },
+            { src: "./sakat-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
+        ];
+
+        let currentIndex = 0;
+
         function toggleSection(id) {
             var panel = document.getElementById(id);
             panel.style.display = (panel.style.display === "block") ? "none" : "block";
         }
-        function changeSong(songSrc, title) {
+
+        function playSongByIndex(index) {
+            currentIndex = index;
             var player = document.getElementById('audio-player');
             var nowPlaying = document.getElementById('now-playing');
-            player.src = songSrc;
-            nowPlaying.innerText = title;
+            player.src = playlist[currentIndex].src;
+            nowPlaying.innerText = playlist[currentIndex].title;
             player.play();
         }
+
+        function nextSong() {
+            currentIndex = (currentIndex + 1) % playlist.length;
+            playSongByIndex(currentIndex);
+        }
+
+        function prevSong() {
+            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+            playSongByIndex(currentIndex);
+        }
+
+        function replaySong() {
+            var player = document.getElementById('audio-player');
+            player.currentTime = 0;
+            player.play();
+        }
+
+        // Şarkı bittiğinde otomatik sonraki şarkıya geçme özelliği
+        document.getElementById('audio-player').addEventListener('ended', function() {
+            nextSong();
+        });
     </script>
 
 </body>
