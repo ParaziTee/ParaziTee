@@ -19,8 +19,9 @@
         .song-btn { background-color: #0d1a0d; border: 1px solid #27ae60; color: #2ecc71; padding: 10px; text-align: left; font-size: 0.8rem; border-radius: 3px; cursor: pointer; }
         .song-btn:active { background-color: #2ecc71; color: #000; }
         .input-field { width: 100%; background: #050805; border: 1px solid #2ecc71; color: #2ecc71; padding: 10px; margin-bottom: 8px; border-radius: 3px; font-family: 'Courier New', Courier, monospace; }
-        .action-btn { width: 100%; background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 3px; font-family: 'Courier New', Courier, monospace; }
+        .action-btn { width: 100%; background-color: #0b140b; border: 1px solid #2ecc71; color: #2ecc71; padding: 10px; cursor: pointer; font-weight: bold; border-radius: 3px; font-family: 'Courier New', Courier, monospace; margin-bottom: 5px; }
         .action-btn:active { background-color: #2ecc71; color: #050805; }
+        .key-box { background: #000; border: 1px solid #2ecc71; padding: 10px; text-align: center; font-size: 1.1rem; letter-spacing: 2px; color: #2ecc71; margin: 8px 0; font-weight: bold; user-select: all; }
     </style>
 </head>
 <body>
@@ -66,122 +67,13 @@
             <span>📥</span>
         </a>
 
-        <!-- Hesap / Giriş Paneli -->
+        <!-- Seri Kodlu Üyelik Paneli -->
         <button class="menu-btn" onclick="toggleSection('account-panel')">
-            <span>> HESAP & ÜYE GİRİŞİ</span>
-            <span>🔐</span>
+            <span>> KULLANICI KİMLİK & SERİ KOD</span>
+            <span>🔑</span>
         </button>
         <div id="account-panel" class="sub-panel">
             <div id="auth-container">
+                <!-- Giriş Yapılmamış Ekran -->
                 <div id="logged-out-view">
-                    <p style="margin-bottom: 8px; color: #27ae60;">Sisteme kayıt ol veya giriş yap:</p>
-                    <input type="text" id="username-input" class="input-field" placeholder="Kullanıcı Adı">
-                    <input type="password" id="password-input" class="input-field" placeholder="Şifre">
-                    <button class="action-btn" onclick="registerUser()">KAYIT OL / GİRİŞ YAP</button>
-                </div>
-                <div id="logged-in-view" style="display: none;">
-                    <p style="color: #2ecc71; font-weight: bold; margin-bottom: 5px;">Hoş geldin, <span id="display-user"></span>! 🟢</p>
-                    <p style="margin-bottom: 10px; font-size: 0.75rem; color: #27ae60;">Yetki: ParaziTR Üyesi</p>
-                    <button class="action-btn" onclick="logoutUser()" style="border-color: #e74c3c; color: #e74c3c;">ÇIKIŞ YAP</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ayarlar / Hakkında -->
-        <button class="menu-btn" onclick="toggleSection('settings-panel')">
-            <span>> SETTINGS // ABOUT</span>
-            <span>⚙️</span>
-        </button>
-        <div id="settings-panel" class="sub-panel">
-            <p><strong>ParaziTR 1.0</strong></p>
-            <p>Nükleer / Green UI Konseptiyle geliştirilmiştir.</p>
-            <p>Tasarım & Altyapı: Enes Alper Projesi özel sürümüdür.</p>
-            <p style="margin-top: 5px; color: #27ae60;">> Tüm hakları saklıdır.</p>
-        </div>
-    </div>
-
-    <script>
-        const playlist = [
-            { src: "./Sakat-Bırakırım-1.mp3", title: "Enes Alper - Sakat Bırakırım Part 1" },
-            { src: "./Sakat-Bırakırım-2.mp3", title: "Enes Alper - Sakat Bırakırım Part 2" },
-            { src: "./Sakat-Bırakırım-3.mp3", title: "Enes Alper - Sakat Bırakırım Part 3" },
-            { src: "./Sakat-Bırakırım-4.mp3", title: "Enes Alper - Sakat Bırakırım Part 4" },
-            { src: "./Enes-alper-sakat-birakirim-5.mp3", title: "Enes Alper - Sakat Bırakırım Part 5" },
-            { src: "./Enes-alper-sakat-birakirim-6.mp3", title: "Enes Alper - Sakat Bırakırım Part 6" },
-            { src: "./Enes-alper-sakat-birakirim-7.mp3", title: "Enes Alper - Sakat Bırakırım Part 7" },
-            { src: "./Enes-alper-sakat-bırakırım-8.mp3", title: "Enes Alper - Sakat Bırakırım Part 8" }
-        ];
-
-        let currentIndex = 0;
-
-        function toggleSection(id) {
-            var panel = document.getElementById(id);
-            panel.style.display = (panel.style.display === "block") ? "none" : "block";
-        }
-
-        function playSongByIndex(index) {
-            currentIndex = index;
-            var player = document.getElementById('audio-player');
-            var nowPlaying = document.getElementById('now-playing');
-            player.src = playlist[currentIndex].src;
-            nowPlaying.innerText = playlist[currentIndex].title;
-            player.play();
-        }
-
-        function nextSong() {
-            currentIndex = (currentIndex + 1) % playlist.length;
-            playSongByIndex(currentIndex);
-        }
-
-        function prevSong() {
-            currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-            playSongByIndex(currentIndex);
-        }
-
-        function replaySong() {
-            var player = document.getElementById('audio-player');
-            player.currentTime = 0;
-            player.play();
-        }
-
-        document.getElementById('audio-player').addEventListener('ended', function() {
-            nextSong();
-        });
-
-        // Hesap Sistemi Mantığı
-        function registerUser() {
-            var username = document.getElementById('username-input').value.trim();
-            if(username === "") {
-                alert("Lütfen bir kullanıcı adı girin!");
-                return;
-            }
-            localStorage.setItem('parazitr_user', username);
-            checkUserSession();
-        }
-
-        function logoutUser() {
-            localStorage.removeItem('parazitr_user');
-            document.getElementById('username-input').value = "";
-            document.getElementById('password-input').value = "";
-            checkUserSession();
-        }
-
-        function checkUserSession() {
-            var savedUser = localStorage.getItem('parazitr_user');
-            if(savedUser) {
-                document.getElementById('logged-out-view').style.display = 'none';
-                document.getElementById('logged-in-view').style.display = 'block';
-                document.getElementById('display-user').innerText = savedUser;
-            } else {
-                document.getElementById('logged-out-view').style.display = 'block';
-                document.getElementById('logged-in-view').style.display = 'none';
-            }
-        }
-
-        // Sayfa açıldığında oturum kontrolü yap
-        window.onload = function() {
-            checkUserSession();
-        };
-    </script>
-</body>
-</html>
+                    <p style="margin-bottom: 8px; color: #27ae60
