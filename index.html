@@ -98,7 +98,25 @@
             <div class="key-box" id="display-key" onclick="copyKeyToClipboard()" title="Kopyalamak için tıkla">PRZ-0000-XX</div>
             <div id="copy-alert" style="font-size: 0.65rem; color: #f1c40f; text-align: center; display: none; margin-bottom: 5px;">✓ Panoya Kopyalandı!</div>
 
-            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; margin-top: 8px;">SIFIRLA / ÇIKIŞ</button>
+            <button class="action-btn"
+        <!-- Arkadaş ve Grup Yönetim Paneli -->
+        <div style="margin-top: 15px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
+            <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">👥 ARKADAŞ SİSTEMİ</p>
+            <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+                <input type="text" id="friend-input" class="input-field" placeholder="Kullanıcı Adı" style="font-size: 0.8rem; padding: 4px;">
+                <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="addFriend()">Ekle</button>
+            </div>
+            <div id="friends-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem; margin-bottom: 10px;"></div>
+
+            <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">☣️ NÜKLEER GRUPLAR</p>
+            <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+                <input type="text" id="group-name-input" class="input-field" placeholder="Grup Adı" style="font-size: 0.8rem; padding: 4px;">
+                <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="createGroup()">Kur</button>
+            </div>
+            <div id="groups-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem;"></div>
+        </div>
+
+ onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; margin-top: 8px;">SIFIRLA / ÇIKIŞ</button>
         </div>
 
         <div class="section-title">👥 ARKADAŞLAR (0)</div>
