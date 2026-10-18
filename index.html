@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PARAZITR 1.0</title>
-
     <style>
         body {
             background-color: #040804;
@@ -47,6 +46,22 @@
             box-sizing: border-box;
             border-radius: 4px;
         }
+        /* MAIN MENU BUTTONS */
+        .main-menu-btn {
+            background: transparent;
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: monospace;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
         /* SOL PANEL (Giriş & Sohbet) */
         .left-panel {
             position: fixed;
@@ -103,17 +118,35 @@
 </head>
 <body>
 
-          <!-- ÜST MENÜ VE PANEL BUTONLARI -->
+    <!-- ÜST MENÜ VE PANEL BUTONLARI -->
     <div class="top-bar">
         <button class="menu-btn" onclick="toggleLeftPanel()">💬 SOHBET & GİRİŞ</button>
-        <h2 style="margin:0; font-size: 1.2rem;">☣️ PARAZITR 1.0</h2>
+        <h2 style="margin:0; font-size: 1.1rem;">☣️ PARAZITR 1.0</h2>
         <button class="menu-btn" onclick="toggleSidePanel()">PANEL ☰</button>
     </div>
 
-    <!-- ANA SAYFA İÇERİĞİ (Tertemiz, sade akış) -->
-    <div style="text-align: center; margin-top: 40px;">
-        <p style="color: #2ecc71; font-size: 0.9rem;">Sistem Durumu: Aktif / Online 🟢</p>
-        <p style="color: #666; font-size: 0.8rem;">Sol üstten sohbet/giriş paneline, sağ üstten arkadaş/grup yönetim paneline ulaşabilirsin.</p>
+    <!-- ANA SAYFA MENÜLERİ (GERİ GELDİ) -->
+    <div style="margin-top: 20px;">
+        <div class="main-menu-btn">
+            <span>> MUSIC [ PLAYLISTS ]</span>
+            <span>🎵</span>
+        </div>
+        <div class="main-menu-btn">
+            <span>> DOWNLOAD APP (.APK)</span>
+            <span>📥</span>
+        </div>
+        <div class="main-menu-btn">
+            <span>> ParaziTR Çevrimiçi</span>
+            <span>🟢</span>
+        </div>
+        <div class="main-menu-btn">
+            <span>Durum: Aktif / Online</span>
+            <span>🟢</span>
+        </div>
+        <div class="main-menu-btn">
+            <span>> SETTINGS // ABOUT</span>
+            <span>⚙️</span>
+        </div>
     </div>
 
     <!-- 1. SOL PANEL (Giriş + Sohbet & Grup Akışı) -->
@@ -171,19 +204,15 @@
         <div id="groups-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem;"></div>
     </div>
 
-
-        <script>
-        // Sol Panel Aç/Kapat
+    <script>
         function toggleLeftPanel() {
             document.getElementById('left-drawer').classList.toggle('open');
         }
 
-        // Sağ Panel Aç/Kapat
         function toggleSidePanel() {
             document.getElementById('side-drawer').classList.toggle('open');
         }
 
-        // Basit Kimlik ve Mesaj Fonksiyonları (localStorage Destekli)
         function generateSanalKimlik() {
             const nick = document.getElementById('sanal-nick-input').value;
             if(!nick) { alert('Lütfen bir nick girin!'); return; }
