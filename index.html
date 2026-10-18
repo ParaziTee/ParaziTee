@@ -16,7 +16,7 @@
             color: var(--main-color);
             font-family: monospace;
             margin: 0;
-            padding: 15px;
+            padding: 15px 15px 70px 15px; /* Alt panel için padding */
             box-sizing: border-box;
             transition: color 0.3s ease;
         }
@@ -127,6 +127,7 @@
             margin: 6px 0;
         }
 
+        /* SOL VE SAĞ PANELLER */
         .left-panel {
             position: fixed;
             top: 0;
@@ -178,6 +179,60 @@
             padding: 6px 10px;
             cursor: pointer;
             font-family: monospace;
+        }
+
+        /* ALT PANEL (BOTTOM NAV) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background-color: #020502;
+            border-top: 1px solid var(--main-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 999;
+            box-sizing: border-box;
+        }
+        .bottom-nav-item {
+            color: var(--main-color);
+            text-align: center;
+            font-size: 0.7rem;
+            cursor: pointer;
+            flex: 1;
+            padding: 6px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .bottom-nav-item:active {
+            background-color: #081508;
+        }
+
+        /* MODAL / POPUP KUTUSU */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: var(--panel-bg);
+            border: 1px solid var(--main-color);
+            padding: 15px;
+            width: 85%;
+            max-width: 320px;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -298,7 +353,7 @@
             </div>
         </div>
 
-        <!-- DOWNLOAD BUTONU -->
+        <!-- DOWNLOAD BUTONU (Tam Düzeltildi) -->
         <button class="main-menu-btn" onclick="downloadApk()">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
@@ -327,9 +382,22 @@
                 <button class="action-btn" onclick="changeTheme('#f1c40f')" style="border-color: #f1c40f; color: #f1c40f;">Nükleer Sarı</button>
             </div>
         </div>
+
+        <!-- SADECE ParaziTR İÇİN ANA SAYFA KURUCU YÖNETİM PANELİ -->
+        <div id="main-kurucu-panel" style="display: none; margin-top: 15px; border: 2px solid #e74c3c; padding: 12px; background: #0c0404; border-radius: 6px;">
+            <p style="font-weight: bold; color: #e74c3c; font-size: 0.9rem; margin: 0 0 8px 0; border-bottom: 1px dashed #e74c3c; padding-bottom: 4px;">☢️ KURUCU YÖNETİM PANELİ (ParaziTR)</p>
+            
+            <p style="font-size: 0.75rem; color: #fff; margin: 4px 0;">👥 <b>Giren Toplam Üye Sayısı:</b> <span id="total-users-count" style="color:#2ecc71;">0</span></p>
+            <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0 8px 0;">Kayıtlı Tüm Kullanıcılar:</p>
+            <div id="all-users-list" style="max-height: 80px; overflow-y: auto; font-size: 0.7rem; border: 1px solid #1a3a2a; padding: 4px; background: #000; color: #2ecc71; margin-bottom: 10px;"></div>
+
+            <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0;">📢 Duyuru Yayınla:</p>
+            <input type="text" id="announcement-input" class="input-field" placeholder="Duyuru metni yazın..." style="font-size: 0.75rem; margin-bottom: 6px; border-color: #e74c3c;">
+            <button class="action-btn" onclick="publishAnnouncement()" style="font-size: 0.75rem; padding: 6px; border-color: #e74c3c; color: #e74c3c;">DUYURUYU YAYINLA</button>
+        </div>
     </div>
 
-    <!-- 1. SOL PANEL -->
+    <!-- 1. SOL PANEL (Kurucu Paneli Buradan Kaldırıldı) -->
     <div id="left-drawer" class="left-panel">
         <button class="close-btn" onclick="toggleLeftPanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
@@ -358,26 +426,18 @@
             <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px; margin-top: 4px;">ÇIKIŞ YAP</button>
         </div>
 
-        <!-- KURUCU PANELİ -->
-        <div id="kurucu-panel" style="display: none; margin-top: 15px; border-top: 2px solid #e74c3c; padding-top: 10px;">
-            <p style="font-weight: bold; color: #e74c3c; font-size: 0.85rem;">☢️ KURUCU YÖNETİM PANELİ</p>
-            <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0;">Duyuru Yayınla:</p>
-            <input type="text" id="announcement-input" class="input-field" placeholder="Duyuru yazın..." style="font-size: 0.75rem; margin-bottom: 4px;">
-            <button class="action-btn" onclick="publishAnnouncement()" style="font-size: 0.75rem; padding: 4px; border-color: #e74c3c; color: #e74c3c;">DUYURUYU YAYINLA</button>
-        </div>
-
-        <!-- CHAT -->
+        <!-- CHAT (HERKESE AÇIK SENKRONİZE SOHBET) -->
         <div style="margin-top: 15px; border-top: 1px dashed var(--main-color); padding-top: 10px;">
             <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem;">💬 SOHBET & CHAT</p>
-            <div id="messages-container" style="height: 130px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
-                <div style="color: #666; text-align: center;">-- Sohbet Akışı --</div>
+            <div id="messages-container" style="height: 150px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
+                <div style="color: #666; text-align: center;">-- Sohbet Yükleniyor --</div>
             </div>
             <input type="text" id="message-input" class="input-field" placeholder="Mesaj yaz..." style="font-size: 0.8rem; margin-bottom: 6px;">
             <button class="action-btn" style="font-size: 0.8rem; padding: 6px;" onclick="sendMessage()">GÖNDER</button>
         </div>
     </div>
 
-    <!-- 2. SAĞ PANEL -->
+    <!-- 2. SAĞ PANEL (Nükleer Gruplar Komple Kaldırıldı, Sadece Arkadaşlık) -->
     <div id="side-drawer" class="side-panel">
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
@@ -385,55 +445,81 @@
         <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; border-bottom: 1px dashed var(--main-color); padding-bottom: 4px;">👥 ARKADAŞ SİSTEMİ</p>
         <div style="display: flex; gap: 5px; margin-bottom: 6px;">
             <input type="text" id="friend-input" class="input-field" placeholder="Kullanıcı Adı" style="font-size: 0.8rem;">
-            <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="addFriend()">Ekle</button>
+            <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="addFriend()">İstek At</button>
         </div>
-        <div id="friends-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem; margin-bottom: 15px;"></div>
 
-        <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; border-bottom: 1px dashed var(--main-color); padding-bottom: 4px;">☣️ NÜKLEER GRUPLAR</p>
-        <div style="display: flex; gap: 5px; margin-bottom: 6px;">
-            <input type="text" id="group-name-input" class="input-field" placeholder="Grup Adı" style="font-size: 0.8rem;">
-            <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="createGroup()">Kur</button>
+        <p style="font-size: 0.75rem; color: #f1c40f; margin-top: 10px;">📩 GELEN İSTEKLER:</p>
+        <div id="friend-requests-list" style="max-height: 80px; overflow-y: auto; font-size: 0.75rem; border: 1px solid #1a3a2a; padding: 4px; margin-bottom: 10px; background: #000;"></div>
+
+        <p style="font-size: 0.75rem; color: var(--main-color);">👥 ARKADAŞLARINIZ:</p>
+        <div id="friends-list" style="max-height: 100px; overflow-y: auto; font-size: 0.8rem;"></div>
+    </div>
+
+    <!-- ALT NAVİGASYON PANELİ (BOTTOM NAV BAR) -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-item" onclick="scrollToTop()">
+            <span style="font-size: 1rem;">🏠</span>
+            <span>Ana Sayfa</span>
         </div>
-        <div id="groups-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem;"></div>
+        <div class="bottom-nav-item" onclick="openAccountModal()">
+            <span style="font-size: 1rem;">👤</span>
+            <span>Hesabım</span>
+        </div>
+        <div class="bottom-nav-item" onclick="openDMModal()">
+            <span style="font-size: 1rem;">✉️</span>
+            <span>DM</span>
+        </div>
+    </div>
+
+    <!-- DM (ÖZEL MESAJ) MODAL -->
+    <div id="dm-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeDMModal()">[X]</button>
+            <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; margin-top: 0;">✉️ ÖZEL MESAJ (DM)</p>
+            <p style="font-size: 0.75rem; color: #888;">Mesaj Atılacak Kullanıcı:</p>
+            <input type="text" id="dm-target-user" class="input-field" placeholder="Nick yazın" style="font-size: 0.8rem; margin-bottom: 6px;">
+            <div id="dm-messages-container" style="height: 100px; overflow-y: auto; font-size: 0.75rem; border: 1px solid #1a3a2a; padding: 4px; background: #000; margin-bottom: 6px;">
+                <div style="color: #666; text-align: center;">-- Özel Sohbet Akışı --</div>
+            </div>
+            <input type="text" id="dm-input-text" class="input-field" placeholder="Özel mesaj..." style="font-size: 0.8rem; margin-bottom: 6px;">
+            <button class="action-btn" onclick="sendDM()">GÖNDER</button>
+        </div>
+    </div>
+
+    <!-- HESABIM MODAL -->
+    <div id="account-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeAccountModal()">[X]</button>
+            <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; margin-top: 0;">👤 HESAP BİLGİLERİ</p>
+            <div id="account-modal-body" style="font-size: 0.8rem; color: #fff; line-height: 1.5;"></div>
+        </div>
     </div>
 
     <script>
         const KURUCU_NICK = "ParaziTR";
         const KURUCU_SIFRE = "nukleer123";
 
-        // MÜZİK LİSTESİ DİZİSİ (Tam Doğru Dosya İsimleriyle)
         const playlist = [
-            // Doğum Serisi (0-3)
             { title: "Stalker - Mağdur Doğum", src: "Stalker-Magdur-Dogum.mp3" },
             { title: "Stalker - Tüp Bebek Doğum", src: "Stalker-Tüpbebek-Dogum.mp3" },
             { title: "Stalker - Kaypak Doğum", src: "Stalker-kaypak-Dogum.mp3" },
             { title: "Stalker - Sezeryan Doğum", src: "Stalker-sezeryan-dogum.mp3" },
-            
-            // M4 Serisi (4-6)
             { title: "Enes Alper - M4A1", src: "Enes-alper-M4A1.mp3" },
             { title: "Enes Alper - M4A2", src: "Enes-alper-M4A2.mp3" },
             { title: "Enes Alper - M4A3", src: "Enes-alper-M4A3.mp3" },
-            
-            // Neden Mi İllegal Serisi (7-10)
             { title: "Hidra - Neden Mi İllegal 1", src: "Hidra-neden-mi-illegal.mp3" },
             { title: "Hidra - Neden Mi İllegal 2", src: "Hidra-neden-mi-illegal-2.mp3" },
             { title: "Hidra - Neden Mi İllegal 3", src: "Hidra-neden-mi-İllegal-3.mp3" },
             { title: "Hidra - Neden Mi İllegal 4", src: "Hidra-neden-mi-İllegal-4.mp3" },
-
-            // Panter Serisi (11-14)
             { title: "Stalker - Beyaz Panter", src: "Stalker-Beyaz-Panter.mp3" },
             { title: "Stalker - Sarı Panter", src: "Stalker-Sarı-Panter.mp3" },
             { title: "Stalker - Pembe Panter", src: "Stalker-Pembe-Panter.mp3" },
             { title: "Stalker - Kırmızı Panter", src: "Stalker-Kırmızı-Panter.mp3" },
-
-            // Biri Fame Mi Dedi Serisi (15-19)
             { title: "Stalker - Biri Fame Mi Dedi (Part 1)", src: "Stallker-Biri-Fame-mi-dedi-1.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 2)", src: "Stalker-Biri-Fame-mi-dedi-2.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 3)", src: "Stalker-Biri-Fame-mi-dedi-3.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 4)", src: "Stalker-Biri-Fame-mi-dedi-4.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 5)", src: "Stalker-Biri-Fame-mi-dedi-5.mp3" },
-
-            // Sakat Bırakırım Serisi (20-27)
             { title: "Enes Alper - Sakat Bırakırım (Part 1)", src: "Sakat-Bırakırım-1.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 2)", src: "Sakat-Bırakırım-2.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 3)", src: "Sakat-Bırakırım-3.mp3" },
@@ -461,13 +547,9 @@
             }
         }
 
+        // KESİN DÜZELTİLMİŞ APK İNDİRME
         function downloadApk() {
-            const a = document.createElement('a');
-            a.href = 'parazitr.apk';
-            a.download = 'ParaziTR.apk';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            window.location.href = "parazitr.apk";
         }
 
         function changeTheme(colorHex) {
@@ -571,6 +653,7 @@
             s.style.display = s.style.display === 'none' ? 'block' : 'none';
         }
 
+        // KULLANICI / KURUCU GİRİŞ SİSTEMİ
         function loginSanalKimlik() {
             const nick = document.getElementById('sanal-nick-input').value.trim();
             const pass = document.getElementById('sanal-key-input').value.trim();
@@ -590,6 +673,7 @@
                 }
             }
 
+            saveUserToGlobalList(nick);
             trackOnlineUser(nick);
             checkLoginState();
         }
@@ -605,8 +689,17 @@
             localStorage.setItem('parazit_role', 'Kullanıcı');
             localStorage.setItem('parazit_code', 'PRZ-' + Math.floor(1000 + Math.random() * 9000));
 
+            saveUserToGlobalList(nick);
             trackOnlineUser(nick);
             checkLoginState();
+        }
+
+        function saveUserToGlobalList(nick) {
+            let all = JSON.parse(localStorage.getItem('parazit_all_users') || '[]');
+            if(!all.includes(nick)) {
+                all.push(nick);
+                localStorage.setItem('parazit_all_users', JSON.stringify(all));
+            }
         }
 
         function trackOnlineUser(nick) {
@@ -642,18 +735,28 @@
                 document.getElementById('display-role').innerText = role;
                 document.getElementById('display-code').innerText = code || '000-000-000';
 
+                // KURUCU YÖNETİM PANELİ SADECE ParaziTR İÇİN ANA SAYFADA
                 if(role === 'KURUCU ☢️') {
-                    document.getElementById('kurucu-panel').style.display = 'block';
+                    document.getElementById('main-kurucu-panel').style.display = 'block';
+                    loadKurucuPanelData();
                 } else {
-                    document.getElementById('kurucu-panel').style.display = 'none';
+                    document.getElementById('main-kurucu-panel').style.display = 'none';
                 }
             } else {
                 document.getElementById('logged-out-view').style.display = 'block';
                 document.getElementById('logged-in-view').style.display = 'none';
-                document.getElementById('kurucu-panel').style.display = 'none';
+                document.getElementById('main-kurucu-panel').style.display = 'none';
             }
             updateOnlineDisplay();
             checkAnnouncement();
+            loadMessages();
+            loadFriendRequests();
+        }
+
+        function loadKurucuPanelData() {
+            const allUsers = JSON.parse(localStorage.getItem('parazit_all_users') || '[]');
+            document.getElementById('total-users-count').innerText = allUsers.length;
+            document.getElementById('all-users-list').innerHTML = allUsers.map(u => `<div>👤 ${u}</div>`).join('') || 'Henüz üye yok';
         }
 
         function updateOnlineDisplay() {
@@ -667,7 +770,7 @@
             if(!text) return;
             localStorage.setItem('parazit_announcement', text);
             checkAnnouncement();
-            alert('Duyuru yayınlandı!');
+            alert('📢 Duyuru Başarıyla Yayınlandı!');
             document.getElementById('announcement-input').value = '';
         }
 
@@ -682,47 +785,199 @@
             }
         }
 
+        // GERÇEK ZAMANLI ORTAK SOHBET SİSTEMİ
         function sendMessage() {
             const msgInput = document.getElementById('message-input');
-            const container = document.getElementById('messages-container');
             const user = localStorage.getItem('parazit_user') || 'Misafir';
             const role = localStorage.getItem('parazit_role') || '';
 
             if(!msgInput.value.trim()) return;
 
-            const msgDiv = document.createElement('div');
-            msgDiv.style.marginBottom = '4px';
+            let chatHistory = JSON.parse(localStorage.getItem('parazit_global_chat') || '[]');
+            chatHistory.push({ user: user, role: role, text: msgInput.value.trim() });
             
-            if(role === 'KURUCU ☢️') {
-                msgDiv.innerHTML = `<b style="color:#e74c3c;">[KURUCU ☢️] ${user}:</b> ${msgInput.value}`;
-            } else {
-                msgDiv.innerHTML = `<b style="color:var(--main-color);">${user}:</b> ${msgInput.value}`;
+            localStorage.setItem('parazit_global_chat', JSON.stringify(chatHistory));
+            msgInput.value = '';
+            loadMessages();
+        }
+
+        function loadMessages() {
+            const container = document.getElementById('messages-container');
+            let chatHistory = JSON.parse(localStorage.getItem('parazit_global_chat') || '[]');
+            
+            if(chatHistory.length === 0) {
+                container.innerHTML = '<div style="color: #666; text-align: center;">-- Sohbet Akışı Temiz --</div>';
+                return;
             }
 
-            container.appendChild(msgDiv);
-            msgInput.value = '';
+            container.innerHTML = chatHistory.map(m => {
+                if(m.role === 'KURUCU ☢️') {
+                    return `<div style="margin-bottom: 4px;"><b style="color:#e74c3c;">[KURUCU ☢️] ${m.user}:</b> ${m.text}</div>`;
+                } else {
+                    return `<div style="margin-bottom: 4px;"><b style="color:var(--main-color);">${m.user}:</b> ${m.text}</div>`;
+                }
+            }).join('');
+
             container.scrollTop = container.scrollHeight;
         }
 
+        // ARKADAŞLIK VE İSTEK ATMA SİSTEMİ
         function addFriend() {
             const fInput = document.getElementById('friend-input');
-            const fList = document.getElementById('friends-list');
-            if(!fInput.value.trim()) return;
-            const item = document.createElement('div');
-            item.innerText = '👤 ' + fInput.value;
-            fList.appendChild(item);
+            const targetUser = fInput.value.trim();
+            const me = localStorage.getItem('parazit_user');
+
+            if(!me) { alert('Önce giriş yapınız!'); return; }
+            if(!targetUser) return;
+
+            let requests = JSON.parse(localStorage.getItem('parazit_friend_requests') || '{}');
+            if(!requests[targetUser]) requests[targetUser] = [];
+            
+            if(!requests[targetUser].includes(me)) {
+                requests[targetUser].push(me);
+                localStorage.setItem('parazit_friend_requests', JSON.stringify(requests));
+                alert(`👥 ${targetUser} kullanıcısına arkadaşlık isteği gönderildi!`);
+            } else {
+                alert('Zaten istek gönderilmiş!');
+            }
             fInput.value = '';
         }
 
-        function createGroup() {
-            const gInput = document.getElementById('group-name-input');
-            const gList = document.getElementById('groups-list');
-            if(!gInput.value.trim()) return;
-            const item = document.createElement('div');
-            item.innerText = '☣️ ' + gInput.value;
-            gList.appendChild(item);
-            gInput.value = '';
+        function loadFriendRequests() {
+            const me = localStorage.getItem('parazit_user');
+            const reqDiv = document.getElementById('friend-requests-list');
+            const friendsDiv = document.getElementById('friends-list');
+
+            if(!me) {
+                reqDiv.innerHTML = '<span style="color:#666;">Giriş yapılmadı</span>';
+                friendsDiv.innerHTML = '<span style="color:#666;">Giriş yapılmadı</span>';
+                return;
+            }
+
+            let requests = JSON.parse(localStorage.getItem('parazit_friend_requests') || '{}');
+            let myReqs = requests[me] || [];
+
+            if(myReqs.length === 0) {
+                reqDiv.innerHTML = '<span style="color:#666;">İstek yok</span>';
+            } else {
+                reqDiv.innerHTML = myReqs.map(from => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <span>👤 ${from}</span>
+                        <button class="action-btn" style="width:auto; padding:2px 6px; font-size:0.65rem;" onclick="acceptFriend('${from}')">Kabul Et</button>
+                    </div>
+                `).join('');
+            }
+
+            let friends = JSON.parse(localStorage.getItem('parazit_friends_' + me) || '[]');
+            friendsDiv.innerHTML = friends.map(f => `<div>💚 ${f}</div>`).join('') || '<span style="color:#666;">Henüz arkadaşınız yok</span>';
         }
+
+        function acceptFriend(fromUser) {
+            const me = localStorage.getItem('parazit_user');
+            
+            let myFriends = JSON.parse(localStorage.getItem('parazit_friends_' + me) || '[]');
+            if(!myFriends.includes(fromUser)) myFriends.push(fromUser);
+            localStorage.setItem('parazit_friends_' + me, JSON.stringify(myFriends));
+
+            let otherFriends = JSON.parse(localStorage.getItem('parazit_friends_' + fromUser) || '[]');
+            if(!otherFriends.includes(me)) otherFriends.push(me);
+            localStorage.setItem('parazit_friends_' + fromUser, JSON.stringify(otherFriends));
+
+            let requests = JSON.parse(localStorage.getItem('parazit_friend_requests') || '{}');
+            if(requests[me]) {
+                requests[me] = requests[me].filter(u => u !== fromUser);
+                localStorage.setItem('parazit_friend_requests', JSON.stringify(requests));
+            }
+
+            alert(`✅ ${fromUser} ile arkadaş oldunuz!`);
+            loadFriendRequests();
+        }
+
+        // ALT PANEL VE MODAL İŞLEMLERİ
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openAccountModal() {
+            const user = localStorage.getItem('parazit_user');
+            const role = localStorage.getItem('parazit_role');
+            const code = localStorage.getItem('parazit_code');
+            const body = document.getElementById('account-modal-body');
+
+            if(user) {
+                body.innerHTML = `
+                    <p><b>Kullanıcı Adı:</b> ${user}</p>
+                    <p><b>Seri Kod:</b> <span style="color:#f1c40f;">${code}</span></p>
+                    <p><b>Sistem Yetkisi:</b> ${role}</p>
+                    <button class="action-btn" onclick="logoutSanalKimlik(); closeAccountModal();" style="border-color:#e74c3c; color:#e74c3c; margin-top:10px;">ÇIKIŞ YAP</button>
+                `;
+            } else {
+                body.innerHTML = `
+                    <p style="color:#e74c3c;">Oturum açılmadı!</p>
+                    <button class="action-btn" onclick="closeAccountModal(); toggleLeftPanel();">GİRİŞ YAP / KAYDOL</button>
+                `;
+            }
+            document.getElementById('account-modal').style.display = 'flex';
+        }
+
+        function closeAccountModal() {
+            document.getElementById('account-modal').style.display = 'none';
+        }
+
+        function openDMModal() {
+            document.getElementById('dm-modal').style.display = 'flex';
+            loadDMMessages();
+        }
+
+        function closeDMModal() {
+            document.getElementById('dm-modal').style.display = 'none';
+        }
+
+        function sendDM() {
+            const me = localStorage.getItem('parazit_user') || 'Misafir';
+            const target = document.getElementById('dm-target-user').value.trim();
+            const text = document.getElementById('dm-input-text').value.trim();
+
+            if(!target || !text) { alert('Alıcı nicki ve mesaj yazınız!'); return; }
+
+            let dms = JSON.parse(localStorage.getItem('parazit_dms') || '[]');
+            dms.push({ from: me, to: target, text: text });
+            localStorage.setItem('parazit_dms', JSON.stringify(dms));
+
+            document.getElementById('dm-input-text').value = '';
+            loadDMMessages();
+        }
+
+        function loadDMMessages() {
+            const me = localStorage.getItem('parazit_user') || 'Misafir';
+            const target = document.getElementById('dm-target-user').value.trim();
+            const container = document.getElementById('dm-messages-container');
+
+            let dms = JSON.parse(localStorage.getItem('parazit_dms') || '[]');
+            let filtered = dms.filter(d => (d.from === me && d.to === target) || (d.from === target && d.to === me));
+
+            if(filtered.length === 0) {
+                container.innerHTML = '<div style="color: #666; text-align: center;">-- Özel Mesaj Yok --</div>';
+                return;
+            }
+
+            container.innerHTML = filtered.map(d => `
+                <div style="margin-bottom:3px;">
+                    <b style="color:${d.from === me ? 'var(--main-color)' : '#f1c40f'};">${d.from}:</b> ${d.text}
+                </div>
+            `).join('');
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // OTOMATİK SENKRONİZASYON (1 SANİYELİK)
+        setInterval(() => {
+            loadMessages();
+            loadFriendRequests();
+            if(document.getElementById('dm-modal').style.display === 'flex') {
+                loadDMMessages();
+            }
+        }, 1000);
 
         window.onload = checkLoginState;
     </script>
