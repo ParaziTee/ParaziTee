@@ -56,16 +56,45 @@
     </div>
 
     <!-- SAĞDAN AÇILAN YAN MENÜ -->
-    <div id="side-drawer"
-<button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
-        <!-- Arkadaş ve Grup Yönetim Paneli -->
-        <div style="margin-top: 15px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
-            <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">👥 ARKADAŞ SİSTEMİ</p>
-            <div style="display: flex; gap: 5px; margin-bottom: 8px;">
-                <input type="text" id="friend-input" class="input-field" placeholder="Kullanıcı Adı" style="font-size: 0.8rem; padding: 4px;">
-                <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="addFriend()">Ekle</button>
-            </div>
-            <div id="friends-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem; margin-bottom: 10px;"></div>
+<div id="side-drawer" class="side-panel">
+    <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
+
+    <!-- ARKADAŞ SİSTEMİ -->
+    <div style="margin-top: 15px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
+        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">👥 ARKADAŞ SİSTEMİ</p>
+        <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+            <input type="text" id="friend-input" class="input-field" placeholder="Kullanıcı Adı" style="font-size: 0.8rem; padding: 4px;">
+            <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="addFriend()">Ekle</button>
+        </div>
+        <div id="friends-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem; margin-bottom: 10px;"></div>
+    </div>
+
+    <!-- NÜKLEER GRUPLAR -->
+    <div style="margin-top: 10px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
+        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">☣️ NÜKLEER GRUPLAR</p>
+        <div style="display: flex; gap: 5px; margin-bottom: 8px;">
+            <input type="text" id="group-name-input" class="input-field" placeholder="Grup Adı" style="font-size: 0.8rem; padding: 4px;">
+            <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="createGroup()">Kur</button>
+        </div>
+        <div id="groups-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem;"></div>
+    </div>
+
+    <!-- SANAL KİMLİK & SERİ KOD -->
+    <div style="margin-top: 10px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
+        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">🔑 SANAL KİMLİK & SERİ KOD</p>
+        <div id="logged-out-view">
+            <p style="font-size: 0.7rem; color: #2ecc71;">Sanal İsim (Nick) girin:</p>
+            <input type="text" id="sanal-nick-input" class="input-field" placeholder="Buraya Gir" style="margin-bottom: 8px;">
+            <button class="action-btn" onclick="generateSanalKimlik()">KİMLİK & SERİ KOD ÜRET</button>
+        </div>
+        <div id="logged-in-view" style="display: none;">
+            <p style="font-size: 0.8rem;">İsim: <span id="display-user" style="font-weight:bold;"></span> <span id="display-badge"></span></p>
+            <p style="font-size: 0.7rem; margin-top: 6px;">Yetki Seviyesi: <span id="display-role" style="font-weight:bold; color:#2ecc71;">Üye</span></p>
+            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; margin-top: 8px;">ÇIKIŞ</button>
+        </div>
+    </div>
+</div>
+
 
             <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">☣️ NÜKLEER GRUPLAR</p>
             <div style="display: flex; gap: 5px; margin-bottom: 8px;">
