@@ -153,7 +153,53 @@
             </div>
             <div id="friends-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem; margin-bottom: 10px;"></div>
         
+     <!-- === SOL PANEL / GİRİŞ VE CHAT KODU (SAĞ PANELİN ALTINA EKLENEN KISIM) === -->
+<div style="margin: 15px 0; padding: 12px; border: 1px solid #2ecc71; background: #080f08; border-radius: 4px;">
+    
+    <!-- 1. SANAL KİMLİK & GİRİŞ -->
+    <div style="margin-bottom: 12px;">
+        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem; margin-bottom: 6px;">🔑 SANAL KİMLİK & GİRİŞ</p>
+        
+        <!-- Giriş Yapılmamışsa -->
+        <div id="logged-out-view">
+            <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Sanal İsim (Nick):</p>
+            <input type="text" id="sanal-nick-input" class="input-field" placeholder="Nickinizi yazın" style="font-size: 0.8rem; padding: 4px; margin-bottom: 6px; width: 100%;">
+            
+            <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Seri Kod:</p>
+            <input type="password" id="sanal-key-input" class="input-field" placeholder="PRZ-XXXX-XX" style="font-size: 0.8rem; padding: 4px; margin-bottom: 8px; width: 100%;">
+            
+            <div style="display: flex; gap: 5px;">
+                <button class="action-btn" onclick="loginSanalKimlik()" style="font-size: 0.8rem; padding: 6px; flex: 1;">GİRİŞ YAP</button>
+                <button class="action-btn" onclick="generateSanalKimlik()" style="font-size: 0.8rem; padding: 6px; flex: 1; border-color: #f1c40f; color: #f1c40f;">KAYDOL</button>
+            </div>
         </div>
+
+        <!-- Giriş Yapılmışsa -->
+        <div id="logged-in-view" style="display: none;">
+            <p style="font-size: 0.8rem; color: #2ecc71;">Hoş geldin: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
+            <p style="font-size: 0.7rem; color: #888;">Seri Kod: <span id="display-key" style="color: #2ecc71;"></span></p>
+            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; margin-top: 6px; font-size: 0.75rem; padding: 4px 8px;">ÇIKIŞ YAP</button>
+        </div>
+    </div>
+
+    <!-- 2. SOHBET & CHAT (GRUPLAR VE MESAJLAR) -->
+    <div style="margin-top: 10px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
+        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem; margin-bottom: 6px;">💬 SOHBET & GRUP AKIŞI</p>
+        
+        <!-- Mesajların Görüneceği Alan -->
+        <div id="messages-container" style="height: 120px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
+            <div style="color: #666; text-align: center;">-- Sohbet Akışı --</div>
+        </div>
+        
+        <!-- Mesaj Gönderme Kutusu -->
+        <div style="display: flex; gap: 4px;">
+            <input type="text" id="message-input" class="input-field" placeholder="Mesaj yaz..." style="font-size: 0.8rem; padding: 4px; flex: 1;">
+            <button class="action-btn" style="width: auto; padding: 4px 10px; font-size: 0.8rem;" onclick="sendMessage()">GÖNDER</button>
+        </div>
+    </div>
+
+</div>
+  
 
         
     <!-- ANA EKRAN MENÜLERİ -->
