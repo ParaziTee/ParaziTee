@@ -72,8 +72,8 @@
 
         /* MÜZİK LİSTESİ İTEMLERİ */
         .song-item {
-            padding: 8px;
-            margin: 4px 0;
+            padding: 7px 10px;
+            margin: 3px 0;
             background: #081408;
             border: 1px solid #1a3a2a;
             border-radius: 4px;
@@ -82,10 +82,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            font-size: 0.75rem;
         }
         .song-item:hover {
             border-color: #f1c40f;
             background: #0e200e;
+        }
+        .category-title {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin: 12px 0 4px 0;
+            border-bottom: 1px dashed #2ecc71;
+            padding-bottom: 2px;
         }
 
         /* SOL PANEL */
@@ -165,31 +174,47 @@
             <span>🎵</span>
         </button>
 
-        <!-- DAHİLİ MÜZİK ÇALAR VE LİSTE -->
-        <div id="music-list" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid #2ecc71; background: #050a05; border-radius: 4px; font-size: 0.8rem;">
+        <!-- DAHİLİ MÜZİK ÇALAR VE KATEGORİLER -->
+        <div id="music-list" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid #2ecc71; background: #050a05; border-radius: 4px;">
             
-            <!-- ŞARKI ÇALAR KUTUSU -->
+            <!-- ŞARKI ÇALAR KONTROL KUTUSU -->
             <div id="player-box" style="margin-bottom: 10px; padding: 8px; border: 1px dashed #f1c40f; text-align: center; background: #081008;">
-                <p style="margin: 0 0 6px 0; color: #2ecc71; font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Çalınacak Şarkıyı Seçin</p>
-                <audio id="audio-player" controls style="width: 100%; height: 30px; filter: invert(100%) hue-rotate(90deg);"></audio>
+                <p style="margin: 0 0 6px 0; color: #2ecc71; font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Şarkı Seçilmedi</p>
+                <audio id="audio-player" style="display: none;"></audio>
+                
+                <div style="display: flex; justify-content: center; gap: 5px; margin-top: 5px;">
+                    <button class="action-btn" onclick="prevSong()" style="font-size: 0.7rem; padding: 4px;">⏮️ Geri</button>
+                    <button class="action-btn" onclick="togglePlay()" id="play-pause-btn" style="font-size: 0.7rem; padding: 4px;">▶️ Oynat</button>
+                    <button class="action-btn" onclick="nextSong()" style="font-size: 0.7rem; padding: 4px;">İleri ⏭️</button>
+                    <button class="action-btn" onclick="toggleReplay()" id="replay-btn" style="font-size: 0.7rem; padding: 4px; border-color: #888; color: #888;">🔁 Tekrar</button>
+                </div>
             </div>
 
-            <div class="song-item" onclick="playSong('Enes Alper - Sakat Bırakırım', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">
-                <span>🎵 Enes Alper - Sakat Bırakırım</span>
-                <span>▶️</span>
-            </div>
+            <!-- KATEGORİ 1: STALKER - PANTER SERİSİ -->
+            <div class="category-title">🐾 Stalker - Panter Serisi</div>
+            <div class="song-item" onclick="playSong(0)"><span>Stalker - Beyaz Panter</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(1)"><span>Stalker - Sarı Panter</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(2)"><span>Stalker - Pembe Panter</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(3)"><span>Stalker - Kırmızı Panter</span><span>▶️</span></div>
 
-            <div class="song-item" onclick="playSong('Stalker - Panter Serisi', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">
-                <span>🎵 Stalker - Panter Serisi</span>
-                <span>▶️</span>
-            </div>
+            <!-- KATEGORİ 2: STALKER - BİRİ FAME Mİ DEDİ SERİSİ -->
+            <div class="category-title">🔥 Stalker - Biri Fame Mi Dedi Serisi</div>
+            <div class="song-item" onclick="playSong(4)"><span>Stalker - Biri Fame Mi Dedi (Part 1)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(5)"><span>Stalker - Biri Fame Mi Dedi (Part 2)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(6)"><span>Stalker - Biri Fame Mi Dedi (Part 3)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(7)"><span>Stalker - Biri Fame Mi Dedi (Part 4)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(8)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span>▶️</span></div>
 
-            <div class="song-item" onclick="playSong('Stalker - Biri Fame Mi Dedi', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">
-                <span>🎵 Stalker - Biri Fame Mi Dedi</span>
-                <span>▶️</span>
-            </div>
-            
-            <p style="font-size: 0.65rem; color: #888; margin-top: 8px; text-align: center;">* Kendi MP3 dosyalarını GitHub projenin içine atıp bağlantılarını da verebilirsin kral.</p>
+            <!-- KATEGORİ 3: ENES ALPER - SAKAT BIRAKIRIM SERİSİ -->
+            <div class="category-title">⚡ Enes Alper - Sakat Bırakırım Serisi</div>
+            <div class="song-item" onclick="playSong(9)"><span>Enes Alper - Sakat Bırakırım (Part 1)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(10)"><span>Enes Alper - Sakat Bırakırım (Part 2)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(11)"><span>Enes Alper - Sakat Bırakırım (Part 3)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(12)"><span>Enes Alper - Sakat Bırakırım (Part 4)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(13)"><span>Enes Alper - Sakat Bırakırım (Part 5)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(14)"><span>Enes Alper - Sakat Bırakırım (Part 6)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(15)"><span>Enes Alper - Sakat Bırakırım (Part 7)</span><span>▶️</span></div>
+            <div class="song-item" onclick="playSong(16)"><span>Enes Alper - Sakat Bırakırım (Part 8)</span><span>▶️</span></div>
         </div>
 
         <button class="main-menu-btn" onclick="alert('APK İndirme Yakında!')">
@@ -281,20 +306,89 @@
         const KURUCU_NICK = "ParaziTR";
         const KURUCU_SIFRE = "nukleer123";
 
+        // MÜZİK LİSTESİ VE SES DOSYALARI
+        const playlist = [
+            // Panter Serisi
+            { title: "Stalker - Beyaz Panter", src: "Stalker-Beyaz-Panter.mp3" },
+            { title: "Stalker - Sarı Panter", src: "Stalker-Sarı-Panter.mp3" },
+            { title: "Stalker - Pembe Panter", src: "Stalker-Pembe-Panter.mp3" },
+            { title: "Stalker - Kırmızı Panter", src: "Stalker-Kırmızı-Panter.mp3" },
+            // Biri Fame Mi Dedi Serisi
+            { title: "Stalker - Biri Fame Mi Dedi (Part 1)", src: "Stallker-Biri-Fame-mi-dedi-1.mp3" },
+            { title: "Stalker - Biri Fame Mi Dedi (Part 2)", src: "Stalker-Biri-Fame-mi-dedi-2.mp3" },
+            { title: "Stalker - Biri Fame Mi Dedi (Part 3)", src: "Stalker-Biri-Fame-mi-dedi-3.mp3" },
+            { title: "Stalker - Biri Fame Mi Dedi (Part 4)", src: "Stalker-Biri-Fame-mi-dedi-4.mp3" },
+            { title: "Stalker - Biri Fame Mi Dedi (Part 5)", src: "Stalker-Biri-Fame-mi-dedi-5.mp3" },
+            // Sakat Bırakırım Serisi
+            { title: "Enes Alper - Sakat Bırakırım (Part 1)", src: "Sakat-Bırakırım-1.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 2)", src: "Sakat-Bırakırım-2.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 3)", src: "Sakat-Bırakırım-3.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 4)", src: "Sakat-Bırakırım-4.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 5)", src: "Enes-alper-sakat-birakirim-5.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 6)", src: "Enes-alper-sakat-birakirim-6.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 7)", src: "Enes-alper-sakat-birakirim-7.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 8)", src: "Enes-alper-sakar-birakirim-8.mp3" }
+        ];
+
+        let currentSongIndex = 0;
+        let isReplayOn = false;
+        const audio = document.getElementById('audio-player');
+
+        function playSong(index) {
+            currentSongIndex = index;
+            audio.src = playlist[index].src;
+            audio.play();
+            document.getElementById('now-playing').innerText = '🔊 ' + playlist[index].title;
+            document.getElementById('play-pause-btn').innerText = '⏸️ Durdur';
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                if(!audio.src) { playSong(0); return; }
+                audio.play();
+                document.getElementById('play-pause-btn').innerText = '⏸️ Durdur';
+            } else {
+                audio.pause();
+                document.getElementById('play-pause-btn').innerText = '▶️ Oynat';
+            }
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            playSong(currentSongIndex);
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            playSong(currentSongIndex);
+        }
+
+        function toggleReplay() {
+            isReplayOn = !isReplayOn;
+            audio.loop = isReplayOn;
+            const btn = document.getElementById('replay-btn');
+            if(isReplayOn) {
+                btn.style.borderColor = '#2ecc71';
+                btn.style.color = '#2ecc71';
+                btn.innerText = '🔁 Tekrar (Açık)';
+            } else {
+                btn.style.borderColor = '#888';
+                btn.style.color = '#888';
+                btn.innerText = '🔁 Tekrar';
+            }
+        }
+
+        audio.onended = function() {
+            if(!isReplayOn) {
+                nextSong();
+            }
+        };
+
         function toggleLeftPanel() { document.getElementById('left-drawer').classList.toggle('open'); }
         function toggleSidePanel() { document.getElementById('side-drawer').classList.toggle('open'); }
         function toggleMusicMenu() {
             const m = document.getElementById('music-list');
             m.style.display = m.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // UYGULAMA İÇİ MÜZİK ÇALAR
-        function playSong(title, url) {
-            const player = document.getElementById('audio-player');
-            const label = document.getElementById('now-playing');
-            label.innerText = '🔊 Çalıyor: ' + title;
-            player.src = url;
-            player.play();
         }
 
         function loginSanalKimlik() {
