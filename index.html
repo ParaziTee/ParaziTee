@@ -16,7 +16,7 @@
             color: var(--main-color);
             font-family: monospace;
             margin: 0;
-            padding: 15px 15px 70px 15px; /* Alt panel için padding */
+            padding: 15px 15px 70px 15px;
             box-sizing: border-box;
             transition: color 0.3s ease;
         }
@@ -127,7 +127,6 @@
             margin: 6px 0;
         }
 
-        /* SOL VE SAĞ PANELLER */
         .left-panel {
             position: fixed;
             top: 0;
@@ -181,7 +180,6 @@
             font-family: monospace;
         }
 
-        /* ALT PANEL (BOTTOM NAV) */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -212,7 +210,6 @@
             background-color: #081508;
         }
 
-        /* MODAL / POPUP KUTUSU */
         .modal {
             display: none;
             position: fixed;
@@ -276,7 +273,7 @@
                 </div>
             </div>
 
-            <!-- 1. STALKER - DOĞUM SERİSİ -->
+            <!-- KATEGORİLER -->
             <div class="category-title" onclick="toggleCategory('cat-dogum')">
                 <span>👶 Stalker - Doğum Serisi</span>
                 <span id="icon-cat-dogum">▼</span>
@@ -288,7 +285,6 @@
                 <div class="song-item" onclick="playSong(3)"><span>Stalker - Sezeryan Doğum</span><span>▶️</span></div>
             </div>
 
-            <!-- 2. ENES ALPER - M4 SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-m4')">
                 <span>⚡ Enes Alper - M4 Serisi</span>
                 <span id="icon-cat-m4">▼</span>
@@ -299,7 +295,6 @@
                 <div class="song-item" onclick="playSong(6)"><span>Enes Alper - M4A3</span><span>▶️</span></div>
             </div>
 
-            <!-- 3. HİDRA - NEDEN Mİ İLLEGAL SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-hidra')">
                 <span>🔥 Hidra - Neden Mi İllegal Serisi</span>
                 <span id="icon-cat-hidra">▼</span>
@@ -311,7 +306,6 @@
                 <div class="song-item" onclick="playSong(10)"><span>Hidra - Neden Mi İllegal 4</span><span>▶️</span></div>
             </div>
 
-            <!-- 4. STALKER - PANTER SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-panter')">
                 <span>🐾 Stalker - Panter Serisi</span>
                 <span id="icon-cat-panter">▼</span>
@@ -323,7 +317,6 @@
                 <div class="song-item" onclick="playSong(14)"><span>Stalker - Kırmızı Panter</span><span>▶️</span></div>
             </div>
 
-            <!-- 5. STALKER - BİRİ FAME Mİ DEDİ SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-fame')">
                 <span>🔥 Stalker - Biri Fame Mi Dedi Serisi</span>
                 <span id="icon-cat-fame">▼</span>
@@ -336,7 +329,6 @@
                 <div class="song-item" onclick="playSong(19)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span>▶️</span></div>
             </div>
 
-            <!-- 6. ENES ALPER - SAKAT BIRAKIRIM SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-sakat')">
                 <span>⚡ Enes Alper - Sakat Bırakırım Serisi</span>
                 <span id="icon-cat-sakat">▼</span>
@@ -353,7 +345,7 @@
             </div>
         </div>
 
-        <!-- DOWNLOAD BUTONU (Tam Düzeltildi) -->
+        <!-- HATASIZ İNDİRME BUTONU -->
         <button class="main-menu-btn" onclick="downloadApk()">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
@@ -367,7 +359,7 @@
             </div>
         </div>
 
-        <!-- AYARLAR & RENK SEÇENEĞİ -->
+        <!-- AYARLAR -->
         <button class="main-menu-btn" onclick="toggleSettingsMenu()">
             <span>> SETTINGS // RENK SEÇENEĞİ</span>
             <span>⚙️</span>
@@ -383,21 +375,25 @@
             </div>
         </div>
 
-        <!-- SADECE ParaziTR İÇİN ANA SAYFA KURUCU YÖNETİM PANELİ -->
-        <div id="main-kurucu-panel" style="display: none; margin-top: 15px; border: 2px solid #e74c3c; padding: 12px; background: #0c0404; border-radius: 6px;">
-            <p style="font-weight: bold; color: #e74c3c; font-size: 0.9rem; margin: 0 0 8px 0; border-bottom: 1px dashed #e74c3c; padding-bottom: 4px;">☢️ KURUCU YÖNETİM PANELİ (ParaziTR)</p>
-            
-            <p style="font-size: 0.75rem; color: #fff; margin: 4px 0;">👥 <b>Giren Toplam Üye Sayısı:</b> <span id="total-users-count" style="color:#2ecc71;">0</span></p>
-            <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0 8px 0;">Kayıtlı Tüm Kullanıcılar:</p>
-            <div id="all-users-list" style="max-height: 80px; overflow-y: auto; font-size: 0.7rem; border: 1px solid #1a3a2a; padding: 4px; background: #000; color: #2ecc71; margin-bottom: 10px;"></div>
+        <!-- ☢️ SADECE ParaziTR İÇİN AÇILIR/KAPANIR SARI KURUCU YÖNETİM PANELİ -->
+        <div id="main-kurucu-wrapper" style="display: none; margin-top: 10px;">
+            <div class="category-title" onclick="toggleCategory('cat-kurucu')" style="border-color: #f1c40f; color: #f1c40f; background: #0a0800;">
+                <span>☢️ KURUCU YÖNETİM PANELİ (ParaziTR)</span>
+                <span id="icon-cat-kurucu">▼</span>
+            </div>
+            <div id="cat-kurucu" class="song-container" style="border: 1px solid #f1c40f; padding: 10px; background: #080600; border-radius: 4px; display: none;">
+                <p style="font-size: 0.75rem; color: #f1c40f; margin: 4px 0;">👥 <b>Giren Toplam Üye Sayısı:</b> <span id="total-users-count" style="color:#fff;">0</span></p>
+                <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0 6px 0;">Kayıtlı Tüm Kullanıcılar:</p>
+                <div id="all-users-list" style="max-height: 80px; overflow-y: auto; font-size: 0.7rem; border: 1px solid #f1c40f; padding: 4px; background: #000; color: #f1c40f; margin-bottom: 10px;"></div>
 
-            <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0;">📢 Duyuru Yayınla:</p>
-            <input type="text" id="announcement-input" class="input-field" placeholder="Duyuru metni yazın..." style="font-size: 0.75rem; margin-bottom: 6px; border-color: #e74c3c;">
-            <button class="action-btn" onclick="publishAnnouncement()" style="font-size: 0.75rem; padding: 6px; border-color: #e74c3c; color: #e74c3c;">DUYURUYU YAYINLA</button>
+                <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0;">📢 Duyuru Yayınla:</p>
+                <input type="text" id="announcement-input" class="input-field" placeholder="Duyuru metni yazın..." style="font-size: 0.75rem; margin-bottom: 6px; border-color: #f1c40f; color: #f1c40f;">
+                <button class="action-btn" onclick="publishAnnouncement()" style="font-size: 0.75rem; padding: 6px; border-color: #f1c40f; color: #f1c40f;">DUYURUYU YAYINLA</button>
+            </div>
         </div>
     </div>
 
-    <!-- 1. SOL PANEL (Kurucu Paneli Buradan Kaldırıldı) -->
+    <!-- 1. SOL PANEL -->
     <div id="left-drawer" class="left-panel">
         <button class="close-btn" onclick="toggleLeftPanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
@@ -426,7 +422,6 @@
             <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px; margin-top: 4px;">ÇIKIŞ YAP</button>
         </div>
 
-        <!-- CHAT (HERKESE AÇIK SENKRONİZE SOHBET) -->
         <div style="margin-top: 15px; border-top: 1px dashed var(--main-color); padding-top: 10px;">
             <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem;">💬 SOHBET & CHAT</p>
             <div id="messages-container" style="height: 150px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
@@ -437,7 +432,7 @@
         </div>
     </div>
 
-    <!-- 2. SAĞ PANEL (Nükleer Gruplar Komple Kaldırıldı, Sadece Arkadaşlık) -->
+    <!-- 2. SAĞ PANEL -->
     <div id="side-drawer" class="side-panel">
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
@@ -455,7 +450,7 @@
         <div id="friends-list" style="max-height: 100px; overflow-y: auto; font-size: 0.8rem;"></div>
     </div>
 
-    <!-- ALT NAVİGASYON PANELİ (BOTTOM NAV BAR) -->
+    <!-- ALT NAVİGASYON PANELİ -->
     <div class="bottom-nav">
         <div class="bottom-nav-item" onclick="scrollToTop()">
             <span style="font-size: 1rem;">🏠</span>
@@ -471,7 +466,7 @@
         </div>
     </div>
 
-    <!-- DM (ÖZEL MESAJ) MODAL -->
+    <!-- DM MODAL -->
     <div id="dm-modal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeDMModal()">[X]</button>
@@ -547,9 +542,19 @@
             }
         }
 
-        // KESİN DÜZELTİLMİŞ APK İNDİRME
+        // İNDİRME HATASINI GİDEREN GÜVENLİ FONKSİYON
         function downloadApk() {
-            window.location.href = "parazitr.apk";
+            const apkUrl = "parazitr.apk";
+            const a = document.createElement('a');
+            a.href = apkUrl;
+            a.download = "ParaziTR.apk";
+            document.body.appendChild(a);
+            try {
+                a.click();
+            } catch(e) {
+                alert("APK dosyası sunucuda henüz bulunamadı! Lütfen repona parazitr.apk yükleyin.");
+            }
+            document.body.removeChild(a);
         }
 
         function changeTheme(colorHex) {
@@ -653,7 +658,6 @@
             s.style.display = s.style.display === 'none' ? 'block' : 'none';
         }
 
-        // KULLANICI / KURUCU GİRİŞ SİSTEMİ
         function loginSanalKimlik() {
             const nick = document.getElementById('sanal-nick-input').value.trim();
             const pass = document.getElementById('sanal-key-input').value.trim();
@@ -735,17 +739,16 @@
                 document.getElementById('display-role').innerText = role;
                 document.getElementById('display-code').innerText = code || '000-000-000';
 
-                // KURUCU YÖNETİM PANELİ SADECE ParaziTR İÇİN ANA SAYFADA
                 if(role === 'KURUCU ☢️') {
-                    document.getElementById('main-kurucu-panel').style.display = 'block';
+                    document.getElementById('main-kurucu-wrapper').style.display = 'block';
                     loadKurucuPanelData();
                 } else {
-                    document.getElementById('main-kurucu-panel').style.display = 'none';
+                    document.getElementById('main-kurucu-wrapper').style.display = 'none';
                 }
             } else {
                 document.getElementById('logged-out-view').style.display = 'block';
                 document.getElementById('logged-in-view').style.display = 'none';
-                document.getElementById('main-kurucu-panel').style.display = 'none';
+                document.getElementById('main-kurucu-wrapper').style.display = 'none';
             }
             updateOnlineDisplay();
             checkAnnouncement();
@@ -785,7 +788,6 @@
             }
         }
 
-        // GERÇEK ZAMANLI ORTAK SOHBET SİSTEMİ
         function sendMessage() {
             const msgInput = document.getElementById('message-input');
             const user = localStorage.getItem('parazit_user') || 'Misafir';
@@ -821,7 +823,6 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // ARKADAŞLIK VE İSTEK ATMA SİSTEMİ
         function addFriend() {
             const fInput = document.getElementById('friend-input');
             const targetUser = fInput.value.trim();
@@ -893,7 +894,6 @@
             loadFriendRequests();
         }
 
-        // ALT PANEL VE MODAL İŞLEMLERİ
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -970,7 +970,6 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // OTOMATİK SENKRONİZASYON (1 SANİYELİK)
         setInterval(() => {
             loadMessages();
             loadFriendRequests();
