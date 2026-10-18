@@ -5,26 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PARAZITR 1.0</title>
     <style>
+        :root {
+            --main-color: #2ecc71; /* Varsayılan Renk: Matrix Yeşili */
+            --bg-color: #040804;
+            --panel-bg: #080f08;
+        }
+
         body {
-            background-color: #040804;
-            color: #2ecc71;
+            background-color: var(--bg-color);
+            color: var(--main-color);
             font-family: monospace;
             margin: 0;
             padding: 15px;
             box-sizing: border-box;
+            transition: color 0.3s ease;
         }
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #2ecc71;
+            border-bottom: 1px solid var(--main-color);
             padding-bottom: 10px;
             margin-bottom: 15px;
         }
         .action-btn {
             background: transparent;
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+            border: 1px solid var(--main-color);
+            color: var(--main-color);
             padding: 8px 12px;
             cursor: pointer;
             font-family: monospace;
@@ -33,13 +40,13 @@
             border-radius: 4px;
         }
         .action-btn:hover {
-            background: #2ecc71;
+            background: var(--main-color);
             color: #040804;
         }
         .input-field {
-            background: #080f08;
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+            background: var(--panel-bg);
+            border: 1px solid var(--main-color);
+            color: var(--main-color);
             padding: 6px;
             font-family: monospace;
             width: 100%;
@@ -50,8 +57,8 @@
         /* ANA SAYFA MENÜ BUTONLARI */
         .main-menu-btn {
             background: transparent;
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+            border: 1px solid var(--main-color);
+            color: var(--main-color);
             padding: 12px;
             margin-bottom: 10px;
             display: flex;
@@ -66,59 +73,61 @@
             box-sizing: border-box;
         }
         .main-menu-btn:active {
-            background: #2ecc71;
+            background: var(--main-color);
             color: #040804;
         }
 
-        /* AÇILIR KATEGORİ BAŞLIKLARI */
+        /* BASİTLEŞTİRİLMİŞ MÜZİK ÇALAR & LİSTE */
+        .player-simple {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid var(--main-color);
+            background: #000;
+            border-radius: 4px;
+            text-align: center;
+        }
         .category-title {
-            color: #2ecc71;
+            color: var(--main-color);
             font-weight: bold;
             font-size: 0.8rem;
-            margin: 8px 0 4px 0;
-            border: 1px solid #1a3a2a;
+            margin: 6px 0;
+            border: 1px solid var(--main-color);
             padding: 8px;
-            background: #081408;
+            background: var(--panel-bg);
             border-radius: 4px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .category-title:hover {
-            border-color: #2ecc71;
-        }
-
-        /* MÜZİK LİSTESİ İTEMLERİ (YEŞİL YAZILAR) */
         .song-container {
-            display: none; /* İLK BAŞTA GİZLİ */
+            display: none;
             padding-left: 5px;
             margin-bottom: 8px;
         }
         .song-item {
-            padding: 7px 10px;
+            padding: 6px 8px;
             margin: 3px 0;
             background: #040a04;
             border: 1px solid #1a3a2a;
             border-radius: 4px;
             cursor: pointer;
-            color: #2ecc71; /* SARI YERİNE YEŞİL */
+            color: var(--main-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 0.75rem;
         }
         .song-item:hover {
-            border-color: #2ecc71;
-            background: #0e200e;
+            border-color: var(--main-color);
         }
 
-        /* OYNATMA ÇUBUĞU (SEEK BAR) */
+        /* OYNATMA ÇUBUĞU */
         .progress-bar {
             width: 100%;
-            accent-color: #2ecc71;
+            accent-color: var(--main-color);
             cursor: pointer;
-            margin-top: 6px;
+            margin: 6px 0;
         }
 
         /* SOL PANEL */
@@ -128,8 +137,8 @@
             left: -300px;
             width: 280px;
             height: 100%;
-            background-color: #080f08;
-            border-right: 1px solid #2ecc71;
+            background-color: var(--panel-bg);
+            border-right: 1px solid var(--main-color);
             z-index: 1000;
             padding: 15px;
             transition: left 0.3s ease;
@@ -146,8 +155,8 @@
             right: -300px;
             width: 280px;
             height: 100%;
-            background-color: #080f08;
-            border-left: 1px solid #2ecc71;
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--main-color);
             z-index: 1000;
             padding: 15px;
             transition: right 0.3s ease;
@@ -169,8 +178,8 @@
         }
         .menu-btn {
             background: transparent;
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+            border: 1px solid var(--main-color);
+            color: var(--main-color);
             padding: 6px 10px;
             cursor: pointer;
             font-family: monospace;
@@ -182,13 +191,13 @@
     <!-- ÜST MENÜ -->
     <div class="top-bar">
         <button class="menu-btn" onclick="toggleLeftPanel()">💬 SOHBET & GİRİŞ</button>
-        <h2 style="margin:0; font-size: 1.1rem; color: #2ecc71;">☣️ PARAZITR 1.0</h2>
+        <h2 style="margin:0; font-size: 1.1rem; color: var(--main-color);">☣️ PARAZITR 1.0</h2>
         <button class="menu-btn" onclick="toggleSidePanel()">PANEL ☰</button>
     </div>
 
     <!-- DUYURULAR ALANI -->
-    <div id="announcement-banner" style="background: #081a0e; border: 1px solid #2ecc71; padding: 8px; margin-bottom: 15px; border-radius: 4px; font-size: 0.8rem; display: none;">
-        <b style="color: #2ecc71;">📢 KURUCU DUYURUSU:</b> <span id="announcement-text" style="color: #fff;"></span>
+    <div id="announcement-banner" style="background: #081a0e; border: 1px solid var(--main-color); padding: 8px; margin-bottom: 15px; border-radius: 4px; font-size: 0.8rem; display: none;">
+        <b style="color: var(--main-color);">📢 KURUCU DUYURUSU:</b> <span id="announcement-text" style="color: #fff;"></span>
     </div>
 
     <!-- ANA SAYFA MENÜLERİ -->
@@ -198,89 +207,101 @@
             <span>🎵</span>
         </button>
 
-        <!-- DAHİLİ MÜZİK ÇALAR VE AÇILIR KATEGORİLER -->
-        <div id="music-list" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid #2ecc71; background: #050a05; border-radius: 4px;">
+        <!-- SADELEŞTİRİLMİŞ MÜZİK ÇALAR VE KATEGORİLER -->
+        <div id="music-list" style="display: none; padding: 8px; margin-bottom: 10px; border: 1px solid var(--main-color); background: #050a05; border-radius: 4px;">
             
-            <!-- ŞARKI ÇALAR KONTROL KUTUSU & OYNATMA ÇUBUĞU -->
-            <div id="player-box" style="margin-bottom: 10px; padding: 8px; border: 1px dashed #2ecc71; text-align: center; background: #081008;">
-                <p style="margin: 0 0 4px 0; color: #2ecc71; font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Şarkı Seçilmedi</p>
+            <!-- SADE OYNATICI KUTUSU -->
+            <div class="player-simple">
+                <p style="margin: 0 0 4px 0; color: var(--main-color); font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Şarkı Seçiniz</p>
                 <audio id="audio-player" style="display: none;"></audio>
                 
-                <!-- SÜRE VE OYNATMA ÇUBUĞU -->
-                <div style="display: flex; align-items: center; gap: 8px; font-size: 0.65rem; color: #888;">
+                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: #888;">
                     <span id="current-time">0:00</span>
                     <input type="range" id="seek-bar" class="progress-bar" value="0" max="100" onchange="seekAudio()">
                     <span id="total-duration">0:00</span>
                 </div>
 
-                <!-- BUTONLAR -->
-                <div style="display: flex; justify-content: center; gap: 5px; margin-top: 8px;">
-                    <button class="action-btn" onclick="prevSong()" style="font-size: 0.7rem; padding: 4px;">⏮️ Geri</button>
-                    <button class="action-btn" onclick="togglePlay()" id="play-pause-btn" style="font-size: 0.7rem; padding: 4px;">▶️ Oynat</button>
-                    <button class="action-btn" onclick="nextSong()" style="font-size: 0.7rem; padding: 4px;">İleri ⏭️</button>
-                    <button class="action-btn" onclick="toggleReplay()" id="replay-btn" style="font-size: 0.7rem; padding: 4px; border-color: #888; color: #888;">🔁 Tekrar</button>
+                <div style="display: flex; justify-content: center; gap: 4px; margin-top: 6px;">
+                    <button class="action-btn" onclick="prevSong()" style="font-size: 0.65rem; padding: 3px 6px;">⏮️ Geri</button>
+                    <button class="action-btn" onclick="togglePlay()" id="play-pause-btn" style="font-size: 0.65rem; padding: 3px 6px;">▶️ Oynat</button>
+                    <button class="action-btn" onclick="nextSong()" style="font-size: 0.65rem; padding: 3px 6px;">İleri ⏭️</button>
+                    <button class="action-btn" onclick="toggleReplay()" id="replay-btn" style="font-size: 0.65rem; padding: 3px 6px; border-color: #888; color: #888;">🔁 Tekrar</button>
                 </div>
             </div>
 
-            <!-- KATEGORİ 1: STALKER - PANTER SERİSİ (AÇILIR/KAPANIR) -->
+            <!-- KATEGORİ 1: PANTER SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-panter')">
                 <span>🐾 Stalker - Panter Serisi</span>
                 <span id="icon-cat-panter">▼</span>
             </div>
             <div id="cat-panter" class="song-container">
-                <div class="song-item" onclick="playSong(0)"><span>Stalker - Beyaz Panter</span><span></span></div>
-                <div class="song-item" onclick="playSong(1)"><span>Stalker - Sarı Panter</span><span></span></div>
-                <div class="song-item" onclick="playSong(2)"><span>Stalker - Pembe Panter</span><span></span></div>
-                <div class="song-item" onclick="playSong(3)"><span>Stalker - Kırmızı Panter</span><span></span></div>
+                <div class="song-item" onclick="playSong(0)"><span>Stalker - Beyaz Panter</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(1)"><span>Stalker - Sarı Panter</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(2)"><span>Stalker - Pembe Panter</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(3)"><span>Stalker - Kırmızı Panter</span><span>▶️</span></div>
             </div>
 
-            <!-- KATEGORİ 2: STALKER - BİRİ FAME Mİ DEDİ SERİSİ (AÇILIR/KAPANIR) -->
+            <!-- KATEGORİ 2: BİRİ FAME Mİ DEDİ SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-fame')">
                 <span>🔥 Stalker - Biri Fame Mi Dedi Serisi</span>
                 <span id="icon-cat-fame">▼</span>
             </div>
             <div id="cat-fame" class="song-container">
-                <div class="song-item" onclick="playSong(4)"><span>Stalker - Biri Fame Mi Dedi (Part 1)</span><span></span></div>
-                <div class="song-item" onclick="playSong(5)"><span>Stalker - Biri Fame Mi Dedi (Part 2)</span><span></span></div>
-                <div class="song-item" onclick="playSong(6)"><span>Stalker - Biri Fame Mi Dedi (Part 3)</span><span></span></div>
-                <div class="song-item" onclick="playSong(7)"><span>Stalker - Biri Fame Mi Dedi (Part 4)</span><span></span></div>
-                <div class="song-item" onclick="playSong(8)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span></span></div>
+                <div class="song-item" onclick="playSong(4)"><span>Stalker - Biri Fame Mi Dedi (Part 1)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(5)"><span>Stalker - Biri Fame Mi Dedi (Part 2)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(6)"><span>Stalker - Biri Fame Mi Dedi (Part 3)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(7)"><span>Stalker - Biri Fame Mi Dedi (Part 4)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(8)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span>▶️</span></div>
             </div>
 
-            <!-- KATEGORİ 3: ENES ALPER - SAKAT BIRAKIRIM SERİSİ (AÇILIR/KAPANIR) -->
+            <!-- KATEGORİ 3: SAKAT BIRAKIRIM SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-sakat')">
                 <span>⚡ Enes Alper - Sakat Bırakırım Serisi</span>
                 <span id="icon-cat-sakat">▼</span>
             </div>
             <div id="cat-sakat" class="song-container">
-                <div class="song-item" onclick="playSong(9)"><span>Enes Alper - Sakat Bırakırım (Part 1)</span><span></span></div>
-                <div class="song-item" onclick="playSong(10)"><span>Enes Alper - Sakat Bırakırım (Part 2)</span><span></span></div>
-                <div class="song-item" onclick="playSong(11)"><span>Enes Alper - Sakat Bırakırım (Part 3)</span><span></span></div>
-                <div class="song-item" onclick="playSong(12)"><span>Enes Alper - Sakat Bırakırım (Part 4)</span><span></span></div>
-                <div class="song-item" onclick="playSong(13)"><span>Enes Alper - Sakat Bırakırım (Part 5)</span><span></span></div>
-                <div class="song-item" onclick="playSong(14)"><span>Enes Alper - Sakat Bırakırım (Part 6)</span><span></span></div>
-                <div class="song-item" onclick="playSong(15)"><span>Enes Alper - Sakat Bırakırım (Part 7)</span><span></span></div>
-                <div class="song-item" onclick="playSong(16)"><span>Enes Alper - Sakat Bırakırım (Part 8)</span><span></span></div>
+                <div class="song-item" onclick="playSong(9)"><span>Enes Alper - Sakat Bırakırım (Part 1)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(10)"><span>Enes Alper - Sakat Bırakırım (Part 2)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(11)"><span>Enes Alper - Sakat Bırakırım (Part 3)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(12)"><span>Enes Alper - Sakat Bırakırım (Part 4)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(13)"><span>Enes Alper - Sakat Bırakırım (Part 5)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(14)"><span>Enes Alper - Sakat Bırakırım (Part 6)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(15)"><span>Enes Alper - Sakat Bırakırım (Part 7)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(16)"><span>Enes Alper - Sakat Bırakırım (Part 8)</span><span>▶️</span></div>
             </div>
         </div>
 
-        <button class="main-menu-btn" onclick="alert('APK İndirme Yakında!')">
+        <!-- DOĞRUDAN İNDİREN DOWNLOAD BUTONU -->
+        <a href="parazitr.apk" download="ParaziTR.apk" class="main-menu-btn">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
-        </button>
+        </a>
 
         <!-- ANLIK ÇEVRİMİÇİ LİSTESİ -->
-        <div style="border: 1px solid #2ecc71; padding: 10px; border-radius: 4px; margin-bottom: 10px; background: #060c06;">
-            <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 0.85rem; color: #2ecc71;">🟢 ANLIK ÇEVRİMİÇİ KULLANICILAR</p>
+        <div style="border: 1px solid var(--main-color); padding: 10px; border-radius: 4px; margin-bottom: 10px; background: #060c06;">
+            <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 0.85rem; color: var(--main-color);">🟢 ANLIK ÇEVRİMİÇİ KULLANICILAR</p>
             <div id="main-online-list" style="font-size: 0.75rem; max-height: 70px; overflow-y: auto; color: #fff;">
                 Yükleniyor...
             </div>
         </div>
 
-        <button class="main-menu-btn" onclick="alert('ParaziTR v1.0 - Cyber System')">
-            <span>> SETTINGS // ABOUT</span>
+        <!-- AYARLAR & RENK SEÇENEĞİ -->
+        <button class="main-menu-btn" onclick="toggleSettingsMenu()">
+            <span>> SETTINGS // RENK SEÇENEĞİ</span>
             <span>⚙️</span>
         </button>
+
+        <!-- AÇILIR AYARLAR KUTUSU -->
+        <div id="settings-box" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid var(--main-color); background: #050a05; border-radius: 4px;">
+            <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 0.8rem;">🎨 ARAYÜZ RENK SEÇİMİ:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                <button class="action-btn" onclick="changeTheme('#2ecc71')" style="border-color: #2ecc71; color: #2ecc71;">Matrix Yeşili</button>
+                <button class="action-btn" onclick="changeTheme('#3498db')" style="border-color: #3498db; color: #3498db;">Siber Mavi</button>
+                <button class="action-btn" onclick="changeTheme('#e74c3c')" style="border-color: #e74c3c; color: #e74c3c;">Kan Kırmızı</button>
+                <button class="action-btn" onclick="changeTheme('#f1c40f')" style="border-color: #f1c40f; color: #f1c40f;">Nükleer Sarı</button>
+            </div>
+            <p style="margin: 10px 0 0 0; font-size: 0.7rem; color: #888; text-align: center;">ParaziTR Interface v1.0</p>
+        </div>
     </div>
 
     <!-- 1. SOL PANEL -->
@@ -288,24 +309,24 @@
         <button class="close-btn" onclick="toggleLeftPanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
 
-        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem; border-bottom: 1px dashed #2ecc71; padding-bottom: 4px;">🔑 SANAL KİMLİK & GİRİŞ</p>
+        <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; border-bottom: 1px dashed var(--main-color); padding-bottom: 4px;">🔑 SANAL KİMLİK & GİRİŞ</p>
         
         <div id="logged-out-view">
-            <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Sanal İsim (Nick):</p>
+            <p style="font-size: 0.75rem; color: var(--main-color); margin-bottom: 4px;">Sanal İsim (Nick):</p>
             <input type="text" id="sanal-nick-input" class="input-field" placeholder="Nickinizi yazın" style="font-size: 0.8rem; margin-bottom: 6px;">
             
-            <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Şifre (ParaziTR için gerekli):</p>
+            <p style="font-size: 0.75rem; color: var(--main-color); margin-bottom: 4px;">Şifre (ParaziTR için gerekli):</p>
             <input type="password" id="sanal-key-input" class="input-field" placeholder="Şifre girin" style="font-size: 0.8rem; margin-bottom: 8px;">
             
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn" onclick="loginSanalKimlik()" style="font-size: 0.75rem; padding: 6px;">GİRİŞ</button>
-                <button class="action-btn" onclick="generateSanalKimlik()" style="font-size: 0.75rem; padding: 6px; border-color: #2ecc71; color: #2ecc71;">KAYDOL</button>
+                <button class="action-btn" onclick="generateSanalKimlik()" style="font-size: 0.75rem; padding: 6px;">KAYDOL</button>
             </div>
         </div>
 
         <div id="logged-in-view" style="display: none;">
-            <p style="font-size: 0.8rem; color: #2ecc71;">Kullanıcı: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
-            <p style="font-size: 0.75rem; color: #2ecc71;">Yetki: <span id="display-role">Üye</span></p>
+            <p style="font-size: 0.8rem; color: var(--main-color);">Kullanıcı: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
+            <p style="font-size: 0.75rem; color: var(--main-color);">Yetki: <span id="display-role">Üye</span></p>
             <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px; margin-top: 4px;">ÇIKIŞ YAP</button>
         </div>
 
@@ -318,8 +339,8 @@
         </div>
 
         <!-- SOHBET AKIŞI -->
-        <div style="margin-top: 15px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
-            <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">💬 SOHBET & CHAT</p>
+        <div style="margin-top: 15px; border-top: 1px dashed var(--main-color); padding-top: 10px;">
+            <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem;">💬 SOHBET & CHAT</p>
             <div id="messages-container" style="height: 130px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
                 <div style="color: #666; text-align: center;">-- Sohbet Akışı --</div>
             </div>
@@ -333,14 +354,14 @@
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
 
-        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem; border-bottom: 1px dashed #2ecc71; padding-bottom: 4px;">👥 ARKADAŞ SİSTEMİ</p>
+        <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; border-bottom: 1px dashed var(--main-color); padding-bottom: 4px;">👥 ARKADAŞ SİSTEMİ</p>
         <div style="display: flex; gap: 5px; margin-bottom: 6px;">
             <input type="text" id="friend-input" class="input-field" placeholder="Kullanıcı Adı" style="font-size: 0.8rem;">
             <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="addFriend()">Ekle</button>
         </div>
         <div id="friends-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem; margin-bottom: 15px;"></div>
 
-        <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem; border-bottom: 1px dashed #2ecc71; padding-bottom: 4px;">☣️ NÜKLEER GRUPLAR</p>
+        <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem; border-bottom: 1px dashed var(--main-color); padding-bottom: 4px;">☣️ NÜKLEER GRUPLAR</p>
         <div style="display: flex; gap: 5px; margin-bottom: 6px;">
             <input type="text" id="group-name-input" class="input-field" placeholder="Grup Adı" style="font-size: 0.8rem;">
             <button class="action-btn" style="width: auto; padding: 4px 8px; font-size: 0.8rem;" onclick="createGroup()">Kur</button>
@@ -373,7 +394,7 @@
             { title: "Enes Alper - Sakat Bırakırım (Part 4)", src: "Sakat-Bırakırım-4.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 5)", src: "Enes-alper-sakat-birakirim-5.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 6)", src: "Enes-alper-sakat-birakirim-6.mp3" },
-            { title: "Enes Alper - Sakat Bırakırım (Part 7)", src: "Enes-alper-sakat-birakirim-7.mp3" },
+{ title: "Enes Alper - Sakat Bırakırım (Part 7)", src: "Enes-alper-sakat-birakirim-7.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 8)", src: "Enes-alper-sakar-birakirim-8.mp3" }
         ];
 
@@ -383,6 +404,18 @@
         const seekBar = document.getElementById('seek-bar');
         const currentTimeSpan = document.getElementById('current-time');
         const totalDurationSpan = document.getElementById('total-duration');
+
+        // TEMA RENK DEĞİŞTİRME
+        function changeTheme(colorHex) {
+            document.documentElement.style.setProperty('--main-color', colorHex);
+            localStorage.setItem('parazit_theme', colorHex);
+        }
+
+        // KAYITLI TEMAYI YÜKLE
+        const savedTheme = localStorage.getItem('parazit_theme');
+        if(savedTheme) {
+            changeTheme(savedTheme);
+        }
 
         function playSong(index) {
             currentSongIndex = index;
@@ -418,8 +451,8 @@
             audio.loop = isReplayOn;
             const btn = document.getElementById('replay-btn');
             if(isReplayOn) {
-                btn.style.borderColor = '#2ecc71';
-                btn.style.color = '#2ecc71';
+                btn.style.borderColor = 'var(--main-color)';
+                btn.style.color = 'var(--main-color)';
                 btn.innerText = '🔁 Tekrar (Açık)';
             } else {
                 btn.style.borderColor = '#888';
@@ -428,7 +461,6 @@
             }
         }
 
-        // DAKİKA FORMATLAMA (00:00)
         function formatTime(seconds) {
             if(isNaN(seconds)) return "0:00";
             const mins = Math.floor(seconds / 60);
@@ -436,7 +468,6 @@
             return mins + ":" + (secs < 10 ? "0" : "") + secs;
         }
 
-        // ŞARKI OYNARKEN ÇUBUĞU VE DAKİKAYI GÜNCELLE
         audio.ontimeupdate = function() {
             if(audio.duration) {
                 const progress = (audio.currentTime / audio.duration) * 100;
@@ -446,7 +477,6 @@
             }
         };
 
-        // ÇUBUKTAN ŞARKIYI İLERİ/GERİ SARMA
         function seekAudio() {
             if(audio.duration) {
                 audio.currentTime = (seekBar.value / 100) * audio.duration;
@@ -459,7 +489,6 @@
             }
         };
 
-        // KATEGORİ AÇILIR/KAPANIR SİSTEMİ
         function toggleCategory(catId) {
             const el = document.getElementById(catId);
             const icon = document.getElementById('icon-' + catId);
@@ -477,6 +506,10 @@
         function toggleMusicMenu() {
             const m = document.getElementById('music-list');
             m.style.display = m.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleSettingsMenu() {
+            const s = document.getElementById('settings-box');
+            s.style.display = s.style.display === 'none' ? 'block' : 'none';
         }
 
         function loginSanalKimlik() {
@@ -596,7 +629,7 @@
             if(role === 'KURUCU ☢️') {
                 msgDiv.innerHTML = `<b style="color:#e74c3c;">[KURUCU ☢️] ${user}:</b> ${msgInput.value}`;
             } else {
-                msgDiv.innerHTML = `<b style="color:#2ecc71;">${user}:</b> ${msgInput.value}`;
+                msgDiv.innerHTML = `<b style="color:var(--main-color);">${user}:</b> ${msgInput.value}`;
             }
 
             container.appendChild(msgDiv);
