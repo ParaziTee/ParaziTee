@@ -6,7 +6,7 @@
     <title>PARAZITR 1.0</title>
     <style>
         :root {
-            --main-color: #2ecc71; /* Varsayılan Renk: Matrix Yeşili */
+            --main-color: #2ecc71;
             --bg-color: #040804;
             --panel-bg: #080f08;
         }
@@ -54,7 +54,6 @@
             border-radius: 4px;
         }
 
-        /* ANA SAYFA MENÜ BUTONLARI */
         .main-menu-btn {
             background: transparent;
             border: 1px solid var(--main-color);
@@ -77,7 +76,6 @@
             color: #040804;
         }
 
-        /* BASİTLEŞTİRİLMİŞ MÜZİK ÇALAR & LİSTE */
         .player-simple {
             margin-bottom: 10px;
             padding: 10px;
@@ -122,7 +120,6 @@
             border-color: var(--main-color);
         }
 
-        /* OYNATMA ÇUBUĞU */
         .progress-bar {
             width: 100%;
             accent-color: var(--main-color);
@@ -130,7 +127,6 @@
             margin: 6px 0;
         }
 
-        /* SOL PANEL */
         .left-panel {
             position: fixed;
             top: 0;
@@ -148,7 +144,6 @@
         }
         .left-panel.open { left: 0; pointer-events: auto; }
 
-        /* SAĞ PANEL */
         .side-panel {
             position: fixed;
             top: 0;
@@ -207,10 +202,7 @@
             <span>🎵</span>
         </button>
 
-        <!-- SADELEŞTİRİLMİŞ MÜZİK ÇALAR VE KATEGORİLER -->
         <div id="music-list" style="display: none; padding: 8px; margin-bottom: 10px; border: 1px solid var(--main-color); background: #050a05; border-radius: 4px;">
-            
-            <!-- SADE OYNATICI KUTUSU -->
             <div class="player-simple">
                 <p style="margin: 0 0 4px 0; color: var(--main-color); font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Şarkı Seçiniz</p>
                 <audio id="audio-player" style="display: none;"></audio>
@@ -229,7 +221,7 @@
                 </div>
             </div>
 
-            <!-- KATEGORİ 1: PANTER SERİSİ -->
+            <!-- KATEGORİLER -->
             <div class="category-title" onclick="toggleCategory('cat-panter')">
                 <span>🐾 Stalker - Panter Serisi</span>
                 <span id="icon-cat-panter">▼</span>
@@ -241,7 +233,6 @@
                 <div class="song-item" onclick="playSong(3)"><span>Stalker - Kırmızı Panter</span><span>▶️</span></div>
             </div>
 
-            <!-- KATEGORİ 2: BİRİ FAME Mİ DEDİ SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-fame')">
                 <span>🔥 Stalker - Biri Fame Mi Dedi Serisi</span>
                 <span id="icon-cat-fame">▼</span>
@@ -254,7 +245,6 @@
                 <div class="song-item" onclick="playSong(8)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span>▶️</span></div>
             </div>
 
-            <!-- KATEGORİ 3: SAKAT BIRAKIRIM SERİSİ -->
             <div class="category-title" onclick="toggleCategory('cat-sakat')">
                 <span>⚡ Enes Alper - Sakat Bırakırım Serisi</span>
                 <span id="icon-cat-sakat">▼</span>
@@ -271,11 +261,11 @@
             </div>
         </div>
 
-        <!-- DOĞRUDAN İNDİREN DOWNLOAD BUTONU -->
-        <a href="parazitr.apk" download="ParaziTR.apk" class="main-menu-btn">
+        <!-- ÇALIŞAN APK İNDİRME BUTONU -->
+        <button class="main-menu-btn" onclick="downloadApk()">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
-        </a>
+        </button>
 
         <!-- ANLIK ÇEVRİMİÇİ LİSTESİ -->
         <div style="border: 1px solid var(--main-color); padding: 10px; border-radius: 4px; margin-bottom: 10px; background: #060c06;">
@@ -291,7 +281,6 @@
             <span>⚙️</span>
         </button>
 
-        <!-- AÇILIR AYARLAR KUTUSU -->
         <div id="settings-box" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid var(--main-color); background: #050a05; border-radius: 4px;">
             <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 0.8rem;">🎨 ARAYÜZ RENK SEÇİMİ:</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
@@ -300,7 +289,6 @@
                 <button class="action-btn" onclick="changeTheme('#e74c3c')" style="border-color: #e74c3c; color: #e74c3c;">Kan Kırmızı</button>
                 <button class="action-btn" onclick="changeTheme('#f1c40f')" style="border-color: #f1c40f; color: #f1c40f;">Nükleer Sarı</button>
             </div>
-            <p style="margin: 10px 0 0 0; font-size: 0.7rem; color: #888; text-align: center;">ParaziTR Interface v1.0</p>
         </div>
     </div>
 
@@ -313,11 +301,14 @@
         
         <div id="logged-out-view">
             <p style="font-size: 0.75rem; color: var(--main-color); margin-bottom: 4px;">Sanal İsim (Nick):</p>
-            <input type="text" id="sanal-nick-input" class="input-field" placeholder="Nickinizi yazın" style="font-size: 0.8rem; margin-bottom: 6px;">
+            <input type="text" id="sanal-nick-input" class="input-field" placeholder="Nickinizi yazın" oninput="checkNickInput()" style="font-size: 0.8rem; margin-bottom: 6px;">
             
-            <p style="font-size: 0.75rem; color: var(--main-color); margin-bottom: 4px;">Şifre (ParaziTR için gerekli):</p>
-            <input type="password" id="sanal-key-input" class="input-field" placeholder="Şifre girin" style="font-size: 0.8rem; margin-bottom: 8px;">
-            
+            <!-- ŞİFRE ALANI (İLK BAŞTA GİZLİ, ParaziTR YAZINCA GELİR) -->
+            <div id="password-wrapper" style="display: none; margin-bottom: 8px;">
+                <p style="font-size: 0.75rem; color: #e74c3c; margin-bottom: 4px;">Kurucu Şifresi:</p>
+                <input type="password" id="sanal-key-input" class="input-field" placeholder="Şifre girin" style="font-size: 0.8rem; border-color: #e74c3c;">
+            </div>
+
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn" onclick="loginSanalKimlik()" style="font-size: 0.75rem; padding: 6px;">GİRİŞ</button>
                 <button class="action-btn" onclick="generateSanalKimlik()" style="font-size: 0.75rem; padding: 6px;">KAYDOL</button>
@@ -326,11 +317,12 @@
 
         <div id="logged-in-view" style="display: none;">
             <p style="font-size: 0.8rem; color: var(--main-color);">Kullanıcı: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
+            <p style="font-size: 0.75rem; color: #f1c40f;">Seri Kod: <span id="display-code" style="font-weight:bold; color: #fff;"></span></p>
             <p style="font-size: 0.75rem; color: var(--main-color);">Yetki: <span id="display-role">Üye</span></p>
             <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px; margin-top: 4px;">ÇIKIŞ YAP</button>
         </div>
 
-        <!-- KURUCU ÖZEL YÖNETİM PANELİ -->
+        <!-- KURUCU PANELİ -->
         <div id="kurucu-panel" style="display: none; margin-top: 15px; border-top: 2px solid #e74c3c; padding-top: 10px;">
             <p style="font-weight: bold; color: #e74c3c; font-size: 0.85rem;">☢️ KURUCU YÖNETİM PANELİ</p>
             <p style="font-size: 0.75rem; color: #aaa; margin: 4px 0;">Duyuru Yayınla:</p>
@@ -338,7 +330,7 @@
             <button class="action-btn" onclick="publishAnnouncement()" style="font-size: 0.75rem; padding: 4px; border-color: #e74c3c; color: #e74c3c;">DUYURUYU YAYINLA</button>
         </div>
 
-        <!-- SOHBET AKIŞI -->
+        <!-- CHAT -->
         <div style="margin-top: 15px; border-top: 1px dashed var(--main-color); padding-top: 10px;">
             <p style="font-weight: bold; color: var(--main-color); font-size: 0.9rem;">💬 SOHBET & CHAT</p>
             <div id="messages-container" style="height: 130px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
@@ -369,32 +361,27 @@
         <div id="groups-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem;"></div>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
         const KURUCU_NICK = "ParaziTR";
         const KURUCU_SIFRE = "nukleer123";
 
-        // MÜZİK LİSTESİ
         const playlist = [
-            // Panter Serisi
             { title: "Stalker - Beyaz Panter", src: "Stalker-Beyaz-Panter.mp3" },
             { title: "Stalker - Sarı Panter", src: "Stalker-Sarı-Panter.mp3" },
             { title: "Stalker - Pembe Panter", src: "Stalker-Pembe-Panter.mp3" },
             { title: "Stalker - Kırmızı Panter", src: "Stalker-Kırmızı-Panter.mp3" },
-            // Biri Fame Mi Dedi Serisi
             { title: "Stalker - Biri Fame Mi Dedi (Part 1)", src: "Stallker-Biri-Fame-mi-dedi-1.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 2)", src: "Stalker-Biri-Fame-mi-dedi-2.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 3)", src: "Stalker-Biri-Fame-mi-dedi-3.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 4)", src: "Stalker-Biri-Fame-mi-dedi-4.mp3" },
             { title: "Stalker - Biri Fame Mi Dedi (Part 5)", src: "Stalker-Biri-Fame-mi-dedi-5.mp3" },
-            // Sakat Bırakırım Serisi
             { title: "Enes Alper - Sakat Bırakırım (Part 1)", src: "Sakat-Bırakırım-1.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 2)", src: "Sakat-Bırakırım-2.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 3)", src: "Sakat-Bırakırım-3.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 4)", src: "Sakat-Bırakırım-4.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 5)", src: "Enes-alper-sakat-birakirim-5.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 6)", src: "Enes-alper-sakat-birakirim-6.mp3" },
-{ title: "Enes Alper - Sakat Bırakırım (Part 7)", src: "Enes-alper-sakat-birakirim-7.mp3" },
+            { title: "Enes Alper - Sakat Bırakırım (Part 7)", src: "Enes-alper-sakat-birakirim-7.mp3" },
             { title: "Enes Alper - Sakat Bırakırım (Part 8)", src: "Enes-alper-sakar-birakirim-8.mp3" }
         ];
 
@@ -405,17 +392,34 @@
         const currentTimeSpan = document.getElementById('current-time');
         const totalDurationSpan = document.getElementById('total-duration');
 
-        // TEMA RENK DEĞİŞTİRME
+        // NICK KONTROLÜ (ParaziTR YAZILINCA ŞİFRE AÇILIR)
+        function checkNickInput() {
+            const nick = document.getElementById('sanal-nick-input').value.trim();
+            const passWrapper = document.getElementById('password-wrapper');
+            if(nick.toLowerCase() === KURUCU_NICK.toLowerCase()) {
+                passWrapper.style.display = 'block';
+            } else {
+                passWrapper.style.display = 'none';
+            }
+        }
+
+        // APK İNDİRME FONKSİYONU
+        function downloadApk() {
+            const a = document.createElement('a');
+            a.href = 'parazitr.apk';
+            a.download = 'ParaziTR.apk';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
         function changeTheme(colorHex) {
             document.documentElement.style.setProperty('--main-color', colorHex);
             localStorage.setItem('parazit_theme', colorHex);
         }
 
-        // KAYITLI TEMAYI YÜKLE
         const savedTheme = localStorage.getItem('parazit_theme');
-        if(savedTheme) {
-            changeTheme(savedTheme);
-        }
+        if(savedTheme) { changeTheme(savedTheme); }
 
         function playSong(index) {
             currentSongIndex = index;
@@ -484,9 +488,7 @@
         }
 
         audio.onended = function() {
-            if(!isReplayOn) {
-                nextSong();
-            }
+            if(!isReplayOn) { nextSong(); }
         };
 
         function toggleCategory(catId) {
@@ -522,9 +524,13 @@
                 if(pass !== KURUCU_SIFRE) { alert('❌ Yanlış Kurucu Şifresi!'); return; }
                 localStorage.setItem('parazit_user', 'ParaziTR');
                 localStorage.setItem('parazit_role', 'KURUCU ☢️');
+                localStorage.setItem('parazit_code', '000-000-001'); // ParaziTR Özel Kod
             } else {
                 localStorage.setItem('parazit_user', nick);
                 localStorage.setItem('parazit_role', 'Kullanıcı');
+                if(!localStorage.getItem('parazit_code')) {
+                    localStorage.setItem('parazit_code', 'PRZ-' + Math.floor(1000 + Math.random() * 9000));
+                }
             }
 
             trackOnlineUser(nick);
@@ -535,11 +541,12 @@
             const nick = document.getElementById('sanal-nick-input').value.trim();
             if(!nick) { alert('Nick giriniz!'); return; }
             if(nick.toLowerCase() === KURUCU_NICK.toLowerCase()) {
-                alert('Bu isim Kurucuya aittir, şifre ile giriş yapın!');
+                alert('Bu isim Kurucuya aittir, şifre giriniz!');
                 return;
             }
             localStorage.setItem('parazit_user', nick);
             localStorage.setItem('parazit_role', 'Kullanıcı');
+            localStorage.setItem('parazit_code', 'PRZ-' + Math.floor(1000 + Math.random() * 9000));
 
             trackOnlineUser(nick);
             checkLoginState();
@@ -562,18 +569,21 @@
             }
             localStorage.removeItem('parazit_user');
             localStorage.removeItem('parazit_role');
+            localStorage.removeItem('parazit_code');
             checkLoginState();
         }
 
         function checkLoginState() {
             const user = localStorage.getItem('parazit_user');
             const role = localStorage.getItem('parazit_role');
+            const code = localStorage.getItem('parazit_code');
 
             if(user) {
                 document.getElementById('logged-out-view').style.display = 'none';
                 document.getElementById('logged-in-view').style.display = 'block';
                 document.getElementById('display-user').innerText = user;
                 document.getElementById('display-role').innerText = role;
+                document.getElementById('display-code').innerText = code || '000-000-000';
 
                 if(role === 'KURUCU ☢️') {
                     document.getElementById('kurucu-panel').style.display = 'block';
