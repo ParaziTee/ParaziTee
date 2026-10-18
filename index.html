@@ -70,31 +70,55 @@
             color: #040804;
         }
 
-        /* MÜZİK LİSTESİ İTEMLERİ */
+        /* AÇILIR KATEGORİ BAŞLIKLARI */
+        .category-title {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin: 8px 0 4px 0;
+            border: 1px solid #1a3a2a;
+            padding: 8px;
+            background: #081408;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .category-title:hover {
+            border-color: #2ecc71;
+        }
+
+        /* MÜZİK LİSTESİ İTEMLERİ (YEŞİL YAZILAR) */
+        .song-container {
+            display: none; /* İLK BAŞTA GİZLİ */
+            padding-left: 5px;
+            margin-bottom: 8px;
+        }
         .song-item {
             padding: 7px 10px;
             margin: 3px 0;
-            background: #081408;
+            background: #040a04;
             border: 1px solid #1a3a2a;
             border-radius: 4px;
             cursor: pointer;
-            color: #f1c40f;
+            color: #2ecc71; /* SARI YERİNE YEŞİL */
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 0.75rem;
         }
         .song-item:hover {
-            border-color: #f1c40f;
+            border-color: #2ecc71;
             background: #0e200e;
         }
-        .category-title {
-            color: #2ecc71;
-            font-weight: bold;
-            font-size: 0.8rem;
-            margin: 12px 0 4px 0;
-            border-bottom: 1px dashed #2ecc71;
-            padding-bottom: 2px;
+
+        /* OYNATMA ÇUBUĞU (SEEK BAR) */
+        .progress-bar {
+            width: 100%;
+            accent-color: #2ecc71;
+            cursor: pointer;
+            margin-top: 6px;
         }
 
         /* SOL PANEL */
@@ -163,8 +187,8 @@
     </div>
 
     <!-- DUYURULAR ALANI -->
-    <div id="announcement-banner" style="background: #081a0e; border: 1px solid #f1c40f; padding: 8px; margin-bottom: 15px; border-radius: 4px; font-size: 0.8rem; display: none;">
-        <b style="color: #f1c40f;">📢 KURUCU DUYURUSU:</b> <span id="announcement-text"></span>
+    <div id="announcement-banner" style="background: #081a0e; border: 1px solid #2ecc71; padding: 8px; margin-bottom: 15px; border-radius: 4px; font-size: 0.8rem; display: none;">
+        <b style="color: #2ecc71;">📢 KURUCU DUYURUSU:</b> <span id="announcement-text" style="color: #fff;"></span>
     </div>
 
     <!-- ANA SAYFA MENÜLERİ -->
@@ -174,15 +198,23 @@
             <span>🎵</span>
         </button>
 
-        <!-- DAHİLİ MÜZİK ÇALAR VE KATEGORİLER -->
+        <!-- DAHİLİ MÜZİK ÇALAR VE AÇILIR KATEGORİLER -->
         <div id="music-list" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid #2ecc71; background: #050a05; border-radius: 4px;">
             
-            <!-- ŞARKI ÇALAR KONTROL KUTUSU -->
-            <div id="player-box" style="margin-bottom: 10px; padding: 8px; border: 1px dashed #f1c40f; text-align: center; background: #081008;">
-                <p style="margin: 0 0 6px 0; color: #2ecc71; font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Şarkı Seçilmedi</p>
+            <!-- ŞARKI ÇALAR KONTROL KUTUSU & OYNATMA ÇUBUĞU -->
+            <div id="player-box" style="margin-bottom: 10px; padding: 8px; border: 1px dashed #2ecc71; text-align: center; background: #081008;">
+                <p style="margin: 0 0 4px 0; color: #2ecc71; font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Şarkı Seçilmedi</p>
                 <audio id="audio-player" style="display: none;"></audio>
                 
-                <div style="display: flex; justify-content: center; gap: 5px; margin-top: 5px;">
+                <!-- SÜRE VE OYNATMA ÇUBUĞU -->
+                <div style="display: flex; align-items: center; gap: 8px; font-size: 0.65rem; color: #888;">
+                    <span id="current-time">0:00</span>
+                    <input type="range" id="seek-bar" class="progress-bar" value="0" max="100" onchange="seekAudio()">
+                    <span id="total-duration">0:00</span>
+                </div>
+
+                <!-- BUTONLAR -->
+                <div style="display: flex; justify-content: center; gap: 5px; margin-top: 8px;">
                     <button class="action-btn" onclick="prevSong()" style="font-size: 0.7rem; padding: 4px;">⏮️ Geri</button>
                     <button class="action-btn" onclick="togglePlay()" id="play-pause-btn" style="font-size: 0.7rem; padding: 4px;">▶️ Oynat</button>
                     <button class="action-btn" onclick="nextSong()" style="font-size: 0.7rem; padding: 4px;">İleri ⏭️</button>
@@ -190,31 +222,46 @@
                 </div>
             </div>
 
-            <!-- KATEGORİ 1: STALKER - PANTER SERİSİ -->
-            <div class="category-title">🐾 Stalker - Panter Serisi</div>
-            <div class="song-item" onclick="playSong(0)"><span>Stalker - Beyaz Panter</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(1)"><span>Stalker - Sarı Panter</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(2)"><span>Stalker - Pembe Panter</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(3)"><span>Stalker - Kırmızı Panter</span><span>▶️</span></div>
+            <!-- KATEGORİ 1: STALKER - PANTER SERİSİ (AÇILIR/KAPANIR) -->
+            <div class="category-title" onclick="toggleCategory('cat-panter')">
+                <span>🐾 Stalker - Panter Serisi</span>
+                <span id="icon-cat-panter">▼</span>
+            </div>
+            <div id="cat-panter" class="song-container">
+                <div class="song-item" onclick="playSong(0)"><span>Stalker - Beyaz Panter</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(1)"><span>Stalker - Sarı Panter</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(2)"><span>Stalker - Pembe Panter</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(3)"><span>Stalker - Kırmızı Panter</span><span>▶️</span></div>
+            </div>
 
-            <!-- KATEGORİ 2: STALKER - BİRİ FAME Mİ DEDİ SERİSİ -->
-            <div class="category-title">🔥 Stalker - Biri Fame Mi Dedi Serisi</div>
-            <div class="song-item" onclick="playSong(4)"><span>Stalker - Biri Fame Mi Dedi (Part 1)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(5)"><span>Stalker - Biri Fame Mi Dedi (Part 2)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(6)"><span>Stalker - Biri Fame Mi Dedi (Part 3)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(7)"><span>Stalker - Biri Fame Mi Dedi (Part 4)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(8)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span>▶️</span></div>
+            <!-- KATEGORİ 2: STALKER - BİRİ FAME Mİ DEDİ SERİSİ (AÇILIR/KAPANIR) -->
+            <div class="category-title" onclick="toggleCategory('cat-fame')">
+                <span>🔥 Stalker - Biri Fame Mi Dedi Serisi</span>
+                <span id="icon-cat-fame">▼</span>
+            </div>
+            <div id="cat-fame" class="song-container">
+                <div class="song-item" onclick="playSong(4)"><span>Stalker - Biri Fame Mi Dedi (Part 1)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(5)"><span>Stalker - Biri Fame Mi Dedi (Part 2)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(6)"><span>Stalker - Biri Fame Mi Dedi (Part 3)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(7)"><span>Stalker - Biri Fame Mi Dedi (Part 4)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(8)"><span>Stalker - Biri Fame Mi Dedi (Part 5)</span><span>▶️</span></div>
+            </div>
 
-            <!-- KATEGORİ 3: ENES ALPER - SAKAT BIRAKIRIM SERİSİ -->
-            <div class="category-title">⚡ Enes Alper - Sakat Bırakırım Serisi</div>
-            <div class="song-item" onclick="playSong(9)"><span>Enes Alper - Sakat Bırakırım (Part 1)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(10)"><span>Enes Alper - Sakat Bırakırım (Part 2)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(11)"><span>Enes Alper - Sakat Bırakırım (Part 3)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(12)"><span>Enes Alper - Sakat Bırakırım (Part 4)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(13)"><span>Enes Alper - Sakat Bırakırım (Part 5)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(14)"><span>Enes Alper - Sakat Bırakırım (Part 6)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(15)"><span>Enes Alper - Sakat Bırakırım (Part 7)</span><span>▶️</span></div>
-            <div class="song-item" onclick="playSong(16)"><span>Enes Alper - Sakat Bırakırım (Part 8)</span><span>▶️</span></div>
+            <!-- KATEGORİ 3: ENES ALPER - SAKAT BIRAKIRIM SERİSİ (AÇILIR/KAPANIR) -->
+            <div class="category-title" onclick="toggleCategory('cat-sakat')">
+                <span>⚡ Enes Alper - Sakat Bırakırım Serisi</span>
+                <span id="icon-cat-sakat">▼</span>
+            </div>
+            <div id="cat-sakat" class="song-container">
+                <div class="song-item" onclick="playSong(9)"><span>Enes Alper - Sakat Bırakırım (Part 1)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(10)"><span>Enes Alper - Sakat Bırakırım (Part 2)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(11)"><span>Enes Alper - Sakat Bırakırım (Part 3)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(12)"><span>Enes Alper - Sakat Bırakırım (Part 4)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(13)"><span>Enes Alper - Sakat Bırakırım (Part 5)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(14)"><span>Enes Alper - Sakat Bırakırım (Part 6)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(15)"><span>Enes Alper - Sakat Bırakırım (Part 7)</span><span>▶️</span></div>
+                <div class="song-item" onclick="playSong(16)"><span>Enes Alper - Sakat Bırakırım (Part 8)</span><span>▶️</span></div>
+            </div>
         </div>
 
         <button class="main-menu-btn" onclick="alert('APK İndirme Yakında!')">
@@ -252,13 +299,13 @@
             
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn" onclick="loginSanalKimlik()" style="font-size: 0.75rem; padding: 6px;">GİRİŞ</button>
-                <button class="action-btn" onclick="generateSanalKimlik()" style="font-size: 0.75rem; padding: 6px; border-color: #f1c40f; color: #f1c40f;">KAYDOL</button>
+                <button class="action-btn" onclick="generateSanalKimlik()" style="font-size: 0.75rem; padding: 6px; border-color: #2ecc71; color: #2ecc71;">KAYDOL</button>
             </div>
         </div>
 
         <div id="logged-in-view" style="display: none;">
             <p style="font-size: 0.8rem; color: #2ecc71;">Kullanıcı: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
-            <p style="font-size: 0.75rem; color: #f1c40f;">Yetki: <span id="display-role">Üye</span></p>
+            <p style="font-size: 0.75rem; color: #2ecc71;">Yetki: <span id="display-role">Üye</span></p>
             <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px; margin-top: 4px;">ÇIKIŞ YAP</button>
         </div>
 
@@ -306,7 +353,7 @@
         const KURUCU_NICK = "ParaziTR";
         const KURUCU_SIFRE = "nukleer123";
 
-        // MÜZİK LİSTESİ VE SES DOSYALARI
+        // MÜZİK LİSTESİ
         const playlist = [
             // Panter Serisi
             { title: "Stalker - Beyaz Panter", src: "Stalker-Beyaz-Panter.mp3" },
@@ -333,6 +380,9 @@
         let currentSongIndex = 0;
         let isReplayOn = false;
         const audio = document.getElementById('audio-player');
+        const seekBar = document.getElementById('seek-bar');
+        const currentTimeSpan = document.getElementById('current-time');
+        const totalDurationSpan = document.getElementById('total-duration');
 
         function playSong(index) {
             currentSongIndex = index;
@@ -378,11 +428,49 @@
             }
         }
 
+        // DAKİKA FORMATLAMA (00:00)
+        function formatTime(seconds) {
+            if(isNaN(seconds)) return "0:00";
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return mins + ":" + (secs < 10 ? "0" : "") + secs;
+        }
+
+        // ŞARKI OYNARKEN ÇUBUĞU VE DAKİKAYI GÜNCELLE
+        audio.ontimeupdate = function() {
+            if(audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                seekBar.value = progress;
+                currentTimeSpan.innerText = formatTime(audio.currentTime);
+                totalDurationSpan.innerText = formatTime(audio.duration);
+            }
+        };
+
+        // ÇUBUKTAN ŞARKIYI İLERİ/GERİ SARMA
+        function seekAudio() {
+            if(audio.duration) {
+                audio.currentTime = (seekBar.value / 100) * audio.duration;
+            }
+        }
+
         audio.onended = function() {
             if(!isReplayOn) {
                 nextSong();
             }
         };
+
+        // KATEGORİ AÇILIR/KAPANIR SİSTEMİ
+        function toggleCategory(catId) {
+            const el = document.getElementById(catId);
+            const icon = document.getElementById('icon-' + catId);
+            if(el.style.display === 'block') {
+                el.style.display = 'none';
+                icon.innerText = '▼';
+            } else {
+                el.style.display = 'block';
+                icon.innerText = '▲';
+            }
+        }
 
         function toggleLeftPanel() { document.getElementById('left-drawer').classList.toggle('open'); }
         function toggleSidePanel() { document.getElementById('side-drawer').classList.toggle('open'); }
