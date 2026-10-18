@@ -261,11 +261,22 @@
             </div>
         </div>
 
-        <!-- ÇALIŞAN APK İNDİRME BUTONU -->
-        <button class="main-menu-btn" onclick="downloadApk()">
-            <span>> DOWNLOAD APP (.APK)</span>
-            <span>📥</span>
-        </button>
+            <!-- ÇALIŞAN APK İNDİRME BUTONU -->
+    <button class="main-menu-btn" onclick="apkIndir()">
+        <span>> DOWNLOAD APP (.APK)</span>
+        <span>📥</span>
+    </button>
+
+    <script>
+    function apkIndir() {
+        // Buradaki linke APK dosyanın direkt indirme adresini yaz (örn: GitHub Releases veya sunucu linki)
+        const dosyaYolu = "https://example.com/parazitr_v1.apk";
+        
+        // Tarayıcıda veya WebView'da indirmeyi tetikler
+        window.open(dosyaYolu, '_system');
+    }
+    </script>
+
 
         <!-- ANLIK ÇEVRİMİÇİ LİSTESİ -->
         <div style="border: 1px solid var(--main-color); padding: 10px; border-radius: 4px; margin-bottom: 10px; background: #060c06;">
