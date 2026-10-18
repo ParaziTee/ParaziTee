@@ -46,13 +46,14 @@
             box-sizing: border-box;
             border-radius: 4px;
         }
-        /* MAIN MENU BUTTONS */
+
+        /* ANA SAYFA MENÜ BUTONLARI */
         .main-menu-btn {
             background: transparent;
             border: 1px solid #2ecc71;
             color: #2ecc71;
-            padding: 12px;
-            margin-bottom: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -60,9 +61,16 @@
             cursor: pointer;
             border-radius: 4px;
             font-size: 0.9rem;
+            text-decoration: none;
+            width: 100%;
+            box-sizing: border-box;
         }
-        
-        /* SOL PANEL (Giriş & Sohbet) */
+        .main-menu-btn:active {
+            background: #2ecc71;
+            color: #040804;
+        }
+
+        /* SOL PANEL (Giriş, Sohbet & Kurucu Görünümü) */
         .left-panel {
             position: fixed;
             top: 0;
@@ -76,8 +84,12 @@
             transition: left 0.3s ease;
             overflow-y: auto;
             box-sizing: border-box;
+            pointer-events: none; /* KAPALIYKEN TIKLAMAYI ENGELLE */
         }
-        .left-panel.open { left: 0; }
+        .left-panel.open { 
+            left: 0; 
+            pointer-events: auto; /* AÇILINCA TIKLANABİLİR YAP */
+        }
 
         /* SAĞ PANEL (Arkadaş & Nükleer Gruplar) */
         .side-panel {
@@ -93,8 +105,12 @@
             transition: right 0.3s ease;
             overflow-y: auto;
             box-sizing: border-box;
+            pointer-events: none; /* KAPALIYKEN TIKLAMAYI ENGELLE */
         }
-        .side-panel.open { right: 0; }
+        .side-panel.open { 
+            right: 0; 
+            pointer-events: auto; /* AÇILINCA TIKLANABİLİR YAP */
+        }
 
         .close-btn {
             background: transparent;
@@ -121,47 +137,48 @@
     <!-- ÜST MENÜ VE PANEL BUTONLARI -->
     <div class="top-bar">
         <button class="menu-btn" onclick="toggleLeftPanel()">💬 SOHBET & GİRİŞ</button>
-        <h2 style="margin:0; font-size: 1.1rem;">☣️ PARAZITR 1.0</h2>
+        <h2 style="margin:0; font-size: 1.1rem; color: #2ecc71;">☣️ PARAZITR 1.0</h2>
         <button class="menu-btn" onclick="toggleSidePanel()">PANEL ☰</button>
     </div>
 
-    <!-- ANA SAYFA MENÜLERİ (GERİ GELDİ) -->
+    <!-- ANA SAYFA MENÜLERİ (ÇALIŞAN BUTONLAR) -->
     <div style="margin-top: 20px;">
-        <div class="main-menu-btn">
+        <button class="main-menu-btn" onclick="alert('Müzik Listeleri Yakında!')">
             <span>> MUSIC [ PLAYLISTS ]</span>
             <span>🎵</span>
-        </div>
-        <div class="main-menu-btn">
+        </button>
+        <button class="main-menu-btn" onclick="alert('APK İndirme Bağlantısı Yakında!')">
             <span>> DOWNLOAD APP (.APK)</span>
             <span>📥</span>
-        </div>
-        <div class="main-menu-btn">
+        </button>
+        <button class="main-menu-btn" onclick="toggleLeftPanel()">
             <span>> ParaziTR Çevrimiçi</span>
             <span>🟢</span>
-        </div>
-        <div class="main-menu-btn">
+        </button>
+        <div class="main-menu-btn" style="cursor: default;">
             <span>Durum: Aktif / Online</span>
             <span>🟢</span>
         </div>
-        <div class="main-menu-btn">
+        <button class="main-menu-btn" onclick="alert('ParaziTR v1.0 - Cyber Hacker Interface')">
             <span>> SETTINGS // ABOUT</span>
             <span>⚙️</span>
-        </div>
+        </button>
     </div>
 
-    <!-- 1. SOL PANEL (Giriş + Sohbet & Grup Akışı) -->
+    <!-- 1. SOL PANEL (Giriş + Sohbet & Kurucu Paneli) -->
     <div id="left-drawer" class="left-panel">
         <button class="close-btn" onclick="toggleLeftPanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
 
         <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem; border-bottom: 1px dashed #2ecc71; padding-bottom: 4px;">🔑 SANAL KİMLİK & GİRİŞ</p>
         
+        <!-- Giriş Formu -->
         <div id="logged-out-view">
             <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Sanal İsim (Nick):</p>
             <input type="text" id="sanal-nick-input" class="input-field" placeholder="Nickinizi yazın" style="font-size: 0.8rem; margin-bottom: 6px;">
             
-            <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Seri Kod:</p>
-            <input type="password" id="sanal-key-input" class="input-field" placeholder="PRZ-XXXX-XX" style="font-size: 0.8rem; margin-bottom: 8px;">
+            <p style="font-size: 0.75rem; color: #2ecc71; margin-bottom: 4px;">Giriş / Kurucu Şifresi:</p>
+            <input type="password" id="sanal-key-input" class="input-field" placeholder="ParaziTR için şifre girin" style="font-size: 0.8rem; margin-bottom: 8px;">
             
             <div style="display: flex; gap: 5px;">
                 <button class="action-btn" onclick="loginSanalKimlik()" style="font-size: 0.75rem; padding: 6px;">GİRİŞ</button>
@@ -169,14 +186,25 @@
             </div>
         </div>
 
+        <!-- Giriş Yapıldı Görünümü -->
         <div id="logged-in-view" style="display: none;">
-            <p style="font-size: 0.8rem; color: #2ecc71;">Hoş geldin: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
-            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px;">ÇIKIŞ</button>
+            <p style="font-size: 0.85rem; color: #2ecc71; margin: 5px 0;">Kullanıcı: <span id="display-user" style="font-weight:bold; color: #fff;"></span></p>
+            <p style="font-size: 0.75rem; color: #f1c40f; margin: 2px 0;">Yetki: <span id="display-role">Üye</span></p>
+            <button class="action-btn" onclick="logoutSanalKimlik()" style="border-color: #e74c3c; color: #e74c3c; font-size: 0.75rem; padding: 4px; margin-top: 6px;">ÇIKIŞ YAP</button>
         </div>
 
-        <div style="margin-top: 20px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
+        <!-- KURUCU ÖZEL PANELİ (Sadece Kurucuya Görünür) -->
+        <div id="kurucu-panel" style="display: none; margin-top: 15px; border-top: 1px dashed #e74c3c; padding-top: 10px;">
+            <p style="font-weight: bold; color: #e74c3c; font-size: 0.85rem;">☢️ KURUCU PANELİ (Girenler)</p>
+            <div id="active-users-list" style="max-height: 80px; overflow-y: auto; font-size: 0.75rem; background: #000; border: 1px solid #e74c3c; padding: 4px; color: #2ecc71;">
+                <!-- Giriş yapanlar buraya düşer -->
+            </div>
+        </div>
+
+        <!-- SOHBET AKIŞI -->
+        <div style="margin-top: 15px; border-top: 1px dashed #2ecc71; padding-top: 10px;">
             <p style="font-weight: bold; color: #2ecc71; font-size: 0.9rem;">💬 SOHBET & CHAT</p>
-            <div id="messages-container" style="height: 150px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
+            <div id="messages-container" style="height: 140px; overflow-y: auto; font-size: 0.75rem; margin-bottom: 6px; border: 1px solid #1a3a2a; padding: 6px; background: #040804;">
                 <div style="color: #666; text-align: center;">-- Sohbet Akışı --</div>
             </div>
             <input type="text" id="message-input" class="input-field" placeholder="Mesaj yaz..." style="font-size: 0.8rem; margin-bottom: 6px;">
@@ -204,7 +232,11 @@
         <div id="groups-list" style="max-height: 80px; overflow-y: auto; font-size: 0.8rem;"></div>
     </div>
 
+    <!-- JAVASCRIPT KODLARI -->
     <script>
+        const KURUCU_NICK = "ParaziTR";
+        const KURUCU_SIFRE = "nukleer123"; // Kurucu giriş şifresi
+
         function toggleLeftPanel() {
             document.getElementById('left-drawer').classList.toggle('open');
         }
@@ -213,50 +245,113 @@
             document.getElementById('side-drawer').classList.toggle('open');
         }
 
-        function generateSanalKimlik() {
-            const nick = document.getElementById('sanal-nick-input').value;
-            if(!nick) { alert('Lütfen bir nick girin!'); return; }
-            const randomKey = 'PRZ-' + Math.floor(1000 + Math.random() * 9000);
-            localStorage.setItem('parazit_user', nick);
-            localStorage.setItem('parazit_key', randomKey);
+        function loginSanalKimlik() {
+            const nick = document.getElementById('sanal-nick-input').value.trim();
+            const pass = document.getElementById('sanal-key-input').value.trim();
+
+            if(!nick) { alert('Lütfen nickinizi girin!'); return; }
+
+            // KURUCU KONTROLÜ
+            if(nick.toLowerCase() === KURUCU_NICK.toLowerCase()) {
+                if(pass !== KURUCU_SIFRE) {
+                    alert('❌ HATA: Kurucu şifresi yanlış!');
+                    return;
+                }
+                localStorage.setItem('parazit_user', 'ParaziTR');
+                localStorage.setItem('parazit_role', 'KURUCU ☢️');
+            } else {
+                localStorage.setItem('parazit_user', nick);
+                localStorage.setItem('parazit_role', 'Kullanıcı');
+            }
+
+            // Aktif Kullanıcı Kaydı (Çevrimiçi Takibi)
+            let onlineUsers = JSON.parse(localStorage.getItem('parazit_online') || '[]');
+            if(!onlineUsers.includes(nick)) {
+                onlineUsers.push(nick);
+                localStorage.setItem('parazit_online', JSON.stringify(onlineUsers));
+            }
+
             checkLoginState();
         }
 
-        function loginSanalKimlik() {
-            const nick = document.getElementById('sanal-nick-input').value;
-            if(!nick) { alert('Lütfen nickinizi girin!'); return; }
+        function generateSanalKimlik() {
+            const nick = document.getElementById('sanal-nick-input').value.trim();
+            if(!nick) { alert('Lütfen bir nick girin!'); return; }
+            if(nick.toLowerCase() === KURUCU_NICK.toLowerCase()) {
+                alert('Bu isim Kurucuya aittir, şifre ile giriş yapın!');
+                return;
+            }
             localStorage.setItem('parazit_user', nick);
-            localStorage.setItem('parazit_key', 'PRZ-GUEST');
+            localStorage.setItem('parazit_role', 'Kullanıcı');
+
+            let onlineUsers = JSON.parse(localStorage.getItem('parazit_online') || '[]');
+            if(!onlineUsers.includes(nick)) {
+                onlineUsers.push(nick);
+                localStorage.setItem('parazit_online', JSON.stringify(onlineUsers));
+            }
+
             checkLoginState();
         }
 
         function logoutSanalKimlik() {
+            const currentUser = localStorage.getItem('parazit_user');
+            if(currentUser) {
+                let onlineUsers = JSON.parse(localStorage.getItem('parazit_online') || '[]');
+                onlineUsers = onlineUsers.filter(u => u !== currentUser);
+                localStorage.setItem('parazit_online', JSON.stringify(onlineUsers));
+            }
             localStorage.removeItem('parazit_user');
-            localStorage.removeItem('parazit_key');
+            localStorage.removeItem('parazit_role');
             checkLoginState();
         }
 
         function checkLoginState() {
             const user = localStorage.getItem('parazit_user');
+            const role = localStorage.getItem('parazit_role');
+
             if(user) {
                 document.getElementById('logged-out-view').style.display = 'none';
                 document.getElementById('logged-in-view').style.display = 'block';
                 document.getElementById('display-user').innerText = user;
+                document.getElementById('display-role').innerText = role;
+
+                // KURUCU PANELİ AÇILIŞI
+                if(role === 'KURUCU ☢️') {
+                    document.getElementById('kurucu-panel').style.display = 'block';
+                    updateOnlineList();
+                } else {
+                    document.getElementById('kurucu-panel').style.display = 'none';
+                }
             } else {
                 document.getElementById('logged-out-view').style.display = 'block';
                 document.getElementById('logged-in-view').style.display = 'none';
+                document.getElementById('kurucu-panel').style.display = 'none';
             }
+        }
+
+        function updateOnlineList() {
+            const listDiv = document.getElementById('active-users-list');
+            const onlineUsers = JSON.parse(localStorage.getItem('parazit_online') || '[]');
+            listDiv.innerHTML = onlineUsers.map(u => `<div>🟢 ${u}</div>`).join('') || 'Giriş yapan yok';
         }
 
         function sendMessage() {
             const msgInput = document.getElementById('message-input');
             const container = document.getElementById('messages-container');
             const user = localStorage.getItem('parazit_user') || 'Misafir';
-            if(!msgInput.value) return;
+            const role = localStorage.getItem('parazit_role') || '';
+
+            if(!msgInput.value.trim()) return;
 
             const msgDiv = document.createElement('div');
             msgDiv.style.marginBottom = '4px';
-            msgDiv.innerHTML = `<b style="color:#2ecc71;">${user}:</b> ${msgInput.value}`;
+            
+            if(role === 'KURUCU ☢️') {
+                msgDiv.innerHTML = `<b style="color:#e74c3c;">[KURUCU ☢️] ${user}:</b> ${msgInput.value}`;
+            } else {
+                msgDiv.innerHTML = `<b style="color:#2ecc71;">${user}:</b> ${msgInput.value}`;
+            }
+
             container.appendChild(msgDiv);
             msgInput.value = '';
             container.scrollTop = container.scrollHeight;
@@ -265,7 +360,7 @@
         function addFriend() {
             const fInput = document.getElementById('friend-input');
             const fList = document.getElementById('friends-list');
-            if(!fInput.value) return;
+            if(!fInput.value.trim()) return;
             const item = document.createElement('div');
             item.innerText = '👤 ' + fInput.value;
             fList.appendChild(item);
@@ -275,7 +370,7 @@
         function createGroup() {
             const gInput = document.getElementById('group-name-input');
             const gList = document.getElementById('groups-list');
-            if(!gInput.value) return;
+            if(!gInput.value.trim()) return;
             const item = document.createElement('div');
             item.innerText = '☣️ ' + gInput.value;
             gList.appendChild(item);
