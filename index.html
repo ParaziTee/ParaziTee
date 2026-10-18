@@ -70,6 +70,24 @@
             color: #040804;
         }
 
+        /* MÜZİK LİSTESİ İTEMLERİ */
+        .song-item {
+            padding: 8px;
+            margin: 4px 0;
+            background: #081408;
+            border: 1px solid #1a3a2a;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #f1c40f;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .song-item:hover {
+            border-color: #f1c40f;
+            background: #0e200e;
+        }
+
         /* SOL PANEL */
         .left-panel {
             position: fixed;
@@ -140,16 +158,38 @@
         <b style="color: #f1c40f;">📢 KURUCU DUYURUSU:</b> <span id="announcement-text"></span>
     </div>
 
-    <!-- ANA SAYFA MENÜLERİ (Müzikler ve Çevrimiçi Listesi) -->
+    <!-- ANA SAYFA MENÜLERİ -->
     <div style="margin-top: 10px;">
         <button class="main-menu-btn" onclick="toggleMusicMenu()">
             <span>> MUSIC [ PLAYLISTS ]</span>
             <span>🎵</span>
         </button>
-        <div id="music-list" style="display: none; padding-left: 10px; margin-bottom: 10px; border-left: 2px solid #2ecc71; font-size: 0.8rem;">
-            <p style="margin: 4px 0; color: #f1c40f;">🎵 Enes Alper - Sakat Bırakırım</p>
-            <p style="margin: 4px 0; color: #f1c40f;">🎵 Stalker - Panter Serisi</p>
-            <p style="margin: 4px 0; color: #f1c40f;">🎵 Stalker - Biri Fame Mi Dedi</p>
+
+        <!-- DAHİLİ MÜZİK ÇALAR VE LİSTE -->
+        <div id="music-list" style="display: none; padding: 10px; margin-bottom: 10px; border: 1px solid #2ecc71; background: #050a05; border-radius: 4px; font-size: 0.8rem;">
+            
+            <!-- ŞARKI ÇALAR KUTUSU -->
+            <div id="player-box" style="margin-bottom: 10px; padding: 8px; border: 1px dashed #f1c40f; text-align: center; background: #081008;">
+                <p style="margin: 0 0 6px 0; color: #2ecc71; font-weight: bold; font-size: 0.75rem;" id="now-playing">▶️ Çalınacak Şarkıyı Seçin</p>
+                <audio id="audio-player" controls style="width: 100%; height: 30px; filter: invert(100%) hue-rotate(90deg);"></audio>
+            </div>
+
+            <div class="song-item" onclick="playSong('Enes Alper - Sakat Bırakırım', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')">
+                <span>🎵 Enes Alper - Sakat Bırakırım</span>
+                <span>▶️</span>
+            </div>
+
+            <div class="song-item" onclick="playSong('Stalker - Panter Serisi', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3')">
+                <span>🎵 Stalker - Panter Serisi</span>
+                <span>▶️</span>
+            </div>
+
+            <div class="song-item" onclick="playSong('Stalker - Biri Fame Mi Dedi', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3')">
+                <span>🎵 Stalker - Biri Fame Mi Dedi</span>
+                <span>▶️</span>
+            </div>
+            
+            <p style="font-size: 0.65rem; color: #888; margin-top: 8px; text-align: center;">* Kendi MP3 dosyalarını GitHub projenin içine atıp bağlantılarını da verebilirsin kral.</p>
         </div>
 
         <button class="main-menu-btn" onclick="alert('APK İndirme Yakında!')">
@@ -157,7 +197,7 @@
             <span>📥</span>
         </button>
 
-        <!-- ESKİ İKİ KUTU YERİNE ANLIK ÇEVRİMİÇİ LİSTESİ -->
+        <!-- ANLIK ÇEVRİMİÇİ LİSTESİ -->
         <div style="border: 1px solid #2ecc71; padding: 10px; border-radius: 4px; margin-bottom: 10px; background: #060c06;">
             <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 0.85rem; color: #2ecc71;">🟢 ANLIK ÇEVRİMİÇİ KULLANICILAR</p>
             <div id="main-online-list" style="font-size: 0.75rem; max-height: 70px; overflow-y: auto; color: #fff;">
@@ -171,7 +211,7 @@
         </button>
     </div>
 
-    <!-- 1. SOL PANEL (Giriş, Sohbet & Kurucu Paneli) -->
+    <!-- 1. SOL PANEL -->
     <div id="left-drawer" class="left-panel">
         <button class="close-btn" onclick="toggleLeftPanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
@@ -216,7 +256,7 @@
         </div>
     </div>
 
-    <!-- 2. SAĞ PANEL (Arkadaş & Nükleer Gruplar) -->
+    <!-- 2. SAĞ PANEL -->
     <div id="side-drawer" class="side-panel">
         <button class="close-btn" onclick="toggleSidePanel()">[X] KAPAT</button>
         <div style="clear: both; height: 10px;"></div>
@@ -246,6 +286,15 @@
         function toggleMusicMenu() {
             const m = document.getElementById('music-list');
             m.style.display = m.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // UYGULAMA İÇİ MÜZİK ÇALAR
+        function playSong(title, url) {
+            const player = document.getElementById('audio-player');
+            const label = document.getElementById('now-playing');
+            label.innerText = '🔊 Çalıyor: ' + title;
+            player.src = url;
+            player.play();
         }
 
         function loginSanalKimlik() {
